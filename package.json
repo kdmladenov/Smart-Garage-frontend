@@ -1,5 +1,5 @@
 {
-  "name": "mdb-react-template",
+  "name": "smart-garage-app",
   "version": "1.0.0",
   "description": "template for mdb-react-ui-kit",
   "private": true,
@@ -14,7 +14,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint-fix": "eslint . --fix"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "keywords": [
     "template",
@@ -33,5 +37,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^7.27.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-react": "^7.23.2"
   }
 }

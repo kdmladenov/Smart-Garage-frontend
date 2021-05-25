@@ -27,8 +27,12 @@
         "react/no-unknown-property": "error",
         "react/no-unused-prop-types": "error",
         "react/prop-types": "error",
-        // "react/react-in-jsx-scope": "error",
+        "react/react-in-jsx-scope": "off",
         "jsx-quotes": "off",
-        "eol-last": "off"
+        "eol-last": "off",
+        "semi": [
+            "warn",
+            "always"
+        ]
     }
 }

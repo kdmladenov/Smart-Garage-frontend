@@ -4,9 +4,15 @@
   "description": "template for mdb-react-ui-kit",
   "private": true,
   "dependencies": {
+    "@types/jwt-decode": "^3.1.0",
+    "@types/prop-types": "^15.7.3",
+    "@types/react-router-dom": "^5.1.7",
+    "jwt-decode": "^3.1.2",
     "mdb-react-ui-kit": "^1.0.0-beta4",
+    "prop-types": "^15.7.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
   },

@@ -1,37 +1,42 @@
 {
   "name": "smart-garage-app",
-  "version": "1.0.0",
-  "description": "template for mdb-react-ui-kit",
+  "version": "0.1.0",
+  "description": "",
   "private": true,
   "dependencies": {
     "@types/jwt-decode": "^3.1.0",
     "@types/prop-types": "^15.7.3",
+    "@types/react-bootstrap": "^0.32.25",
     "@types/react-router-dom": "^5.1.7",
     "jwt-decode": "^3.1.2",
-    "mdb-react-ui-kit": "^1.0.0-beta4",
+    "mdbreact": "5.0.1",
     "prop-types": "^15.7.2",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1",
-    "web-vitals": "^0.2.4"
+    "react": "^16.3.0",
+    "react-bootstrap": "^1.6.0",
+    "react-dom": "^16.3.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "rename": "renamer --find App-clear.js --replace App.js ./src/App-clear.js && renamer --find style.css --replace index.css ./src/style.css ",
+    "remove-demo": "rimraf ./src/assets ./src/components ./src/pages ./src/Routes.js ./src/App.js ./src/index.css && npm run rename",
     "lint-fix": "eslint . --fix"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "devDependencies": {
+    "@types/rimraf": "^3.0.0",
+    "eslint": "^7.27.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-react": "^7.23.2",
+    "renamer": "^1.0.0",
+    "rimraf": "^2.6.2"
   },
-  "keywords": [
-    "template",
-    "react"
-  ],
-  "author": "MDBootstrap",
-  "license": "MIT",
   "browserslist": {
     "production": [
       ">0.2%",
@@ -44,12 +49,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "eslint": "^7.27.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.23.3",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-react": "^7.23.2"
+  "eslintConfig": {
+    "extends": "react-app"
   }
 }

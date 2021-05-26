@@ -5,6 +5,7 @@ import {
   Switch, Redirect
 } from 'react-router-dom';
 import './App.css';
+import Header from './components/Header/Header';
 import AuthContext, { getUser } from './providers/AuthContext';
 // import GuardedRoute from "./providers/GuardedRoute";
 
@@ -19,6 +20,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <AuthContext.Provider value={{ ...authValue, setAuthValue }}>
+        <Header />
         <Switch>
           <Redirect path="/" exact to="/home" />
         </Switch>

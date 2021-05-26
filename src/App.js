@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   BrowserRouter,
   // Route,
@@ -10,23 +10,61 @@ import AuthContext, { getUser } from './providers/AuthContext';
 // import GuardedRoute from "./providers/GuardedRoute";
 
 const App = () => {
+  const breakWidth = 992;
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => { window.removeEventListener('resize', handleResize); };
+  }, []);
+
   const [authValue, setAuthValue] = useState({
     isLoggedIn: !!getUser(),
     user: getUser()
   });
+
+  const mainContainerStyle = {
+    backgroundColor: '#ececec',
+    minHeight: '100vh',
+    paddingTop: '5.5rem',
+    paddingRight: '6%',
+    paddingLeft:
+      windowWidth > breakWidth ? 'calc(6% + 15rem)' : '6%'
+  };
 
   // const { isLoggedIn, user } = authValue
 
   return (
     <BrowserRouter>
       <AuthContext.Provider value={{ ...authValue, setAuthValue }}>
-        <Header />
-        <Switch>
-          <Redirect path="/" exact to="/home" />
-        </Switch>
+        <Header breakWidth={breakWidth} windowWidth={windowWidth} />
+        <main style={mainContainerStyle}>
+          <Switch>
+            <Redirect path="/" exact to="/home" />
+          </Switch>
+        </main>
       </AuthContext.Provider>
     </BrowserRouter>
   );
 };
 
 export default App;
+
+/*  <main style={mainContainerStyle}>
+      <MDBContainer fluid style={{ height: 2000 }} className="mt-5">
+        <h2>
+          Advanced Double Navigation with fixed SideNav & fixed Navbar:
+        </h2>
+        <br />
+        <h5>1. Fixed side menu, hidden on small devices.</h5>
+        <h5>
+          2. Fixed Navbar. It will always stay visible on the top, even
+          when you scroll down.
+        </h5>
+      </MDBContainer>
+    </main> */

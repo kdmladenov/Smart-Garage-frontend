@@ -19,4 +19,9 @@ export const getUser = () => {
   }
 };
 
+export const getUsername = () => {
+  const { email } = getUser();
+  return email.substring(0, email.indexOf('@'));
+};
+
 export default AuthContext;

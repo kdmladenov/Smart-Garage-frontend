@@ -111,7 +111,7 @@ a.nav-link.active {
 
 @media only screen and (min-width: 768px) {
   .nav-link {
-    padding-right: 1rem !important;
-    padding-left: 1rem !important;
+    padding-right: 0.7rem !important;
+    padding-left: 0.7rem !important;
   }
 }

@@ -10,7 +10,7 @@ import { BASE_URL } from '../../common/constants';
 import AuthContext, { getUser } from '../../providers/AuthContext';
 
 const Login = () => {
-  const auth = useContext(AuthContext);
+  const { setAuthValue } = useContext(AuthContext);
   const history = useHistory();
   const [error, setError] = useState('');
   const [remember, setRemember] = useState(false);
@@ -54,7 +54,8 @@ const Login = () => {
         .then(data => {
           const { token } = data;
           localStorage.setItem('token', token);
-          auth.setAuthValue({
+          const user = getUser();
+          setAuthValue({
             isLoggedIn: true,
             user: getUser()
           });
@@ -74,7 +75,6 @@ const Login = () => {
           }
         });
     }
-    console.log(inputErrors);
   };
 
   return (

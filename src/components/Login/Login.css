@@ -3,6 +3,8 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .form-wrapper-inner {

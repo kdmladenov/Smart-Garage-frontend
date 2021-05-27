@@ -1,16 +1,14 @@
-import { BrowserRouter as Router, NavLink, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, NavLink } from 'react-router-dom';
 import { MDBNavbar, MDBNavbarNav, MDBNavItem, MDBIcon } from 'mdbreact';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import AuthContext, { getToken, getUsername } from '../../providers/AuthContext';
 import './Header.css';
-import { BASE_URL } from '../../common/constants';
+import { getUser } from '../../providers/AuthContext';
+// import { getUser } from '../../providers/AuthContext';
 
-const Header = ({ windowWidth, breakWidth }) => {
+const Header = ({ breakWidth, windowWidth, toggleModal, num }) => {
   const [content, setContent] = useState('customers');
   const [sideNavVisible, toggleSideNavVisible] = useState(true);
-  const { setAuthValue } = useContext(AuthContext);
-  const history = useHistory();
 
   const handleHamburgerClick = () => {
     toggleSideNavVisible(!sideNavVisible);
@@ -40,24 +38,7 @@ const Header = ({ windowWidth, breakWidth }) => {
     position: 'fixed',
     zIndex: '1040'
   };
-
-  const logout = () => {
-    fetch(`${BASE_URL}/auth/logout`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
-    })
-      .then(res => res.json())
-      .then(() => {
-        setAuthValue({
-          user: null,
-          isLoggedIn: false
-        });
-        history.push('/logout');
-        localStorage.removeItem('token');
-      });
-  };
+  const username = getUser().email.substr(0, getUser().email.indexOf('@'));
 
   return (
     <Router>
@@ -87,7 +68,7 @@ const Header = ({ windowWidth, breakWidth }) => {
           verticalAlign: 'middle',
           color: sideNavVisible ? '#ffffff' : '#004c4f'
         }}>
-          {getUsername().toUpperCase()}
+          {username.length > 8 ? `${username.substr(0, 7).toUpperCase()}...` : username.toUpperCase()}
         </div>
         {sideNavVisible && <div className="side-nav" style={sideNavStyle}>
           {content === 'customers' && <div>Customers sidebar</div>}
@@ -129,10 +110,10 @@ const Header = ({ windowWidth, breakWidth }) => {
               </NavLink>
             </MDBNavItem>
             <MDBNavItem>
-              <NavLink to="/logout" className="nav-link" role="button" onClick={logout} style={{ borderLeft: '1px solid #000' }}>
+              <button className="nav-link" role="button" onClick={() => toggleModal(num)} style={{ borderLeft: '1px solid #000' }}>
                 <MDBIcon icon="sign-out-alt" className="d-inline-inline" />
                 <div className="d-none d-md-inline">Logout</div>
-              </NavLink>
+              </button>
             </MDBNavItem>
           </MDBNavbarNav>
         </MDBNavbar>
@@ -146,5 +127,7 @@ export default Header;
 
 Header.propTypes = {
   windowWidth: PropTypes.number.isRequired,
-  breakWidth: PropTypes.number.isRequired
+  breakWidth: PropTypes.number.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  num: PropTypes.number.isRequired
 };

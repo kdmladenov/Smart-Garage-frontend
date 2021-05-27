@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, NavLink, useHistory } from 'react-router-dom';
 import { MDBNavbar, MDBNavbarNav, MDBNavItem, MDBIcon } from 'mdbreact';
 import { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
@@ -10,6 +10,7 @@ const Header = ({ windowWidth, breakWidth }) => {
   const [content, setContent] = useState('customers');
   const [sideNavVisible, toggleSideNavVisible] = useState(true);
   const { setAuthValue } = useContext(AuthContext);
+  const history = useHistory();
 
   const handleHamburgerClick = () => {
     toggleSideNavVisible(!sideNavVisible);

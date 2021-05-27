@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
-import {
-  BrowserRouter,
-  // Route,
-  Switch, Redirect
-} from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header/Header';
+import Login from './components/Login/Login';
 import AuthContext, { getUser } from './providers/AuthContext';
 // import GuardedRoute from "./providers/GuardedRoute";
 
@@ -42,12 +39,13 @@ const App = () => {
   return (
     <BrowserRouter>
       <AuthContext.Provider value={{ ...authValue, setAuthValue }}>
-        <Header breakWidth={breakWidth} windowWidth={windowWidth} />
-        <main style={mainContainerStyle}>
+        {!authValue.isLoggedIn && <Route path="/login" exact component={Login} />}
+        {authValue.isLoggedIn && <Header breakWidth={breakWidth} windowWidth={windowWidth} />}
+        {authValue.isLoggedIn && <main style={mainContainerStyle}>
           <Switch>
             <Redirect path="/" exact to="/home" />
           </Switch>
-        </main>
+        </main>}
       </AuthContext.Provider>
     </BrowserRouter>
   );

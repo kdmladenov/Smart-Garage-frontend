@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Header.css';
 import { getUser } from '../../providers/AuthContext';
-// import { getUser } from '../../providers/AuthContext';
 
 const Header = ({ breakWidth, windowWidth, toggleModal, num }) => {
   const [content, setContent] = useState('customers');

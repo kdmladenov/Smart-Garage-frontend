@@ -7,7 +7,7 @@ const GuardedRoute = ({ component: Component, isLoggedIn, ...rest }) => {
     <Route
       {...rest}
       render={props => {
-        return (isLoggedIn ? <Component {...props} /> : <Redirect to="/home" />);
+        return (isLoggedIn ? <Component {...props} /> : <Redirect to="/login" />);
       }}
     />
   );

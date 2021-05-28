@@ -3,10 +3,15 @@ import PropTypes from 'prop-types';
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 import { Button } from 'react-bootstrap';
 
-const CustomToggle = ({ children, eventKey, variant }) => {
-  const handleClick = useAccordionToggle(eventKey, () =>
-    console.log('toggle clicked')
+const CustomToggle = ({ children, eventKey, variant, customFunc }) => {
+  const handleClick = useAccordionToggle(
+    eventKey,
+    () => {
+      customFunc && customFunc(false);
+      console.log(customFunc);
+    }
   );
+
   return (
     <Button type="button" variant={variant} onClick={handleClick}>
       {children}
@@ -14,10 +19,15 @@ const CustomToggle = ({ children, eventKey, variant }) => {
   );
 };
 
+CustomToggle.defaultProp = {
+  func: () => {}
+};
+
 CustomToggle.propTypes = {
   children: PropTypes.string.isRequired,
   eventKey: PropTypes.string.isRequired,
-  variant: PropTypes.string.isRequired
+  variant: PropTypes.string.isRequired,
+  customFunc: PropTypes.func
 };
 
 export default CustomToggle;

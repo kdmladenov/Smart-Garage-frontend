@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
@@ -12,6 +12,7 @@ import Loading from '../UI/Loading';
 import './Customers.css';
 
 const CustomerCard = ({ customer }) => {
+  const [editMode, setEditMode] = useState(false);
   // const { search: query } = useLocation();
   const {
     data,
@@ -51,17 +52,17 @@ const CustomerCard = ({ customer }) => {
               <h3>{customer.fullName}</h3>
             </div>
             <div className="card-header-buttons">
-              <CustomToggle variant="primary" eventKey="1">
+              <CustomToggle variant="primary" eventKey="1" customFunc={setEditMode}>
                 Details
               </CustomToggle>
-              <CustomToggle variant="primary" eventKey="2">
+              <CustomToggle variant="primary" eventKey="2" customFunc={setEditMode}>
                 Car List
               </CustomToggle>
             </div>
           </Card.Header>
           <Accordion.Collapse eventKey="1">
             <Card.Body>
-              <CustomerCardDetailed key={customer.userId} customer={customer} />
+              <CustomerCardDetailed key={customer.userId} customer={customer} editMode={editMode} setEditMode={setEditMode} />
             </Card.Body>
           </Accordion.Collapse>
           <Accordion.Collapse eventKey="2">
@@ -102,7 +103,7 @@ CustomerCard.propTypes = {
     city: PropTypes.string.isRequired,
     country: PropTypes.string.isRequired,
     postalCode: PropTypes.number.isRequired,
-    street: PropTypes.string,
+    streetAddress: PropTypes.string,
     licensePlate: PropTypes.string.isRequired,
     make: PropTypes.string.isRequired,
     modelId: PropTypes.number.isRequired,

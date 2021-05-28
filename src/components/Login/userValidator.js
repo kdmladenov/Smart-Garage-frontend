@@ -2,17 +2,22 @@ import { userInput } from '../../common/constants';
 
 const validate = {
   email: value => typeof value === 'string' && value.length <= userInput.MAX_EMAIL_LENGTH && value.match(userInput.EMAIL_REGEX),
-  // reenteredEmail: (value, match) => value === match,
+  reenteredEmail: (value, match) => value === match,
   password: {
     length: value => typeof value === 'string' && value.length >= userInput.MIN_PASSWORD_LENGTH && value.length <= userInput.MAX_PASSWORD_LENGTH,
     upperCase: value => (/[A-Z]/.test(value)),
     lowerCase: value => (/[a-z]/.test(value)),
     digit: value => (/[\d]/.test(value))
   },
-  reenteredPassword: (value, match) => value === match
-  // firstName: value => typeof value === 'undefined' || (typeof value === 'string' && value.length >= userInput.MIN_FIRSTNAME_LENGTH && value.length <= userInput.MAX_FIRSTNAME_LENGTH),
-  // lastName: value => typeof value === 'undefined' || (typeof value === 'string' && value.length >= userInput.MIN_LASTNAME_LENGTH && value.length <= userInput.MAX_LASTNAME_LENGTH),
-  // phone: value => typeof value === 'undefined' || (typeof value === 'string' && value.match(userInput.PHONE_REGEX))
+  reenteredPassword: (value, match) => value === match,
+  firstName: value => typeof value === 'string' && value.length >= userInput.MIN_FIRST_NAME_LENGTH && value.length <= userInput.MAX_FIRST_NAME_LENGTH,
+  lastName: value => typeof value === 'string' && value.length >= userInput.MIN_LAST_NAME_LENGTH && value.length <= userInput.MAX_LAST_NAME_LENGTH,
+  companyName: value => typeof value === 'string' && value.length >= userInput.MIN_COMPANY_NAME_LENGTH && value.length <= userInput.MAX_COMPANY_NAME_LENGTH,
+  phone: value => typeof value === 'string' && value.match(userInput.PHONE_REGEX),
+  country: value => typeof value === 'string' && value.length >= userInput.MIN_COUNTRY_LENGTH && value.length <= userInput.MAX_COUNTRY_LENGTH,
+  city: value => typeof value === 'string' && value.length >= userInput.MIN_CITY_LENGTH && value.length <= userInput.MAX_CITY_LENGTH,
+  streetAddress: value => typeof value === 'string' && value.length >= userInput.MIN_STREET_LENGTH && value.length <= userInput.MAX_STREET_LENGTH,
+  postalCode: value => typeof +value === 'number' && value >= userInput.MIN_POSTAL_CODE_VALUE && value <= userInput.MAX_POSTAL_CODE_VALUE
 };
 
 const validateInput = {
@@ -26,15 +31,15 @@ const validateInput = {
     return '';
   },
 
-  // reenteredEmail: (value, match) => {
-  //   if (!value) {
-  //     return ' is required!';
-  //   }
-  //   if (!validate.reenteredEmail(value, match)) {
-  //     return ' does not match';
-  //   }
-  //   return '';
-  // },
+  reenteredEmail: (value, match) => {
+    if (!value) {
+      return ' is required!';
+    }
+    if (!validate.reenteredEmail(value, match)) {
+      return ' does not match';
+    }
+    return '';
+  },
 
   password: value => {
     if (!value) {
@@ -63,7 +68,7 @@ const validateInput = {
       return ' does not match';
     }
     return '';
-  }
+  },
 
   // currentPassword: value => {
   //   if (!value) {
@@ -84,26 +89,61 @@ const validateInput = {
   //   return '';
   // },
 
-  // firstName: value => {
-  //   if (!validate.firstName(value)) {
-  //     return ` must be between ${userInput.MIN_FIRSTNAME_LENGTH} and ${userInput.MAX_FIRSTNAME_LENGTH} characters`;
-  //   }
-  //   return '';
-  // },
+  firstName: value => {
+    if (!validate.firstName(value)) {
+      return ` must be between ${userInput.MIN_FIRST_NAME_LENGTH} and ${userInput.MAX_FIRST_NAME_LENGTH} characters`;
+    }
+    return '';
+  },
 
-  // lastName: value => {
-  //   if (!validate.lastName(value)) {
-  //     return ` must be between ${userInput.MIN_LASTNAME_LENGTH} and ${userInput.MAX_LASTNAME_LENGTH} characters`;
-  //   }
-  //   return '';
-  // },
+  lastName: value => {
+    if (!validate.lastName(value)) {
+      return ` must be between ${userInput.MIN_LAST_NAME_LENGTH} and ${userInput.MAX_LAST_NAME_LENGTH} characters`;
+    }
+    return '';
+  },
 
-  // phone: value => {
-  //   if (!validate.phone(value)) {
-  //     return ' must be valid';
-  //   }
-  //   return '';
-  // },
+  companyName: value => {
+    if (!validate.companyName(value)) {
+      return ` must be between ${userInput.MIN_COMPANY_NAME_LENGTH} and ${userInput.MAX_COMPANY_NAME_LENGTH} characters`;
+    }
+    return '';
+  },
+
+  phone: value => {
+    if (!validate.phone(value)) {
+      return ' must be valid';
+    }
+    return '';
+  },
+
+  country: value => {
+    if (!validate.country(value)) {
+      return ` must be between ${userInput.MIN_COUNTRY_LENGTH} and ${userInput.MAX_COUNTRY_LENGTH} characters`;
+    }
+    return '';
+  },
+
+  city: value => {
+    if (!validate.city(value)) {
+      return ` must be between ${userInput.MIN_CITY_LENGTH} and ${userInput.MAX_CITY_LENGTH} characters`;
+    }
+    return '';
+  },
+
+  streetAddress: value => {
+    if (!validate.streetAddress(value)) {
+      return ` must be between ${userInput.MIN_STREET_LENGTH} and ${userInput.MAX_STREET_LENGTH} characters`;
+    }
+    return '';
+  },
+
+  postalCode: value => {
+    if (!validate.postalCode(value)) {
+      return ` must be between a number in range ${userInput.MIN_POSTAL_CODE_VALUE} - ${userInput.MAX_POSTAL_CODE_VALUE}`;
+    }
+    return '';
+  }
 };
 
 export default validateInput;

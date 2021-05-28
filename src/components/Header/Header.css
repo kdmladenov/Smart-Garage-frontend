@@ -1,3 +1,11 @@
+.side-nav {
+  visibility: hidden;
+}
+
+.side-nav.open {
+  visibility: visible;
+}
+
 .nav-link {
   padding-right: 0.5rem !important;
   padding-left: 0.5rem !important;
@@ -28,7 +36,6 @@ button.nav-link {
   color: #004c4f;
   border-left: 1px solid rgb(0, 0, 0);
 }
-
 
 /* hamburger button */
 
@@ -108,7 +115,20 @@ button.nav-link {
   left: 50%;
 }
 
+.username {
+  position: absolute;
+  z-index: 1045;
+  width: 13rem;
+  text-align: center;
+  line-height: 64px;
+  vertical-align: middle;
+  color: #004c4f;
+}
 
+.username.open {
+  color: #ffffff;
+}
+  
 @media only screen and (min-width: 600px) {
   #hamburgerBtn {
     margin-top: 1.3rem;
@@ -119,5 +139,21 @@ button.nav-link {
   .nav-link {
     padding-right: 0.7rem !important;
     padding-left: 0.7rem !important;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .username {
+    color: #ffffff;
+  }
+}
+
+@media only screen and (min-width: 922px) {
+  #hamburgerBtn {
+    visibility: hidden;
+  }
+
+  .side-nav {
+    visibility: visible;
   }
 }

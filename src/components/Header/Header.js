@@ -51,15 +51,7 @@ const Header = ({
             <span></span>
             <span></span>
         </div>
-        <div style={{
-          position: 'absolute',
-          zIndex: '1045',
-          width: '15rem',
-          textAlign: 'center',
-          lineHeight: '64px',
-          verticalAlign: 'middle',
-          color: sideNavVisible ? '#ffffff' : '#004c4f'
-        }}>
+        <div className={`username ${sideNavVisible ? 'open' : ''}`} >
           {username.length > 8 ? `${username.substr(0, 7).toUpperCase()}...` : username.toUpperCase()}
         </div>
         <div className={`side-nav ${sideNavVisible ? 'open' : ''}`} style={sideNavStyle}>

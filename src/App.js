@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import { BASE_URL, modals } from './common/constants';
-import CustomersDemo from './components/CustomersDemo/CustomersDemo';
+import Customers from './containers/Users/Customers';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import Modal from './components/Modal/Modal';
@@ -60,25 +60,31 @@ const App = () => {
     paddingLeft:
         windowWidth > breakWidth ? 'calc(6% + 15rem)' : '6%'
   };
-
+  console.log(authValue);
   return (
-      <BrowserRouter>
+    <BrowserRouter>
       <AuthContext.Provider value={{ ...authValue, setAuthValue }}>
         <Route path="/login" exact component={Login} />
-        {authValue.isLoggedIn && <Header
-          breakWidth={breakWidth}
-          windowWidth={windowWidth}
-          toggleModal={toggleModal}
-          num={modals.VERTICALLY_CENTERED}
-        />}
+        {authValue.isLoggedIn && (
+          <Header
+            breakWidth={breakWidth}
+            windowWidth={windowWidth}
+            toggleModal={toggleModal}
+            num={modals.VERTICALLY_CENTERED}
+          />
+        )}
         <Switch>
           <Redirect path="/" exact to="/customers" />
           <GuardedRoute
-          path="/customers"
-          exact
-          component={(props) => <CustomersDemo {...props} mainContainerStyle={mainContainerStyle} />}
-          isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
-        />
+            path="/customers"
+            exact
+            component={(props) => (
+              <Customers {...props} mainContainerStyle={mainContainerStyle} />
+            )}
+            isLoggedIn={
+              authValue.isLoggedIn && authValue.user.role === 'employee'
+            }
+          />
         </Switch>
         <Modal
           modalHeader="Are you leaving?"

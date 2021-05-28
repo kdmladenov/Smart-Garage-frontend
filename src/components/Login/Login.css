@@ -59,13 +59,13 @@ label {
 }
 
 .form-link, p.forgot-password {
-  color: #a5ffb6;
+  color: #63ddb6;
   text-decoration: initial;
   text-shadow: 0 0 3px #000000;
 }
 
 p.forgot-password:hover, .form-link:hover {
-  color: #63ddb6;
+  color: #a5ffb6;
   cursor: pointer;
   text-shadow: 0 0.05rem black;
   text-decoration: none;
@@ -81,7 +81,7 @@ p.forgot-password:hover, .form-link:hover {
   text-shadow: 0 1px 0 black;
   padding-bottom: .5rem;
   margin-bottom: initial;
-  color: #f73636;
+  color: #ff9797
 }
 
 .error .form-control, .error .form-control:focus {
@@ -92,29 +92,40 @@ p.forgot-password:hover, .form-link:hover {
 
 .error p {
   text-shadow: 0 1px 0 black;
-  font-size: 1.5rem;
-  color: #f73636;
+  font-size: 1.1rem;
+  color: #ff9797;
 }
 
 .form-wrapper-inner .btn {
+  border-radius: 0.3rem;
   margin-left: auto;
   margin-right: auto;
-  background-color: #263629;
-  border-color: #263629;
+  background-color: #1f5343 !important;
 }
 
 .form-wrapper-inner .btn:hover {
-  background-color: #1c1f1a;
-  border-color: #1c1f1a;
+  background-color:  #138763 !important;
 }
 
 .center {
   text-align: center;
 }
 
-.green {
-  color: #28a745;
+.message {
+  font-size: 1.1rem;
+  color: #63ddb6;
+  text-align: center;
 }
+
+.message:hover {
+  color:springgreen;
+}
+
+.btn {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 
 @media only screen and (min-width: 992px) {
   .login {

@@ -23,6 +23,12 @@ a.nav-link.active {
   padding-top: 5rem;
 }
 
+button.nav-link {
+  border: none;
+  color: #004c4f;
+  border-left: 1px solid rgb(0, 0, 0);
+}
+
 
 /* hamburger button */
 

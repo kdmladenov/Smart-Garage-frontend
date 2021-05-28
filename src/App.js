@@ -6,6 +6,7 @@ import CustomersDemo from './components/CustomersDemo/CustomersDemo';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import Modal from './components/Modal/Modal';
+import ResetPassword from './components/ResetPassword/ResetPassword';
 import AuthContext, { getToken, getUser } from './providers/AuthContext';
 import GuardedRoute from './providers/GuardedRoute';
 
@@ -64,6 +65,7 @@ const App = () => {
   return (
       <BrowserRouter>
       <AuthContext.Provider value={{ ...authValue, setAuthValue }}>
+        <Route path="/reset-password/:userId/:token" exact component={ResetPassword} />
         <Route path="/login" exact component={Login} />
         {authValue.isLoggedIn && <Header
           breakWidth={breakWidth}

@@ -31,7 +31,7 @@ const Header = ({ breakWidth, windowWidth, toggleModal, num }) => {
     margin: '0',
     paddingTop: '0',
     paddingLeft: '0',
-    backgroundColor: '#034b4e',
+    backgroundColor: '#00695a',
     width: '15rem',
     height: '100vh',
     position: 'fixed',

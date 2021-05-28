@@ -8,8 +8,8 @@ const validate = {
     upperCase: value => (/[A-Z]/.test(value)),
     lowerCase: value => (/[a-z]/.test(value)),
     digit: value => (/[\d]/.test(value))
-  }
-  // reenteredPassword: (value, match) => value === match,
+  },
+  reenteredPassword: (value, match) => value === match
   // firstName: value => typeof value === 'undefined' || (typeof value === 'string' && value.length >= userInput.MIN_FIRSTNAME_LENGTH && value.length <= userInput.MAX_FIRSTNAME_LENGTH),
   // lastName: value => typeof value === 'undefined' || (typeof value === 'string' && value.length >= userInput.MIN_LASTNAME_LENGTH && value.length <= userInput.MAX_LASTNAME_LENGTH),
   // phone: value => typeof value === 'undefined' || (typeof value === 'string' && value.match(userInput.PHONE_REGEX))
@@ -41,7 +41,7 @@ const validateInput = {
       return ' is required!';
     }
     if (!validate.password.length(value)) {
-      return `must be between ${userInput.MIN_PASSWORD_LENGTH} and ${userInput.MAX_PASSWORD_LENGTH} characters`;
+      return ` must be between ${userInput.MIN_PASSWORD_LENGTH} and ${userInput.MAX_PASSWORD_LENGTH} characters`;
     }
     if (!validate.password.lowerCase(value)) {
       return ' must include a lowercase letter';
@@ -53,17 +53,17 @@ const validateInput = {
       return ' must include a digit';
     }
     return '';
-  }
+  },
 
-  // reenteredPassword: (value, match) => {
-  //   if (!value) {
-  //     return ' is required!';
-  //   }
-  //   if (!validate.reenteredPassword(value, match)) {
-  //     return ' does not match';
-  //   }
-  //   return '';
-  // },
+  reenteredPassword: (value, match) => {
+    if (!value) {
+      return ' is required!';
+    }
+    if (!validate.reenteredPassword(value, match)) {
+      return ' does not match';
+    }
+    return '';
+  }
 
   // currentPassword: value => {
   //   if (!value) {

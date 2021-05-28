@@ -13,7 +13,9 @@ const Login = () => {
   const { setAuthValue } = useContext(AuthContext);
   const history = useHistory();
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const [remember, setRemember] = useState(false);
+  const [formContent, setFormContent] = useState('login');
 
   const [user, setUser] = useState({
     email: '',
@@ -32,7 +34,7 @@ const Login = () => {
     updateUser(prop, value);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleLoginFormSubmit = (e) => {
     e.preventDefault();
 
     if (inputErrors.email || inputErrors.password || !user.email || !user.password) {
@@ -77,19 +79,116 @@ const Login = () => {
     }
   };
 
+  const forgottenPassword = () => {
+    setError('');
+    setFormContent('forgottenPassword');
+  };
+
+  const handleForgottenPasswordFormSubmit = (e) => {
+    e.preventDefault();
+    setError('');
+    setMessage('');
+
+    if (inputErrors.email || !user.email) {
+      setError('Please enter a valid email address');
+    } else {
+      fetch(`${BASE_URL}/users/forgotten-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: user.email })
+      })
+        .then(res => res.json())
+        .then(res => {
+          if (res.message.includes('is not found')) {
+            setError(res.message);
+          }
+          if (res.message.includes('link has been send')) {
+            setMessage(res.message);
+          }
+          updateUser('email', '');
+        });
+    }
+  };
+
   return (
     <div style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/login.jpg)` }} className="form-wrapper-outer">
       <div className="form-wrapper-inner">
-        <Form onSubmit={handleFormSubmit} className="login">
-          <h3>Login</h3>
-          {error && (
-            <Form.Group className="error">
-              <p>{`${error}`}</p>
+        {formContent === 'login' && (
+          <Form onSubmit={handleLoginFormSubmit} className="login">
+            <h3>Login</h3>
+            {error && (
+              <Form.Group className="error">
+                <p>{`${error}`}</p>
+              </Form.Group>
+            )}
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>
+                Email
+              </Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                placeholder="Enter Email"
+                value={user.email}
+                onChange={(e) => handleInput(e.target.name, e.target.value)}
+              />
             </Form.Group>
-          )}
-          <Form.Group controlId="formBasicEmail">
+
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>
+                Password
+              </Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                placeholder="Enter Password"
+                autoComplete="off"
+                value={user.password}
+                onChange={(e) => handleInput(e.target.name, e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicCheckbox1">
+              <Form.Check
+                name="remember"
+                type="checkbox"
+                label="Remember me"
+                value={remember}
+                onChange={() => setRemember(!remember)}
+              />
+              <p type="button" className="forgot-password text-right" onClick={forgottenPassword}>
+                Forgot Your Password
+              </p>
+            </Form.Group>
+
+            <Form.Group>
+              <Button
+                type="submit"
+                className="btn btn-dark btn-lg btn-block"
+              >
+                Login
+              </Button>
+            </Form.Group>
+          </Form>
+        )}
+        {formContent === 'forgottenPassword' && (
+          <Form onSubmit={handleForgottenPasswordFormSubmit} className="login">
+          <h3>Forgot Password</h3>
+            {error &&
+              <Form.Group className="error">
+                <p>{`${error}`}</p>
+              </Form.Group>
+            }
+            {message &&
+              <Form.Group className="message">
+                <p>{`${message}`}</p>
+              </Form.Group>
+            }
+            <Form.Group controlId="formBasicEmail">
             <Form.Label>
-              Email
+              Enter your email address
             </Form.Label>
             <Form.Control
               type="email"
@@ -100,42 +199,28 @@ const Login = () => {
             />
           </Form.Group>
 
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>
-              Password
-            </Form.Label>
-            <Form.Control
-              type="password"
-              name="password"
-              placeholder="Enter Password"
-              autoComplete="off"
-              value={user.password}
-              onChange={(e) => handleInput(e.target.name, e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formBasicCheckbox1">
-            <Form.Check
-              name="remember"
-              type="checkbox"
-              label="Remember me"
-              value={remember}
-              onChange={() => setRemember(!remember)}
-            />
-            <p className="forgot-password text-right">
-              Forgot Your Password
-            </p>
-          </Form.Group>
-
           <Form.Group>
             <Button
               type="submit"
               className="btn btn-dark btn-lg btn-block"
             >
-              Login
+              Send email
+            </Button>
+          </Form.Group>
+          <Form.Group>
+            <Button
+              type="button"
+              className="btn btn-dark btn-lg btn-block"
+              onClick={() => {
+                setError('');
+                setFormContent('login');
+              }}
+            >
+              Cancel
             </Button>
           </Form.Group>
         </Form>
+        )}
       </div>
     </div>
 

@@ -1,25 +1,18 @@
 import { BrowserRouter as Router, NavLink } from 'react-router-dom';
 import { MDBNavbar, MDBNavbarNav, MDBNavItem, MDBIcon } from 'mdbreact';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Header.css';
 import { getUser } from '../../providers/AuthContext';
 
-const Header = ({ breakWidth, windowWidth, toggleModal, num }) => {
+const Header = ({
+  toggleModal, num
+}) => {
   const [content, setContent] = useState('customers');
   const [sideNavVisible, toggleSideNavVisible] = useState(true);
 
   const handleHamburgerClick = () => {
     toggleSideNavVisible(!sideNavVisible);
-  };
-
-  useEffect(() => {
-    toggleSideNavVisible(windowWidth > breakWidth);
-  }, [windowWidth]);
-
-  const navStyle = {
-    paddingLeft:
-      windowWidth > breakWidth ? '15rem' : '16px'
   };
 
   const specialCaseNavbarStyles = {
@@ -42,7 +35,7 @@ const Header = ({ breakWidth, windowWidth, toggleModal, num }) => {
   return (
     <Router>
       <div className="fixed-sn light-blue-skin">
-        {windowWidth < breakWidth && <div
+        <div
           className={sideNavVisible ? 'open' : ''}
           id="hamburgerBtn"
           onClick={handleHamburgerClick}
@@ -57,7 +50,7 @@ const Header = ({ breakWidth, windowWidth, toggleModal, num }) => {
             <span></span>
             <span></span>
             <span></span>
-        </div>}
+        </div>
         <div style={{
           position: 'absolute',
           zIndex: '1045',
@@ -69,14 +62,14 @@ const Header = ({ breakWidth, windowWidth, toggleModal, num }) => {
         }}>
           {username.length > 8 ? `${username.substr(0, 7).toUpperCase()}...` : username.toUpperCase()}
         </div>
-        {sideNavVisible && <div className="side-nav" style={sideNavStyle}>
+        <div className={`side-nav ${sideNavVisible ? 'open' : ''}`} style={sideNavStyle}>
           {content === 'customers' && <div>Customers sidebar</div>}
           {content === 'vehicles' && <div>Vehicles sidebar</div>}
           {content === 'services' && <div>Services sidebar</div>}
           {content === 'parts' && <div>Parts sidebar</div>}
           {content === 'invoices' && <div>Invoices sidebar</div>}
-        </div>}
-        <MDBNavbar style={navStyle} double expand="md" fixed="top" scrolling>
+        </div>
+        <MDBNavbar double expand="md" fixed="top" scrolling>
           <MDBNavbarNav right style={specialCaseNavbarStyles}>
             <MDBNavItem active>
               <NavLink to="/customers" className="nav-link" role="button" onClick={() => setContent('customers')}>
@@ -125,8 +118,6 @@ const Header = ({ breakWidth, windowWidth, toggleModal, num }) => {
 export default Header;
 
 Header.propTypes = {
-  windowWidth: PropTypes.number.isRequired,
-  breakWidth: PropTypes.number.isRequired,
   toggleModal: PropTypes.func.isRequired,
   num: PropTypes.number.isRequired
 };

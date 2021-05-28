@@ -10,9 +10,8 @@ import { BASE_URL } from '../../common/constants';
 // import { useState } from 'react';
 import CustomerCard from '../../components/Customers/CustomerCard';
 import Loading from '../../components/UI/Loading';
-import PropTypes from 'prop-types';
 
-const Customers = ({ mainContainerStyle }) => {
+const Customers = () => {
   // const user = getUser();
   // const history = useHistory();
   const { search: query } = useLocation();
@@ -52,7 +51,7 @@ const Customers = ({ mainContainerStyle }) => {
   );
 
   return (
-    <main style={mainContainerStyle}>
+    <main>
       <div className="customers-container-inner">
         <div className="customers-container-header">
           {/* <Form className="sorting">
@@ -81,10 +80,6 @@ const Customers = ({ mainContainerStyle }) => {
       </div>
     </main>
   );
-};
-
-Customers.propTypes = {
-  mainContainerStyle: PropTypes.object.isRequired
 };
 
 export default Customers;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import { BASE_URL, modals } from './common/constants';
@@ -11,19 +11,6 @@ import AuthContext, { getToken, getUser } from './providers/AuthContext';
 import GuardedRoute from './providers/GuardedRoute';
 
 const App = () => {
-  const breakWidth = 992;
-  const [windowWidth, setWindowWidth] = useState(0);
-
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
-
-  useEffect(() => {
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => { window.removeEventListener('resize', handleResize); };
-  }, []);
-
   const [authValue, setAuthValue] = useState({
     isLoggedIn: !!getUser(),
     user: getUser()
@@ -53,14 +40,6 @@ const App = () => {
       });
   };
 
-  const mainContainerStyle = {
-    backgroundColor: '#ececec',
-    minHeight: '100vh',
-    paddingTop: '5.5rem',
-    paddingRight: '6%',
-    paddingLeft:
-        windowWidth > breakWidth ? 'calc(6% + 15rem)' : '6%'
-  };
   console.log(authValue);
   return (
     <BrowserRouter>
@@ -69,8 +48,6 @@ const App = () => {
         <Route path="/login" exact component={Login} />
         {authValue.isLoggedIn && (
           <Header
-            breakWidth={breakWidth}
-            windowWidth={windowWidth}
             toggleModal={toggleModal}
             num={modals.VERTICALLY_CENTERED}
           />
@@ -80,9 +57,7 @@ const App = () => {
           <GuardedRoute
             path="/customers"
             exact
-            component={(props) => (
-              <Customers {...props} mainContainerStyle={mainContainerStyle} />
-            )}
+            component={Customers}
             isLoggedIn={
               authValue.isLoggedIn && authValue.user.role === 'employee'
             }

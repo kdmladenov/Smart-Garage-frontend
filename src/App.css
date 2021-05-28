@@ -1,0 +1,37 @@
+main {
+  background-color: #ececec;
+  min-height: 100vh;
+  padding-top: 5.5rem;
+}
+
+.customers-container-inner ul {
+  padding-inline-start: 30px;
+  padding-inline-end: 30px;
+}
+
+.side-nav {
+  visibility: hidden;
+}
+
+.side-nav.open {
+  visibility: visible;
+}
+
+@media only screen and (min-width: 922px) {
+  main {
+    background-color: #ececec;
+    min-height: 100vh;
+    padding-top: 5.5rem;
+    padding-left: 15rem;
+  }
+
+  #hamburgerBtn {
+    visibility: hidden;
+  }
+
+  .side-nav {
+    visibility: visible;
+  }
+}
+
+

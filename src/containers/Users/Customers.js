@@ -7,25 +7,25 @@ import {
 // import Paging from '../../components/Paging/Paging';
 import useHttp from '../../hooks/useHttp';
 import { BASE_URL } from '../../common/constants';
-// import { useState } from 'react';
 import CustomerCard from '../../components/Customers/CustomerCard';
-import Loading from '../../components/UI/Loading';
+// import Loading from '../../components/UI/Loading';
 import PropTypes from 'prop-types';
+import Paging from '../../components/Paging/Paging';
 
 const Customers = ({ mainContainerStyle }) => {
   // const user = getUser();
   // const history = useHistory();
   const { search: query } = useLocation();
   const {
-    data,
+    data
     // setLocalData,
-    loading
+    // loading
     // error
   } = useHttp(`${BASE_URL}/users${query}`, 'GET', []);
 
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   // if (error === '404') {
   //   history.push('*');
@@ -33,18 +33,17 @@ const Customers = ({ mainContainerStyle }) => {
   //   history.push('/serviceUnavailable');
   // }
 
-  console.log(data);
   const customersListToShow = (
     <div className="customer-list">
       {data.map((customer) => {
         return (
           <CustomerCard
-            className="customer-card"
-            key={customer.userId}
-            // {...customer}
-            // updateCustomers={setLocalData}
-            customer={customer}
-            // goToDetails={() => history.push(`/users/${customer.userId}`)}
+          className="customer-card"
+          key={customer.userId}
+          // {...customer}
+          // updateCustomers={setLocalData}
+          customer={customer}
+          // goToDetails={() => history.push(`/users/${customer.userId}`)}
           />
         );
       })}
@@ -75,9 +74,11 @@ const Customers = ({ mainContainerStyle }) => {
           : (
           <h2> No customers are found... </h2>
             )}
-        {/* <div id="paging-customers">
-          <Paging resource="/customers" />
-        </div> */}
+        <div id="paging-customers">
+          {data.length > 0 && (
+            <Paging resource="customers" itemCount={data[0].totalDBItems} />
+          )}
+        </div>
       </div>
     </main>
   );

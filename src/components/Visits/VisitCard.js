@@ -7,8 +7,6 @@ import VisitCardDetailed from './VisitCardDetailed';
 import './Visits.css';
 
 const VisitCard = ({ visit }) => {
-  console.log('visits1', visit);
-
   return (
     <>
       <Accordion>

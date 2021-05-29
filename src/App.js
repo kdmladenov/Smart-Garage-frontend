@@ -61,7 +61,7 @@ const App = () => {
     paddingLeft:
         windowWidth > breakWidth ? 'calc(6% + 15rem)' : '6%'
   };
-  console.log(authValue);
+
   return (
     <BrowserRouter>
       <AuthContext.Provider value={{ ...authValue, setAuthValue }}>

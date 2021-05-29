@@ -11,7 +11,6 @@ import VisitCard from '../Visits/VisitCard';
 import './Vehicles.css';
 
 const VehicleCard = ({ vehicle }) => {
-  console.log('vehiclekk', vehicle);
   const {
     data,
     // setLocalData,
@@ -28,7 +27,6 @@ const VehicleCard = ({ vehicle }) => {
   // // } else if (error) {
   // //   history.push('/serviceUnavailable');
   // // }
-  console.log('visits', data);
   const visitListToShow = (
       <div className="visit-list">
         {data.map((visit) => {
@@ -42,7 +40,7 @@ const VehicleCard = ({ vehicle }) => {
         })}
       </div>
   );
-  // console.log('visitListToShow', visitListToShow);
+
   return (
     <>
       <Accordion>

@@ -29,7 +29,6 @@ const CustomerCard = ({ customer }) => {
   // //   history.push('/serviceUnavailable');
   // // }
 
-  console.log('z1', data);
   const vehiclesListToShow = (
     <div className="vehicle-list">
       {data.map((vehicle) => {
@@ -93,6 +92,7 @@ CustomerCard.defaultProps = {
 CustomerCard.propTypes = {
   customer: PropTypes.shape({
     userId: PropTypes.number.isRequired,
+    totalDBItems: PropTypes.number.isRequired,
     fullName: PropTypes.string,
     firstName: PropTypes.string,
     lastName: PropTypes.string,

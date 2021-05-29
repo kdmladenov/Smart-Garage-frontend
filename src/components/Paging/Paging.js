@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import DropDown from '../UI/DropDown';
 // import DropDown from "../UI/DropDown";
 
@@ -11,17 +11,20 @@ const rangePageSize = [...Array(11)].map((_, i) => {
   };
 });
 
-const Paging = ({ itemCount, resource }) => {
+const Paging = ({ itemCount, setQuery }) => {
   const [pageSize, setPageSize] = useState(rangePageSize[0]);
 
-  const rangePageNumber = [...Array(Math.ceil(itemCount / pageSize.value))].map((_, i) => i + 1);
+  const rangePageNumber = [...Array(Math.ceil(itemCount / pageSize.value))].map(
+    (_, i) => i + 1
+  );
 
   const [pageNumber, setPageNumber] = useState(rangePageNumber[0]);
 
-  const history = useHistory();
+  // const history = useHistory();
 
   useEffect(() => {
-    history.push(`/${resource}?page=${pageNumber}&pageSize=${pageSize.value}`);
+    setQuery((`?page=${pageNumber}&pageSize=${pageSize.value}`));
+    // history.push(`/${resource}?page=${pageNumber}&pageSize=${pageSize.value}`);
   }, [pageNumber, pageSize]);
 
   const PageButtonsList = rangePageNumber.map((number) => {
@@ -31,7 +34,7 @@ const Paging = ({ itemCount, resource }) => {
           type="button"
           className="page-link"
           onClick={() => {
-            history.push(`/${resource}?page=${number}&pageSize=${pageSize.value}`);
+            // history.push(`/${resource}?page=${number}&pageSize=${pageSize.value}`);
             setPageNumber(number);
           }}
         >
@@ -46,13 +49,13 @@ const Paging = ({ itemCount, resource }) => {
         type="button"
         className="page-link"
         onClick={() => {
-          history.push(
-            pageNumber > 1
-              ? `/${resource}?page=${pageNumber - 1}&pageSize=${
-                  rangePageSize[0].value
-                }`
-              : `/${resource}?page=1&pageSize=${pageSize.value}`
-          );
+          // history.push(
+          //   pageNumber > 1
+          //     ? `/${resource}?page=${pageNumber - 1}&pageSize=${
+          //         rangePageSize[0].value
+          //       }`
+          //     : `/${resource}?page=1&pageSize=${pageSize.value}`
+          // );
           setPageNumber(Math.max(pageNumber - 1, 1));
         }}
         aria-label="Previous"
@@ -69,13 +72,13 @@ const Paging = ({ itemCount, resource }) => {
         type="button"
         className="page-link"
         onClick={() => {
-          history.push(
-            pageNumber < rangePageNumber.length
-              ? `/${resource}?page=${pageNumber + 1}&pageSize=${
-                  rangePageSize[0].value
-                }`
-              : `/${resource}?page=${rangePageNumber.length}&pageSize=${pageSize.value}`
-          );
+          // history.push(
+          //   pageNumber < rangePageNumber.length
+          //     ? `/${resource}?page=${pageNumber + 1}&pageSize=${
+          //         rangePageSize[0].value
+          //       }`
+          //     : `/${resource}?page=${rangePageNumber.length}&pageSize=${pageSize.value}`
+          // );
           setPageNumber(Math.min(pageNumber + 1, rangePageNumber.length));
         }}
         aria-label="Next"
@@ -110,7 +113,8 @@ const Paging = ({ itemCount, resource }) => {
 };
 
 Paging.propTypes = {
-  resource: PropTypes.string.isRequired,
-  itemCount: PropTypes.number.isRequired
+  // resource: PropTypes.string.isRequired,
+  itemCount: PropTypes.number.isRequired,
+  setQuery: PropTypes.func.isRequired
 };
 export default Paging;

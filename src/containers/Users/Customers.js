@@ -1,8 +1,8 @@
 // import { Form } from 'react-bootstrap';
-import {
-  // useHistory,
-  useLocation
-} from 'react-router-dom';
+// import {
+//   // useHistory,
+//   useLocation
+// } from 'react-router-dom';
 // import Sort from '../../components/Sort/Sort';
 // import Paging from '../../components/Paging/Paging';
 import useHttp from '../../hooks/useHttp';
@@ -11,11 +11,14 @@ import CustomerCard from '../../components/Customers/CustomerCard';
 // import Loading from '../../components/UI/Loading';
 import PropTypes from 'prop-types';
 import Paging from '../../components/Paging/Paging';
+import { useState } from 'react';
 
 const Customers = ({ mainContainerStyle }) => {
   // const user = getUser();
   // const history = useHistory();
-  const { search: query } = useLocation();
+  // const { search: query } = useLocation();
+  const [query, setQuery] = useState('');
+
   const {
     data
     // setLocalData,
@@ -38,12 +41,12 @@ const Customers = ({ mainContainerStyle }) => {
       {data.map((customer) => {
         return (
           <CustomerCard
-          className="customer-card"
-          key={customer.userId}
-          // {...customer}
-          // updateCustomers={setLocalData}
-          customer={customer}
-          // goToDetails={() => history.push(`/users/${customer.userId}`)}
+            className="customer-card"
+            key={customer.userId}
+            // {...customer}
+            // updateCustomers={setLocalData}
+            customer={customer}
+            // goToDetails={() => history.push(`/users/${customer.userId}`)}
           />
         );
       })}
@@ -76,7 +79,11 @@ const Customers = ({ mainContainerStyle }) => {
             )}
         <div id="paging-customers">
           {data.length > 0 && (
-            <Paging resource="customers" itemCount={data[0].totalDBItems} />
+            <Paging
+              // resource="customers"
+              itemCount={data[0].totalDBItems}
+              setQuery={setQuery}
+            />
           )}
         </div>
       </div>

@@ -43,12 +43,12 @@ const Header = ({
           id="hamburgerBtn"
           onClick={handleHamburgerClick}
         >
-            <span style={content === 'account' ? { backgroundColor: '#ffffff' } : ''}></span>
-            <span style={content === 'account' ? { backgroundColor: '#ffffff' } : ''}></span>
-            <span style={content === 'account' ? { backgroundColor: '#ffffff' } : ''}></span>
-            <span style={content === 'account' ? { backgroundColor: '#ffffff' } : ''}></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-        <div className={`username ${sideNavVisible ? 'open' : ''}`} style={content === 'account' ? { color: '#ffffff' } : ''}>
+        <div className={`username ${sideNavVisible ? 'open' : ''}`}>
           {username.toUpperCase()}
         </div>
         <div className={`side-nav ${sideNavVisible ? 'open' : ''}`} style={sideNavStyle}>
@@ -70,7 +70,7 @@ const Header = ({
               </MDBNavItem>
               <MDBNavItem active>
                 <NavLink to="/customers" className="nav-link" role="button" onClick={() => setContent('customers')}>
-                  <MDBIcon icon="user" className="d-inline-inline" style={navColor} />
+                  <MDBIcon icon="user-friends" className="d-inline-inline" style={navColor} />
                   <div className="d-none d-md-inline" style={navColor}>Customers</div>
                 </NavLink>
               </MDBNavItem>

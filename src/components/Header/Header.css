@@ -156,18 +156,18 @@ button.nav-link {
   }
 }
 
-@media only screen and (min-width: 992px) {
-  .username {
-    color: #ffffff;
-  }
-}
-
 @media only screen and (min-width: 922px) {
   #hamburgerBtn {
     visibility: hidden;
   }
-
+  
   .side-nav {
     visibility: visible;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .username {
+    color: #ffffff;
   }
 }

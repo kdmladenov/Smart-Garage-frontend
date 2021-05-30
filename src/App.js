@@ -10,6 +10,8 @@ import Modal from './components/Modal/Modal';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import AuthContext, { getToken, getUser } from './providers/AuthContext';
 import GuardedRoute from './providers/GuardedRoute';
+import Services from './containers/Services/Services';
+import Parts from './containers/Parts/Parts';
 
 const App = () => {
   const [authValue, setAuthValue] = useState({
@@ -68,6 +70,22 @@ const App = () => {
             path="/vehicles"
             exact
             component={Vehicles}
+            isLoggedIn={
+              authValue.isLoggedIn && authValue.user.role === 'employee'
+            }
+          />
+          <GuardedRoute
+            path="/services"
+            exact
+            component={Services}
+            isLoggedIn={
+              authValue.isLoggedIn && authValue.user.role === 'employee'
+            }
+          />
+          <GuardedRoute
+            path="/parts"
+            exact
+            component={Parts}
             isLoggedIn={
               authValue.isLoggedIn && authValue.user.role === 'employee'
             }

@@ -142,7 +142,7 @@ const CustomerCardDetailed = ({ customer, editMode, setEditMode }) => {
                 </Form.Label>
             </Form.Group>
           </div>
-          <div className="col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12">
+          <div className={editMode ? 'col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12' : 'col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12'}>
             <Form.Group controlId="formBasicEmail" className={inputErrors.email ? 'error' : ''}>
               <Form.Control
                 type="email"
@@ -157,7 +157,7 @@ const CustomerCardDetailed = ({ customer, editMode, setEditMode }) => {
                 </Form.Label>
             </Form.Group>
           </div>
-          <div className="col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12">
+          {editMode && <div className="col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12">
             <Form.Group controlId="formBasicConfirmEmail" className={inputErrors.reenteredEmail ? 'error' : ''}>
               <Form.Control
                 type="email"
@@ -171,8 +171,8 @@ const CustomerCardDetailed = ({ customer, editMode, setEditMode }) => {
                   {`Confirm Email ${inputErrors.email}`}
                 </Form.Label>
             </Form.Group>
-          </div>
-          <div className="col-xl-2 col-lg-4 col-md-4 col-sm-4 col-12">
+          </div>}
+          <div className={editMode ? 'col-xl-2 col-lg-4 col-md-4 col-sm-4 col-12' : 'col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12'}>
             <Form.Group controlId="FormBasicPhone" className={inputErrors.phone ? 'error' : ''}>
               <Form.Control
                 type="tel"

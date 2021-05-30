@@ -32,7 +32,7 @@ const Customers = () => {
   //   history.push('/serviceUnavailable');
   // }
 
-  console.log(data);
+  // console.log(data);
   const customersListToShow = (
     <div className="customer-list">
       {data.map((customer) => {

@@ -30,7 +30,7 @@ const CustomerCard = ({ customer }) => {
   // //   history.push('/serviceUnavailable');
   // // }
 
-  console.log('z1', data);
+  // console.log('z1', data);
   const vehiclesListToShow = (
     <div className="vehicle-list">
       {data.map((vehicle) => {
@@ -48,8 +48,8 @@ const CustomerCard = ({ customer }) => {
       <Accordion>
         <Card key={customer.userId}>
           <Card.Header className="card-header">
-            <div className="card-header-text">
-              <h3>{customer.fullName}</h3>
+            <div className="card-header-text customer-name">
+              {customer.fullName}
             </div>
             <div className="card-header-buttons">
               <CustomToggle variant="primary" eventKey="1" customFunc={setEditMode}>

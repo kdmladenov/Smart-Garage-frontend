@@ -24,7 +24,7 @@ a.nav-link.active {
   border-radius: 0;
   box-shadow: initial;
   border-left: initial;
-  background: linear-gradient(180deg, #034b4e, transparent);
+  background: linear-gradient(180deg, #00806e, transparent);
 }
 
 .side-nav div {
@@ -118,15 +118,24 @@ button.nav-link {
 .username {
   position: absolute;
   z-index: 1045;
-  width: 13rem;
+  width: 9rem;
   text-align: center;
   line-height: 64px;
   vertical-align: middle;
   color: #004c4f;
+  padding-left: 4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .username.open {
   color: #ffffff;
+}
+
+@media only screen and (min-width: 450px) {
+  .username {
+    width: initial;
+  }
 }
   
 @media only screen and (min-width: 600px) {

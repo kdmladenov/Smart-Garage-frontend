@@ -11,6 +11,7 @@ import AuthContext, { getToken, getUser } from './providers/AuthContext';
 import GuardedRoute from './providers/GuardedRoute';
 
 const App = () => {
+  // const [customerQuery, setCustomerQuery] = useState();
   const [authValue, setAuthValue] = useState({
     isLoggedIn: !!getUser(),
     user: getUser()
@@ -40,7 +41,7 @@ const App = () => {
       });
   };
 
-  console.log(authValue);
+  // console.log(authValue);
   return (
     <BrowserRouter>
       <AuthContext.Provider value={{ ...authValue, setAuthValue }}>

@@ -52,7 +52,7 @@ const Header = ({
             <span></span>
         </div>
         <div className={`username ${sideNavVisible ? 'open' : ''}`} >
-          {username.length > 8 ? `${username.substr(0, 7).toUpperCase()}...` : username.toUpperCase()}
+          {username.toUpperCase()}
         </div>
         <div className={`side-nav ${sideNavVisible ? 'open' : ''}`} style={sideNavStyle}>
           {content === 'customers' && <div>Customers sidebar</div>}

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { MDBNavbar, MDBNavbarNav, MDBNavItem, MDBIcon } from 'mdbreact';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
@@ -33,7 +33,7 @@ const Header = ({
   const username = getUser().email.substr(0, getUser().email.indexOf('@'));
 
   return (
-    <Router>
+    <>
       <div className="fixed-sn light-blue-skin">
         <div
           className={sideNavVisible ? 'open' : ''}
@@ -103,7 +103,7 @@ const Header = ({
         </MDBNavbar>
 
       </div>
-    </Router>
+    </>
   );
 };
 

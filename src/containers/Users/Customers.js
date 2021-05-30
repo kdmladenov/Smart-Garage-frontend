@@ -50,7 +50,7 @@ const Customers = () => {
 
   return (
     <main>
-      <div className="customers-container-inner">
+      <div className="container-inner">
         <div className="customers-container-header">
           {/* <Form className="sorting">
             <div>Sorting Options</div>

@@ -41,7 +41,7 @@ const Vehicles = () => {
 
   return (
     <main>
-      <div className="vehicles-container-inner">
+      <div className="container-inner">
         <div className="vehicles-container-header">
         </div>
         {data.length

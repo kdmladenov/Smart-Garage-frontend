@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
@@ -11,7 +11,8 @@ import VisitCard from '../Visits/VisitCard';
 import './Vehicles.css';
 
 const VehicleCard = ({ vehicle }) => {
-  console.log('vehiclekk', vehicle);
+  const [editMode, setEditMode] = useState(false);
+  // console.log('vehiclekk', vehicle);
   const {
     data,
     // setLocalData,
@@ -28,7 +29,7 @@ const VehicleCard = ({ vehicle }) => {
   // // } else if (error) {
   // //   history.push('/serviceUnavailable');
   // // }
-  console.log('visits', data);
+  // console.log('visits', data);
   const visitListToShow = (
       <div className="visit-list">
         {data.map((visit) => {
@@ -49,24 +50,24 @@ const VehicleCard = ({ vehicle }) => {
         <Card key={vehicle.vehicleId}>
           <Card.Header className="card-header">
             <div className="card-header-text">
-              <div className="card-header-text-item">{vehicle.make}</div>
-              <div className="card-header-text-item">{vehicle.model}</div>
+              <div className="card-header-text-item">{vehicle.manufacturer}</div>
+              <div className="card-header-text-item">{vehicle.modelName}</div>
               <div className="card-header-text-item">
                 {vehicle.licensePlate}
               </div>
             </div>
             <div className="card-header-buttons">
-              <CustomToggle variant="primary" eventKey="1">
+              <CustomToggle variant="primary" eventKey="1" setEditMode={setEditMode}>
                 Details
               </CustomToggle>
-              <CustomToggle variant="primary" eventKey="2">
+              <CustomToggle variant="primary" eventKey="2" setEditMode={setEditMode}>
                 History
               </CustomToggle>
             </div>
           </Card.Header>
           <Accordion.Collapse eventKey="1">
             <Card.Body>
-              <VehicleCardDetailed key={vehicle.vehicleId} vehicle={vehicle} />
+              <VehicleCardDetailed key={vehicle.vehicleId} vehicle={vehicle} editMode={editMode} setEditMode={setEditMode} />
             </Card.Body>
           </Accordion.Collapse>
           <Accordion.Collapse eventKey="2">
@@ -101,10 +102,10 @@ VehicleCard.propTypes = {
     engineType: PropTypes.string.isRequired,
     fullName: PropTypes.string,
     licensePlate: PropTypes.string.isRequired,
-    make: PropTypes.string.isRequired,
+    manufacturer: PropTypes.string.isRequired,
     manufacturedYear: PropTypes.number.isRequired,
     manufacturerId: PropTypes.number.isRequired,
-    model: PropTypes.string.isRequired,
+    modelName: PropTypes.string.isRequired,
     modelId: PropTypes.number.isRequired,
     transmission: PropTypes.string.isRequired,
     userId: PropTypes.number.isRequired,

@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
-import { Button } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
+import './CustomToggle.css';
+import { MDBBtn } from 'mdbreact';
 
 const CustomToggle = ({ children, eventKey, variant, customFunc }) => {
   const handleClick = useAccordionToggle(
     eventKey,
     () => {
       customFunc && customFunc(false);
-      console.log(customFunc);
     }
   );
 
   return (
-    <Button type="button" variant={variant} onClick={handleClick}>
+    <MDBBtn type="button" variant={variant} onClick={handleClick}>
       {children}
-    </Button>
+    </MDBBtn>
   );
 };
 

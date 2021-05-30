@@ -23,6 +23,12 @@ export const userInput = {
   PASSWORD_REGEX: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/ // letters, numbers and at least 1 uppercase
 };
 
+export const vehicleInput = {
+  VIN_REGEX: /^(?<wmi>[A-HJ-NPR-Z\d]{3})(?<vds>[A-HJ-NPR-Z\d]{5})(?<check>[\dX])(?<vis>(?<year>[A-HJ-NPR-Z\d])(?<plant>[A-HJ-NPR-Z\d])(?<seq>[A-HJ-NPR-Z\d]{6}))$/,
+  LICENSE_PLATE_REGEX: /^[A-Z0-9]{7,8}/,
+  MIN_MANUFACTURED_YEAR: 1900
+};
+
 export const modals = {
   VERTICALLY_CENTERED: 14
 };

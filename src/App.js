@@ -14,6 +14,7 @@ import Services from './containers/Services/Services';
 import Parts from './containers/Parts/Parts';
 
 const App = () => {
+  // const [customerQuery, setCustomerQuery] = useState();
   const [authValue, setAuthValue] = useState({
     isLoggedIn: !!getUser(),
     user: getUser()
@@ -43,7 +44,7 @@ const App = () => {
       });
   };
 
-  console.log(authValue);
+  // console.log(authValue);
   return (
     <BrowserRouter>
       <AuthContext.Provider value={{ ...authValue, setAuthValue }}>

@@ -1,0 +1,50 @@
+.vehicle-detailed .form-label {
+  color: #009b85;
+  font-size: 13px;
+  text-align: center;
+}
+
+.vehicle-detailed .form-control {
+  border: 1px solid #00695a;
+}
+
+.vehicle-detailed .form-control:disabled {
+  border: none;
+  border-bottom: 1px solid;
+  background-color: transparent;
+  border-radius: 0;
+  text-align: center;
+}
+
+.vehicle-detailed .form-group {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.vehicle-detailed .form-control {
+  text-align: center;
+}
+
+.vehicle-detailed .btn-default {
+  background: transparent !important;
+  padding: 0;
+  box-shadow: none;
+  font-size: 25px;
+  color: #009b85;
+}
+
+.vehicle-detailed .buttons {
+  text-align: right;
+}
+
+.vehicle-detailed .error label {
+  color: red;
+  text-shadow: none;
+}
+
+
+
+
+.vehicle-detailed select {
+  text-align-last: center;
+}

@@ -32,7 +32,7 @@ const Customers = () => {
   //   history.push('/serviceUnavailable');
   // }
 
-  console.log(data);
+  // console.log(data);
   const customersListToShow = (
     <div className="customer-list">
       {data.map((customer) => {
@@ -50,7 +50,7 @@ const Customers = () => {
 
   return (
     <main>
-      <div className="customers-container-inner">
+      <div className="container-inner">
         <div className="customers-container-header">
           {/* <Form className="sorting">
             <div>Sorting Options</div>

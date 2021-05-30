@@ -10,6 +10,7 @@ import Modal from './components/Modal/Modal';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import AuthContext, { getToken, getUser } from './providers/AuthContext';
 import GuardedRoute from './providers/GuardedRoute';
+import CustomerProfile from './containers/CustomerProfile/CustomerProfile';
 
 const App = () => {
   // const [customerQuery, setCustomerQuery] = useState();
@@ -71,6 +72,14 @@ const App = () => {
             component={Vehicles}
             isLoggedIn={
               authValue.isLoggedIn && authValue.user.role === 'employee'
+            }
+          />
+          <GuardedRoute
+            path="/customer-profile"
+            exact
+            component={CustomerProfile}
+            isLoggedIn={
+              authValue.isLoggedIn
             }
           />
         </Switch>

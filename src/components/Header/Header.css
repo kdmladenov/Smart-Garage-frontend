@@ -35,6 +35,7 @@ button.nav-link {
   border: none;
   color: #004c4f;
   border-left: 1px solid rgb(0, 0, 0);
+  background-color: transparent;
 }
 
 /* hamburger button */
@@ -42,9 +43,13 @@ button.nav-link {
 #hamburgerBtn {
   width: 30px;
   height: 24px;
-  position: absolute;
+  position: fixed;
   margin: 0.8rem;  
   margin-top: 1rem;
+  line-height: 32px;
+  margin-right: 1em;
+  vertical-align: middle;
+  z-index: 1050;
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
   -o-transform: rotate(0deg);
@@ -116,7 +121,7 @@ button.nav-link {
 }
 
 .username {
-  position: absolute;
+  position: fixed;
   z-index: 1045;
   width: 9rem;
   text-align: center;

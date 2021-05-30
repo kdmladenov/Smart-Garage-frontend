@@ -70,24 +70,24 @@ const validateInput = {
     return '';
   },
 
-  // currentPassword: value => {
-  //   if (!value) {
-  //     return ' is required!';
-  //   }
-  //   if (!validate.password.length(value)) {
-  //     return `must be between ${userInput.MIN_PASSWORD_LENGTH} and ${userInput.MAX_PASSWORD_LENGTH} characters`;
-  //   }
-  //   if (!validate.password.lowerCase(value)) {
-  //     return ' must include a lowercase letter';
-  //   }
-  //   if (!validate.password.upperCase(value)) {
-  //     return ' must include an uppercase letter';
-  //   }
-  //   if (!validate.password.digit(value)) {
-  //     return ' must include a digit';
-  //   }
-  //   return '';
-  // },
+  currentPassword: value => {
+    if (!value) {
+      return ' is required!';
+    }
+    if (!validate.password.length(value)) {
+      return `must be between ${userInput.MIN_PASSWORD_LENGTH} and ${userInput.MAX_PASSWORD_LENGTH} characters`;
+    }
+    if (!validate.password.lowerCase(value)) {
+      return ' must include a lowercase letter';
+    }
+    if (!validate.password.upperCase(value)) {
+      return ' must include an uppercase letter';
+    }
+    if (!validate.password.digit(value)) {
+      return ' must include a digit';
+    }
+    return '';
+  },
 
   firstName: value => {
     if (!validate.firstName(value)) {

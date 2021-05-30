@@ -65,7 +65,7 @@ const Login = () => {
             history.push('/customers');
           }
           if (user.role === 'customer') {
-            history.push('/customer/history');
+            history.push('/customer-profile');
           }
         })
         .catch(err => {

@@ -18,6 +18,8 @@
 .part-detailed .form-group {
   margin-left: 0;
   margin-right: 0;
+  padding-top: 20px;
+  margin-bottom: -10px;
 }
 
 .part-detailed .form-control {
@@ -27,6 +29,8 @@
 .part-detailed .btn-default {
   background: transparent !important;
   padding: 0;
+  padding-top: 20px;
+  margin-bottom: -10px;
   box-shadow: none;
   font-size: 25px;
   color: #009b85;
@@ -41,7 +45,6 @@
   text-shadow: none;
 }
 
-
 .form-group {
   margin-bottom: 0px;
 }
@@ -50,33 +53,35 @@
   width: 100%;
 }
 
-
-
-.part-detailed .name .car-segment .form-control:disabled  {
+.part-detailed .name .car-segment .form-control:disabled {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 @media only screen and (max-width: 768px) {
   .part-detailed .form-control:disabled {
-  border-bottom: 1px solid;
+    border-bottom: 1px solid;
   }
 }
 
 @media only screen and (min-width: 768px) {
-  .form-label .form-control:disabled{
-  display: none;
+  .form-label {
+    visibility: hidden;
   }
 
-  .part-detailed .name .form-control:disabled  {
-  text-align: left;
+  .form-label.visible {
+    visibility: hidden;
+  }
+
+  .part-detailed .name .form-control:disabled {
+    text-align: left;
   }
 
   .part-detailed .name .form-control {
-  text-align: left;
+    text-align: left;
   }
+}
 
-  /* .part-detailed .car-segment .form-control:disabled  {
-  text-align: left;
-  } */
+.part-detailed select {
+  text-align-last: center;
 }

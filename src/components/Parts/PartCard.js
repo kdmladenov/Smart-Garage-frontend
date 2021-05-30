@@ -76,9 +76,9 @@ const PartCard = ({ part }) => {
                   onChange={(e) => handleInput(e.target.name, e.target.value)}
                   disabled={!editMode}
                 />
-                {editMode && (
-                  <Form.Label className="form-label">{`Part Name${inputErrors.name}`}</Form.Label>
-                )}
+                <Form.Label
+                  className={editMode ? 'visible' : ''}
+                >{`Part Name${inputErrors.name}`}</Form.Label>
               </Form.Group>
             </div>
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12 car-segment">
@@ -100,9 +100,9 @@ const PartCard = ({ part }) => {
                     </option>
                   ))}
                 </Form.Control>
-                {editMode && (
-                  <Form.Label>{`Car Segment ${inputErrors.carSegment}`}</Form.Label>
-                )}
+                <Form.Label
+                  className={editMode ? 'visible' : ''}
+                >{`Car Segment ${inputErrors.carSegment}`}</Form.Label>
               </Form.Group>
             </div>
             <div className="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12 price">
@@ -118,9 +118,9 @@ const PartCard = ({ part }) => {
                   onChange={(e) => handleInput(e.target.name, e.target.value)}
                   disabled={!editMode}
                 />
-                {editMode && (
-                  <Form.Label>{`Price${inputErrors.price} `}</Form.Label>
-                )}
+                <Form.Label
+                  className={editMode ? 'visible' : ''}
+                >{`Price${inputErrors.price} `}</Form.Label>
               </Form.Group>
             </div>
             <div className="col-xl-2 col-lg-2 col-md-2 col-sm-12 col-12 buttons">

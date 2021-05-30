@@ -41,7 +41,7 @@ const Services = () => {
 
   return (
     <main>
-      <div className="services-container-inner">
+      <div className="container-inner">
         <div className="services-container-header">
           {/* <Form className="sorting">
             <div>Sorting Options</div>

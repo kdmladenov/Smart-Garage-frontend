@@ -41,7 +41,7 @@ const Parts = () => {
 
   return (
     <main>
-      <div className="parts-container-inner">
+      <div className="container-inner">
         <div className="parts-container-header">
           {/* <Form className="sorting">
             <div>Sorting Options</div>

@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import { BASE_URL, modals } from './common/constants';
-import Customers from './containers/Users/Customers';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import Modal from './components/Modal/Modal';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import AuthContext, { getToken, getUser } from './providers/AuthContext';
 import GuardedRoute from './providers/GuardedRoute';
+import Customers from './containers/Users/Customers';
+import Services from './containers/Services/Services';
+import Parts from './containers/Parts/Parts';
 
 const App = () => {
   const [authValue, setAuthValue] = useState({
@@ -44,13 +46,14 @@ const App = () => {
   return (
     <BrowserRouter>
       <AuthContext.Provider value={{ ...authValue, setAuthValue }}>
-        <Route path="/reset-password/:userId/:token" exact component={ResetPassword} />
+        <Route
+          path="/reset-password/:userId/:token"
+          exact
+          component={ResetPassword}
+        />
         <Route path="/login" exact component={Login} />
         {authValue.isLoggedIn && (
-          <Header
-            toggleModal={toggleModal}
-            num={modals.VERTICALLY_CENTERED}
-          />
+          <Header toggleModal={toggleModal} num={modals.VERTICALLY_CENTERED} />
         )}
         <Switch>
           <Redirect path="/" exact to="/customers" />
@@ -58,6 +61,22 @@ const App = () => {
             path="/customers"
             exact
             component={Customers}
+            isLoggedIn={
+              authValue.isLoggedIn && authValue.user.role === 'employee'
+            }
+          />
+          <GuardedRoute
+            path="/services"
+            exact
+            component={Services}
+            isLoggedIn={
+              authValue.isLoggedIn && authValue.user.role === 'employee'
+            }
+          />
+          <GuardedRoute
+            path="/parts"
+            exact
+            component={Parts}
             isLoggedIn={
               authValue.isLoggedIn && authValue.user.role === 'employee'
             }

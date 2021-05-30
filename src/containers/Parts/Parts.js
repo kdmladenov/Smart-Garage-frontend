@@ -4,16 +4,16 @@
 import useHttp from '../../hooks/useHttp';
 import { BASE_URL } from '../../common/constants';
 // import { useState } from 'react';
-import ServiceCard from '../../components/Services/ServiceCard';
+import PartCard from '../../components/Parts/PartCard';
 // import Loading from '../../components/UI/Loading';
 
-const Services = () => {
+const Parts = () => {
   const {
     data
     // setLocalData,
     // loading
     // error
-  } = useHttp(`${BASE_URL}/services`, 'GET', []);
+  } = useHttp(`${BASE_URL}/parts`, 'GET', []);
 
   // if (loading) {
   //   return <Loading />;
@@ -25,14 +25,14 @@ const Services = () => {
   //   history.push('/serviceUnavailable');
   // }
 
-  const servicesListToShow = (
-    <div className="services-list">
-      {data.map((services) => {
+  const partsListToShow = (
+    <div className="parts-list">
+      {data.map((parts) => {
         return (
-          <ServiceCard
-            className="service-card"
-            key={services.serviceId}
-            service={services}
+          <PartCard
+            className="part-card"
+            key={parts.partId}
+            part={parts}
           />
         );
       })}
@@ -41,34 +41,34 @@ const Services = () => {
 
   return (
     <main>
-      <div className="services-container-inner">
-        <div className="services-container-header">
+      <div className="parts-container-inner">
+        <div className="parts-container-header">
           {/* <Form className="sorting">
             <div>Sorting Options</div>
-            <Sort resource="/services" />
+            <Sort resource="/parts" />
           </Form> */}
           {/* {user.role === 'employee' && (
             <Button
-              className="create-service-btn btn-success"
+              className="create-part-btn btn-success"
               onClick={() => history.push('/users/create')}
             >
-              Create service
+              Create part
             </Button>
           )} */}
         </div>
         {data.length
           ? (
-          <ul>{servicesListToShow}</ul>
+          <ul>{partsListToShow}</ul>
             )
           : (
-          <h2> No services are found... </h2>
+          <h2> No parts are found... </h2>
             )}
-        {/* <div id="paging-services">
-          <Paging resource="/services" />
+        {/* <div id="paging-parts">
+          <Paging resource="/parts" />
         </div> */}
       </div>
     </main>
   );
 };
 
-export default Services;
+export default Parts;

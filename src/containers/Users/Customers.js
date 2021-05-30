@@ -40,10 +40,8 @@ const Customers = () => {
           <CustomerCard
             className="customer-card"
             key={customer.userId}
-            // {...customer}
-            // updateCustomers={setLocalData}
+
             customer={customer}
-            // goToDetails={() => history.push(`/users/${customer.userId}`)}
           />
         );
       })}

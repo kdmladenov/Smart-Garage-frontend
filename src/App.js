@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import { BASE_URL, modals } from './common/constants';
 import Customers from './containers/Users/Customers';
+import Vehicles from './containers/Vehicles/Vehicles';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import Modal from './components/Modal/Modal';
@@ -45,13 +46,14 @@ const App = () => {
   return (
     <BrowserRouter>
       <AuthContext.Provider value={{ ...authValue, setAuthValue }}>
-        <Route path="/reset-password/:userId/:token" exact component={ResetPassword} />
+        <Route
+          path="/reset-password/:userId/:token"
+          exact
+          component={ResetPassword}
+        />
         <Route path="/login" exact component={Login} />
         {authValue.isLoggedIn && (
-          <Header
-            toggleModal={toggleModal}
-            num={modals.VERTICALLY_CENTERED}
-          />
+          <Header toggleModal={toggleModal} num={modals.VERTICALLY_CENTERED} />
         )}
         <Switch>
           <Redirect path="/" exact to="/customers" />
@@ -59,6 +61,14 @@ const App = () => {
             path="/customers"
             exact
             component={Customers}
+            isLoggedIn={
+              authValue.isLoggedIn && authValue.user.role === 'employee'
+            }
+          />
+          <GuardedRoute
+            path="/vehicles"
+            exact
+            component={Vehicles}
             isLoggedIn={
               authValue.isLoggedIn && authValue.user.role === 'employee'
             }

@@ -26,3 +26,17 @@ export const userInput = {
 export const modals = {
   VERTICALLY_CENTERED: 14
 };
+
+export const serviceInput = {
+  SERVICE_NAME_MIN_LENGTH: 2,
+  SERVICE_NAME_MAX_LENGTH: 100,
+  SERVICE_PRICE_MIN_VALUE: 0.1,
+  SERVICE_PRICE_MAX_VALUE: 100000
+};
+
+export const partInput = {
+  PART_NAME_MIN_LENGTH: 2,
+  PART_NAME_MAX_LENGTH: 100,
+  PART_PRICE_MIN_VALUE: 0.1,
+  PART_PRICE_MAX_VALUE: 100000
+};

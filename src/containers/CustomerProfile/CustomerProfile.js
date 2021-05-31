@@ -54,7 +54,7 @@ const CustomerProfile = () => {
   }, [query]);
 
   return (
-    <main style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/profile.jpg)` }}>
+    <main style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/profile.jpg)`, paddingLeft: '0' }}>
       <div className="container profile">
         <div className="row gutters">
           <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">

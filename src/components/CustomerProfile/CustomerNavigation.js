@@ -5,7 +5,7 @@ import { MDBBtn } from 'mdbreact';
 import { Form } from 'react-bootstrap';
 
 const CustomerNavigation = ({ setContent, setQuery, username, vehicles }) => {
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState('all');
   const [input, setInput] = useState({
     visitRangeLow: '',
     visitRangeHight: new Date().toLocaleDateString('fr-CA')

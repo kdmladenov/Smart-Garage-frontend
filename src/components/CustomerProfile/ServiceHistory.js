@@ -22,9 +22,11 @@ const ServiceHistory = ({ visits }) => {
         </Link> */}
         <div className="timeline-element-info">
           <h4 className="vertical-timeline-element-vehicle">{`${e.licensePlate}  ${e.manufacturerName} ${e.modelName}`}</h4>
-          <MDBBtn type="button">details</MDBBtn>
           <h5 className="vertical-timeline-element-notes">{e.notes}</h5>
-          <h5 className="vertical-timeline-element-status">{e.status}</h5>
+          <div>
+            <MDBBtn type="button">details</MDBBtn>
+            <h5 className="vertical-timeline-element-status">{e.status}</h5>
+          </div>
         </div>
       </VerticalTimelineElement>
     );

@@ -5,6 +5,6 @@ const carSegment = {
   4: 'D - large cars',
   5: 'E - executive cars',
   6: 'F - luxury cars'
-}
+};
 
 export default carSegment;

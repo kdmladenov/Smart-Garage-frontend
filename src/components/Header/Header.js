@@ -51,13 +51,15 @@ const Header = ({
         <div className={`username ${sideNavVisible ? 'open' : ''}`}>
           {username.toUpperCase()}
         </div>
-        <div className={`side-nav ${sideNavVisible ? 'open' : ''}`} style={sideNavStyle}>
-          {content === 'customers' && <div>Customers sidebar</div>}
-          {content === 'vehicles' && <div>Vehicles sidebar</div>}
-          {content === 'services' && <div>Services sidebar</div>}
-          {content === 'parts' && <div>Parts sidebar</div>}
-          {content === 'invoices' && <div>Invoices sidebar</div>}
-        </div>
+        {content !== 'account' &&
+          <div className={`side-nav ${sideNavVisible ? 'open' : ''}`} style={sideNavStyle}>
+            {content === 'customers' && <div>Customers sidebar</div>}
+            {content === 'vehicles' && <div>Vehicles sidebar</div>}
+            {content === 'services' && <div>Services sidebar</div>}
+            {content === 'parts' && <div>Parts sidebar</div>}
+            {content === 'invoices' && <div>Invoices sidebar</div>}
+          </div>
+        }
         <MDBNavbar double expand="md" fixed="top" scrolling style={{ backgroundColor: `${content === 'account' ? '#42414094' : 'transparent'}` }}>
           <MDBNavbarNav right style={specialCaseNavbarStyles}>
             {getUser().role === 'employee' &&

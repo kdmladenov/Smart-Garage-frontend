@@ -99,6 +99,7 @@ span.vertical-timeline-element-icon {
     border-bottom: 1px solid #fff;
     min-width: 5rem;
     text-shadow: 1px 1px 0px black;
+    box-shadow: 0 0.5px black
   }
 
   span.date-bottom {

@@ -9,7 +9,7 @@ const ServiceHistory = ({ visits }) => {
     return (
       <VerticalTimelineElement
         key={e.visitId}
-        className="vertical-timeline-element--review"
+        className="vertical-timeline-element"
         contentStyle={{ background: '#42414094', color: '#fff', border: '1px solid #fff' }}
         contentArrowStyle={{ borderRight: '7px solid  #fff' }}
         iconStyle={{ background: '#466d61', color: '#fff' }}
@@ -21,9 +21,11 @@ const ServiceHistory = ({ visits }) => {
           <img className="book-cover" src={`${BASE_URL}/${e.front_cover}`} alt="front cover" />
         </Link> */}
         <div className="timeline-element-info">
-          <h4 className="vertical-timeline-element-vehicle">{`${e.licensePlate}  ${e.manufacturerName} ${e.modelName}`}</h4>
-          <h5 className="vertical-timeline-element-notes">{e.notes}</h5>
-          <div>
+          <div className="left">
+            <h4 className="vertical-timeline-element-vehicle">{`${e.licensePlate}  ${e.manufacturerName} ${e.modelName}`}</h4>
+            <h5 className="vertical-timeline-element-notes">{e.notes}</h5>
+          </div>
+          <div className="right">
             <MDBBtn type="button">details</MDBBtn>
             <h5 className="vertical-timeline-element-status">{e.status}</h5>
           </div>
@@ -37,7 +39,19 @@ const ServiceHistory = ({ visits }) => {
       // layout="2-columns"
       layout="1-column-left"
     >
-      {visits.map(e => createTimelineElement(e))}
+      {visits.length > 0
+        ? visits.map(e => createTimelineElement(e))
+        : <VerticalTimelineElement
+          className="vertical-timeline-element"
+          contentStyle={{ background: '#42414094', color: '#fff', border: '1px solid #fff' }}
+          contentArrowStyle={{ borderRight: '7px solid  #fff' }}
+          iconStyle={{ background: '#466d61', color: '#fff' }}
+          icon={<MDBIcon icon="galactic-republic" />}
+        >
+          <div>
+            <h2 style={{ color: '#ffffff' }}>NO VISITS FOUND</h2>
+          </div>
+        </VerticalTimelineElement>}
     </VerticalTimeline>
   );
 };

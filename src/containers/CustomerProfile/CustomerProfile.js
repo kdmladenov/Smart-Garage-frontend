@@ -48,7 +48,7 @@ const CustomerProfile = () => {
       })
       .then(res => {
         setVisits(res);
-        setUsername(`${res[0].firstName} ${res[0].lastName}`);
+        if (res.length > 0) setUsername(`${res[0].firstName} ${res[0].lastName}`);
       });
     // .catch((e) => setError(e.message));
   }, [query]);

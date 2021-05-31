@@ -7,14 +7,14 @@ import { Form } from 'react-bootstrap';
 const CustomerNavigation = ({ setContent, setQuery, username, vehicles }) => {
   const [selected, setSelected] = useState('all');
   const [input, setInput] = useState({
-    visitRangeLow: '',
-    visitRangeHight: new Date().toLocaleDateString('fr-CA')
+    visitRangeLow: '1900-01-01',
+    visitRangeHigh: new Date().toLocaleDateString('fr-CA')
   });
 
   const handleClick = (vehicleId) => {
     setContent('history');
     setSelected(vehicleId);
-    setQuery(`&vehicleId=${vehicleId}&visitRangeHight=${input.visitRangeHight}&visitRangeLow=${input.visitRangeLow}`);
+    setQuery(`&vehicleId=${vehicleId}&visitRangeHigh=${input.visitRangeHigh}&visitRangeLow=${input.visitRangeLow}`);
   };
 
   const createNavBtn = (licensePlate, vehicleId) => {
@@ -65,9 +65,9 @@ const CustomerNavigation = ({ setContent, setQuery, username, vehicles }) => {
             </Form.Label>
             <Form.Control
               type="date"
-              name="visitRangeHight"
+              name="visitRangeHigh"
               placeholder="To:"
-              value={input.visitRangeHight}
+              value={input.visitRangeHigh}
               onChange={(e) => setInput({ ...input, [e.target.name]: e.target.value })}
             />
           </Form.Group>
@@ -78,7 +78,7 @@ const CustomerNavigation = ({ setContent, setQuery, username, vehicles }) => {
               onClick={() => {
                 setContent('history');
                 setSelected('all');
-                setQuery(`&visitRangeHight=${input.visitRangeHight}&visitRangeLow=${input.visitRangeLow}`);
+                setQuery(`&visitRangeHigh=${input.visitRangeHigh}&visitRangeLow=${input.visitRangeLow}`);
               }}
             >
               All visits

@@ -54,7 +54,8 @@ span.date-bottom {
 }
 
 .vertical-timeline-element-status {
-  margin-bottom: 1rem;text-align: right;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .vertical-timeline-element-notes,
@@ -75,6 +76,14 @@ span.vertical-timeline-element-icon {
 }
 
 .timeline-element-info button {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.right {
   float: right;
 }
 

@@ -1,0 +1,142 @@
+.book-cover {
+  width: 5rem;
+  margin: 0 1rem 0 0;
+  vertical-align: top;
+  padding-bottom: 1rem;
+}
+
+img.book-cover:hover {
+  cursor: pointer;
+  box-shadow: 0 0 10px 0px #fff;
+}
+
+img.ban-image {
+  height: 5rem;
+  margin: 0 1rem 0 0;
+  vertical-align: top;
+}
+
+span.date-top {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+}
+
+span.date-bottom {
+  position: absolute;
+  right: 0.5rem;
+  top: 2rem;
+  border-top: 1px solid #fff;
+}
+
+.vertical-timeline-element--points .vertical-timeline-element-content {
+  max-height: 6rem;
+}
+
+.vertical-timeline-element-content h4{
+  max-width: 220px;
+  display: inline-block;
+}
+
+.vertical-timeline-element-content {
+  box-shadow: initial;
+}
+
+
+/* .timeline-element-info {
+  display: inline-block;
+  min-width: 11.5rem;
+  max-width: 32vw;
+} */
+
+.vertical-timeline-element-notes {
+  margin-bottom: 1rem;
+}
+
+.vertical-timeline-element-status {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.vertical-timeline-element-notes,
+.vertical-timeline-element-status {
+  margin-bottom:0.5rem;
+}
+
+.vertical-timeline {
+  max-width: 600px;
+  width: 90%;
+  margin-right: 0;
+}
+
+span.vertical-timeline-element-icon {
+  line-height: 40px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.timeline-element-info button {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+@media only screen and (min-width: 440px) {
+  .book-cover, .ban-img {
+    padding-bottom: initial;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .book-cover, .ban-img {
+    width: 7rem;
+    margin: 0 1rem;
+  }  
+
+  span.date-top {
+    position: absolute;
+    top: -0.6rem;
+    right: initial;
+    left: -9rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid #fff;
+    min-width: 5rem;
+    text-shadow: 1px 1px 0px black;
+    box-shadow: 0 0.5px black
+  }
+
+  span.date-bottom {
+    position: absolute;
+    top: 1.5rem;
+    left: -9rem;
+    border-top: initial;
+    text-shadow: 1px 1px 0px black;
+  }
+
+  .vertical-timeline-element--points .vertical-timeline-element-content {
+    max-height: 4rem;
+  }
+
+  .vertical-timeline-element-content h4{
+    max-width: initial;
+  }
+}
+
+@media only screen and (min-width: 1170px) {
+  .vertical-timeline.vertical-timeline--two-columns {
+    width: 95%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .vertical-timeline.vertical-timeline--two-columns {
+    width: 90%;
+  }
+}
+

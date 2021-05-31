@@ -18,18 +18,16 @@ img.ban-image {
 
 span.date-top {
   position: absolute;
-  right: 0.5rem;
-  top: 0.5rem;
+  bottom: 45px;
+  border-bottom: 1px solid #fff;
 }
 
 span.date-bottom {
   position: absolute;
-  right: 0.5rem;
-  top: 2rem;
-  border-top: 1px solid #fff;
+  bottom: 20px;
 }
 
-.vertical-timeline-element--points .vertical-timeline-element-content {
+.vertical-timeline-element--points {
   max-height: 6rem;
 }
 
@@ -38,16 +36,10 @@ span.date-bottom {
   display: inline-block;
 }
 
-.vertical-timeline-element-content {
+.vertical-timeline-element-content.bounce-in {
   box-shadow: initial;
+  min-height: 200px;
 }
-
-
-/* .timeline-element-info {
-  display: inline-block;
-  min-width: 11.5rem;
-  max-width: 32vw;
-} */
 
 .vertical-timeline-element-notes {
   margin-bottom: 1rem;
@@ -87,18 +79,24 @@ span.vertical-timeline-element-icon {
   float: right;
 }
 
-@media only screen and (min-width: 440px) {
-  .book-cover, .ban-img {
-    padding-bottom: initial;
-  }
-}
-
 @media only screen and (min-width: 600px) {
   .book-cover, .ban-img {
     width: 7rem;
     margin: 0 1rem;
   }  
 
+  span.date-top {
+    right: 0.5rem;
+    top: 0.5rem;
+    bottom: initial;
+  }
+  
+  span.date-bottom {
+    right: 0.5rem;
+    top: 2rem;
+    bottom: initial;
+  }
+  
   span.date-top {
     position: absolute;
     top: -0.6rem;
@@ -125,6 +123,10 @@ span.vertical-timeline-element-icon {
 
   .vertical-timeline-element-content h4{
     max-width: initial;
+  }
+
+  .vertical-timeline-element-content.bounce-in {
+    min-height: initial;
   }
 }
 

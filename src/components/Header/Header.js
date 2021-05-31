@@ -1,13 +1,11 @@
 import { NavLink } from 'react-router-dom';
-import { MDBNavbar, MDBNavbarNav, MDBNavItem, MDBIcon } from 'mdbreact';
+import { MDBNavbar, MDBNavbarNav, MDBNavItem, MDBIcon, MDBBtn } from 'mdbreact';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Header.css';
 import { getUser } from '../../providers/AuthContext';
 
-const Header = ({
-  toggleModal, num
-}) => {
+const Header = ({ toggleModal, num, setCreatePartMode, createPartMode, setCreateServiceMode, createServiceMode }) => {
   const [content, setContent] = useState('customers');
   const [sideNavVisible, toggleSideNavVisible] = useState(true);
 
@@ -46,19 +44,29 @@ const Header = ({
             zIndex: '1050'
           }}
         >
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-        <div className={`username ${sideNavVisible ? 'open' : ''}`} >
-          {username.toUpperCase()}
-        </div>
+        <div className={`username ${sideNavVisible ? 'open' : ''}`}>{username.toUpperCase()}</div>
         <div className={`side-nav ${sideNavVisible ? 'open' : ''}`} style={sideNavStyle}>
           {content === 'customers' && <div>Customers sidebar</div>}
           {content === 'vehicles' && <div>Vehicles sidebar</div>}
-          {content === 'services' && <div>Services sidebar</div>}
-          {content === 'parts' && <div>Parts sidebar</div>}
+          {content === 'services' && (
+            <div>
+              <MDBBtn type="button" onClick={() => setCreateServiceMode(!createServiceMode)}>
+                {!createServiceMode ? 'Create New Service' : 'Close Create Form'}
+              </MDBBtn>
+            </div>
+          )}
+          {content === 'parts' && (
+            <div>
+              <MDBBtn type="button" onClick={() => setCreatePartMode(!createPartMode)}>
+                {!createPartMode ? 'Create New Part' : 'Close Create Form'}
+              </MDBBtn>
+            </div>
+          )}
           {content === 'invoices' && <div>Invoices sidebar</div>}
         </div>
         <MDBNavbar double expand="md" fixed="top" scrolling>
@@ -94,14 +102,18 @@ const Header = ({
               </NavLink>
             </MDBNavItem>
             <MDBNavItem>
-              <button className="nav-link" role="button" onClick={() => toggleModal(num)} style={{ borderLeft: '1px solid #000' }}>
+              <button
+                className="nav-link"
+                role="button"
+                onClick={() => toggleModal(num)}
+                style={{ borderLeft: '1px solid #000' }}
+              >
                 <MDBIcon icon="sign-out-alt" className="d-inline-inline" />
                 <div className="d-none d-md-inline">Logout</div>
               </button>
             </MDBNavItem>
           </MDBNavbarNav>
         </MDBNavbar>
-
       </div>
     </>
   );
@@ -109,7 +121,16 @@ const Header = ({
 
 export default Header;
 
+Header.defaultProps = {
+  createPartMode: false,
+  createServiceMode: false
+};
+
 Header.propTypes = {
   toggleModal: PropTypes.func.isRequired,
-  num: PropTypes.number.isRequired
+  num: PropTypes.number.isRequired,
+  setCreatePartMode: PropTypes.func.isRequired,
+  createPartMode: PropTypes.bool.isRequired,
+  setCreateServiceMode: PropTypes.func.isRequired,
+  createServiceMode: PropTypes.bool.isRequired
 };

@@ -2,12 +2,14 @@
 // import Sort from '../../components/Sort/Sort';
 // import Paging from '../../components/Paging/Paging';
 import useHttp from '../../hooks/useHttp';
+import PropTypes from 'prop-types';
 import { BASE_URL } from '../../common/constants';
 // import { useState } from 'react';
 import PartCard from '../../components/Parts/PartCard';
+import CreatePartCard from '../../components/Parts/CreatePartCard';
 // import Loading from '../../components/UI/Loading';
 
-const Parts = () => {
+const Parts = ({ createPartMode, setCreatePartMode }) => {
   const {
     data
     // setLocalData,
@@ -28,13 +30,7 @@ const Parts = () => {
   const partsListToShow = (
     <div className="parts-list">
       {data.map((parts) => {
-        return (
-          <PartCard
-            className="part-card"
-            key={parts.partId}
-            part={parts}
-          />
-        );
+        return <PartCard className="part-card" key={parts.partId} part={parts} />;
       })}
     </div>
   );
@@ -47,28 +43,25 @@ const Parts = () => {
             <div>Sorting Options</div>
             <Sort resource="/parts" />
           </Form> */}
-          {/* {user.role === 'employee' && (
-            <Button
-              className="create-part-btn btn-success"
-              onClick={() => history.push('/users/create')}
-            >
-              Create part
-            </Button>
-          )} */}
+
         </div>
-        {data.length
-          ? (
-          <ul>{partsListToShow}</ul>
-            )
-          : (
-          <h2> No parts are found... </h2>
-            )}
+        {createPartMode && <CreatePartCard setCreatePartMode={setCreatePartMode} />}
+        {data.length ? <ul>{partsListToShow}</ul> : <h2> No parts are found... </h2>}
         {/* <div id="paging-parts">
           <Paging resource="/parts" />
         </div> */}
       </div>
     </main>
   );
+};
+
+Parts.defaultProps = {
+  createPartMode: false
+};
+
+Parts.propTypes = {
+  createPartMode: PropTypes.bool.isRequired,
+  setCreatePartMode: PropTypes.func.isRequired
 };
 
 export default Parts;

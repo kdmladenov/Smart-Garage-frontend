@@ -15,6 +15,8 @@ import Parts from './containers/Parts/Parts';
 
 const App = () => {
   // const [customerQuery, setCustomerQuery] = useState();
+  const [createPartMode, setCreatePartMode] = useState(false);
+  const [createServiceMode, setCreateServiceMode] = useState(false);
   const [authValue, setAuthValue] = useState({
     isLoggedIn: !!getUser(),
     user: getUser()
@@ -33,7 +35,7 @@ const App = () => {
         Authorization: `Bearer ${getToken()}`
       }
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(() => {
         setAuthValue({
           user: null,
@@ -48,14 +50,17 @@ const App = () => {
   return (
     <BrowserRouter>
       <AuthContext.Provider value={{ ...authValue, setAuthValue }}>
-        <Route
-          path="/reset-password/:userId/:token"
-          exact
-          component={ResetPassword}
-        />
+        <Route path="/reset-password/:userId/:token" exact component={ResetPassword} />
         <Route path="/login" exact component={Login} />
         {authValue.isLoggedIn && (
-          <Header toggleModal={toggleModal} num={modals.VERTICALLY_CENTERED} />
+          <Header
+            toggleModal={toggleModal}
+            num={modals.VERTICALLY_CENTERED}
+            setCreateServiceMode={setCreateServiceMode}
+            createServiceMode={createServiceMode}
+            setCreatePartMode={setCreatePartMode}
+            createPartMode={createPartMode}
+          />
         )}
         <Switch>
           <Redirect path="/" exact to="/customers" />
@@ -63,33 +68,27 @@ const App = () => {
             path="/customers"
             exact
             component={Customers}
-            isLoggedIn={
-              authValue.isLoggedIn && authValue.user.role === 'employee'
-            }
+            isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
           />
           <GuardedRoute
             path="/vehicles"
             exact
             component={Vehicles}
-            isLoggedIn={
-              authValue.isLoggedIn && authValue.user.role === 'employee'
-            }
+            isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
           />
           <GuardedRoute
             path="/services"
             exact
-            component={Services}
-            isLoggedIn={
-              authValue.isLoggedIn && authValue.user.role === 'employee'
-            }
+            component={() => (
+              <Services createServiceMode={createServiceMode} setCreateServiceMode={setCreateServiceMode} />
+            )}
+            isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
           />
           <GuardedRoute
             path="/parts"
             exact
-            component={Parts}
-            isLoggedIn={
-              authValue.isLoggedIn && authValue.user.role === 'employee'
-            }
+            component={() => <Parts createPartMode={createPartMode} setCreatePartMode={setCreatePartMode} />}
+            isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
           />
         </Switch>
         <Modal

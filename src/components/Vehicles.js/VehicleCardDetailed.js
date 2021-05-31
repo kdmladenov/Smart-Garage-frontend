@@ -63,17 +63,17 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
     filterCarSegment(modelsData.filter(m => m.modelName === vehicle.modelName));
   }, [vehicle.modelName]);
 
-  const modelsByMake = (make) => {
-    console.log(make);
-    return modelsData.reduce((acc, m) => {
-      if (m.manufacturer === make) {
-        acc.push(m.modelName);
-      }
-      return acc;
-    }, []);
-  };
+  // const modelsByMake = (make) => {
+  //   console.log(make);
+  //   return modelsData.reduce((acc, m) => {
+  //     if (m.manufacturer === make) {
+  //       acc.push(m.modelName);
+  //     }
+  //     return acc;
+  //   }, []);
+  // };
 
-  console.log(modelsByMake(vehicle.manufacturer));
+  // console.log(modelsByMake(vehicle.manufacturer));
 
   const updateVehicle = (prop, value) => setVehicle({ ...vehicle, [prop]: value });
 
@@ -106,7 +106,7 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
       });
   };
 
-  console.log(models);
+  // console.log(models);
 
   return (
     <div>

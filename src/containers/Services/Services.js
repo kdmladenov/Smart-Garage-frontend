@@ -2,12 +2,14 @@
 // import Sort from '../../components/Sort/Sort';
 // import Paging from '../../components/Paging/Paging';
 import useHttp from '../../hooks/useHttp';
+import PropTypes from 'prop-types';
 import { BASE_URL } from '../../common/constants';
 // import { useState } from 'react';
 import ServiceCard from '../../components/Services/ServiceCard';
+import CreateServiceCard from '../../components/Services/CreateServiceCard';
 // import Loading from '../../components/UI/Loading';
 
-const Services = () => {
+const Services = ({ createServiceMode, setCreateServiceMode }) => {
   const {
     data
     // setLocalData,
@@ -47,28 +49,24 @@ const Services = () => {
             <div>Sorting Options</div>
             <Sort resource="/services" />
           </Form> */}
-          {/* {user.role === 'employee' && (
-            <Button
-              className="create-service-btn btn-success"
-              onClick={() => history.push('/users/create')}
-            >
-              Create service
-            </Button>
-          )} */}
         </div>
-        {data.length
-          ? (
-          <ul>{servicesListToShow}</ul>
-            )
-          : (
-          <h2> No services are found... </h2>
-            )}
+        {createServiceMode && <CreateServiceCard setCreateServiceMode={setCreateServiceMode} />}
+        {data.length ? <ul>{servicesListToShow}</ul> : <h2> No services are found... </h2>}
         {/* <div id="paging-services">
           <Paging resource="/services" />
         </div> */}
       </div>
     </main>
   );
+};
+
+Services.defaultProps = {
+  createServiceMode: false
+};
+
+Services.propTypes = {
+  createServiceMode: PropTypes.bool.isRequired,
+  setCreateServiceMode: PropTypes.func.isRequired
 };
 
 export default Services;

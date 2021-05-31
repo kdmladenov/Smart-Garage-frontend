@@ -45,7 +45,7 @@
   text-shadow: none;
 }
 
-.form-group {
+.service-detailed .form-group {
   margin-bottom: 0px;
 }
 
@@ -65,11 +65,11 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .form-label {
+  .service-detailed .form-label {
     visibility: hidden;
   }
 
-  .form-label.visible {
+  .service-detailed .form-label.visible {
     visibility: hidden;
   }
 

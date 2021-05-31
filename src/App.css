@@ -2,6 +2,9 @@ main {
   background-color: #ececec;
   min-height: 100vh;
   padding-top: 5.5rem;
+  /* background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; */
 }
 
 .container-inner ul {

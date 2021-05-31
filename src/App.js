@@ -12,6 +12,7 @@ import AuthContext, { getToken, getUser } from './providers/AuthContext';
 import GuardedRoute from './providers/GuardedRoute';
 import Services from './containers/Services/Services';
 import Parts from './containers/Parts/Parts';
+import CustomerProfile from './containers/CustomerProfile/CustomerProfile';
 
 const App = () => {
   // const [customerQuery, setCustomerQuery] = useState();
@@ -89,6 +90,12 @@ const App = () => {
             exact
             component={() => <Parts createPartMode={createPartMode} setCreatePartMode={setCreatePartMode} />}
             isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
+          />
+          <GuardedRoute
+            path="/customer-profile"
+            exact
+            component={CustomerProfile}
+            isLoggedIn={authValue.isLoggedIn}
           />
         </Switch>
         <Modal

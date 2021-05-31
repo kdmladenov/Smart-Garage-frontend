@@ -45,7 +45,7 @@
   text-shadow: none;
 }
 
-.form-group {
+.part-detailed.form-group {
   margin-bottom: 0px;
 }
 
@@ -65,11 +65,11 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .form-label {
+  .part-detailed .form-label {
     visibility: hidden;
   }
 
-  .form-label.visible {
+  .part-detailed .form-label.visible {
     visibility: hidden;
   }
 

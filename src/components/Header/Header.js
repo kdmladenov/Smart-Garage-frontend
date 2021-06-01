@@ -5,12 +5,10 @@ import PropTypes from 'prop-types';
 import './Header.css';
 import { getUser } from '../../providers/AuthContext';
 
-const Header = ({
-  toggleModal, num
-}) => {
+const Header = ({ toggleModal, num }) => {
   const initialContent = getUser().role === 'employee' ? 'customers' : 'account';
   const [content, setContent] = useState(initialContent);
-  const [sideNavVisible, toggleSideNavVisible] = useState(true);
+  const [sideNavVisible, toggleSideNavVisible] = useState(false);
 
   const handleHamburgerClick = () => {
     toggleSideNavVisible(!sideNavVisible);

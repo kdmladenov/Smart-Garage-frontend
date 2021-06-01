@@ -11,14 +11,14 @@
   margin-bottom: 2vh;
 }
 
-.form-control {
+.profile .form-control {
   background-color: #ffffffa2;
   color: #343a40;
   height: calc(1.5em + 1.5rem + 2px);
   border: 0.05rem solid #ffffff;
 }
 
-.form-control:focus {
+.profile .form-control:focus {
   border-color: #24b943;
   background-color: #fff;
   border-color: #006416;
@@ -61,15 +61,15 @@
 }
 
 @media (min-width: 992px) {
-  .col-lg-8 {
+  .profile .col-lg-8 {
     flex: 0 0 69%;
     max-width: 69%;
   }
-  .col-lg-4 {
+  .profile .col-lg-4 {
     flex: 0 0 31%;
     max-width: 31%;
   }
-  .outer {
+  .profile .outer {
     padding-top: 18vh;
   }
 }

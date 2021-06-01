@@ -83,7 +83,7 @@ const ServiceCard = ({ service }) => {
   return (
     !isDeleted && (
       <Card key={service.serviceId}>
-        <Card.Header className="card-header">
+        <Card.Header className="card-header service-detailed">
           <Form className="service-detailed">
             <div className="row gutters">
               <div className="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 name">

@@ -84,8 +84,6 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setVehicleCopy({ ...vehicleCopy, ...vehicle });
-    setEditMode(false);
     setError('');
 
     fetch(`${BASE_URL}/vehicles/${vehicle.vehicleId}`, {
@@ -101,6 +99,7 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
         if (res.message) {
           setError(res.message);
         } else {
+          setVehicleCopy({ ...vehicleCopy, ...vehicle });
           setEditMode(false);
         }
       });
@@ -136,6 +135,7 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
                     manufacturer: '',
                     carSegment: ''
                   });
+                  setError('');
                 }}>
                   <MDBIcon icon="times" />
                 </MDBBtn>

@@ -34,8 +34,6 @@ const CustomerCardDetailed = ({ customer, editMode, setEditMode }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setUserCopy({ ...userCopy, ...user });
-    setEditMode(false);
     setError('');
 
     fetch(`${BASE_URL}/users/${customer.userId}`, {
@@ -50,6 +48,9 @@ const CustomerCardDetailed = ({ customer, editMode, setEditMode }) => {
       .then(res => {
         if (res.message) {
           setError(res.message);
+        } else {
+          setEditMode(false);
+          setUserCopy({ ...userCopy, ...user });
         }
       });
   };
@@ -84,6 +85,7 @@ const CustomerCardDetailed = ({ customer, editMode, setEditMode }) => {
                     postalCode: '',
                     streetAddress: ''
                   });
+                  setError('');
                 }}>
                   <MDBIcon icon="times" />
                 </MDBBtn>

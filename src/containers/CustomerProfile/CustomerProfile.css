@@ -7,7 +7,7 @@
   color: #ffffff;
 }
 
-.col-12 {
+.profile .col-12 {
   margin-bottom: 2vh;
 }
 
@@ -43,7 +43,7 @@
   margin-right: initial;
 }
 
-.card-body {
+.profile .card-body {
   min-height: 37rem;
 }
 

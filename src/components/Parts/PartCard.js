@@ -83,7 +83,7 @@ const PartCard = ({ part }) => {
   return (
     !isDeleted && (
       <Card key={part.partId}>
-        <Card.Header className="card-header">
+        <Card.Header className="card-header part-detailed">
           <Form className="part-detailed">
             <div className="row gutters">
               <div className="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 name">

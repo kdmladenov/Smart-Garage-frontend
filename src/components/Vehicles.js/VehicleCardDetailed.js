@@ -120,7 +120,7 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
             )}
             {editMode && (
               <>
-                <MDBBtn type="submit" onClick={handleFormSubmit}>
+                <MDBBtn type="submit" onClick={handleFormSubmit} disabled={Object.values(inputErrors).some(e => e !== '')}>
                   <MDBIcon icon="check" />
                 </MDBBtn>
                 <MDBBtn type="button" onClick={() => {

@@ -27,8 +27,8 @@ const CustomerCardDetailed = ({ customer, editMode, setEditMode }) => {
 
   const updateUser = (prop, value) => setUser({ ...user, [prop]: value });
 
-  const handleInput = (prop, value) => {
-    setInputErrors({ ...inputErrors, [prop]: validateInput[prop](value) });
+  const handleInput = (prop, value, match) => {
+    setInputErrors({ ...inputErrors, [prop]: validateInput[prop](value, match) });
     updateUser(prop, value);
   };
 
@@ -66,7 +66,7 @@ const CustomerCardDetailed = ({ customer, editMode, setEditMode }) => {
             )}
             {editMode && (
               <>
-                <MDBBtn type="submit" onClick={handleFormSubmit}>
+                <MDBBtn type="submit" onClick={handleFormSubmit} disabled={Object.values(inputErrors).some(e => e !== '')}>
                   <MDBIcon icon="check" />
                 </MDBBtn>
                 <MDBBtn type="button" onClick={() => {
@@ -128,7 +128,7 @@ const CustomerCardDetailed = ({ customer, editMode, setEditMode }) => {
             </Form.Group>
           </div>
           <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-            <Form.Group controlId="formBasicLastName" className={inputErrors.companyName ? 'error' : ''}>
+            <Form.Group controlId="formBasicCompanyName" className={inputErrors.companyName ? 'error' : ''}>
               <Form.Control
                 type="text"
                 name="companyName"
@@ -168,7 +168,7 @@ const CustomerCardDetailed = ({ customer, editMode, setEditMode }) => {
                 disabled={!editMode}
                 />
                 <Form.Label>
-                  {`Confirm Email ${inputErrors.email}`}
+                  {`Confirm Email ${inputErrors.reenteredEmail}`}
                 </Form.Label>
             </Form.Group>
           </div>}

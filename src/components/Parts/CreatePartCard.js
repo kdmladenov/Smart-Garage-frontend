@@ -24,14 +24,14 @@ const CreatePartCard = ({ setCreatePartMode }) => {
 
   const isValid = Object.values(inputErrors).every((v) => !v) && Object.values(parts).every((v) => v);
 
-  const createPart = (prop, value) => setPart({ ...parts, [prop]: value });
+  const updatePart = (prop, value) => setPart({ ...parts, [prop]: value });
 
   const handleInput = (prop, value) => {
     setInputErrors({
       ...inputErrors,
       [prop]: validatePart[prop](value)
     });
-    createPart(prop, value);
+    updatePart(prop, value);
   };
 
   const handleFormSubmit = (e) => {

@@ -10,9 +10,14 @@ import useHttp from '../../hooks/useHttp';
 import { BASE_URL } from '../../common/constants';
 import Loading from '../UI/Loading';
 import './Customers.css';
+import DeleteButtonWithPopover from '../UI/DeleteButtonWithPopover/DeleteButtonWithPopover';
+import { getToken } from '../../providers/AuthContext';
 
 const CustomerCard = ({ customer }) => {
   const [editMode, setEditMode] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
+  // const [error, setError] = useState('');
+
   // const { search: query } = useLocation();
   const {
     data,
@@ -30,7 +35,24 @@ const CustomerCard = ({ customer }) => {
   // //   history.push('/serviceUnavailable');
   // // }
 
-  // console.log('z1', data);
+  const handleDeleteButton = () => {
+    fetch(`${BASE_URL}/users/${customer.userId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.error) {
+          throw new Error(result.message);
+        }
+        setIsDeleted(!isDeleted);
+      });
+    // .catch((e) => setError(e.message));
+  };
+
   const vehiclesListToShow = (
     <div className="vehicle-list">
       {data.map((vehicle) => {
@@ -43,14 +65,12 @@ const CustomerCard = ({ customer }) => {
       })}
     </div>
   );
-  return (
+  return !isDeleted && (
     <>
       <Accordion>
         <Card key={customer.userId}>
           <Card.Header className="card-header">
-            <div className="card-header-text customer-name">
-              {customer.fullName}
-            </div>
+            <div className="card-header-text customer-name">{customer.fullName}</div>
             <div className="card-header-buttons">
               <CustomToggle variant="primary" eventKey="1" customFunc={setEditMode}>
                 Details
@@ -58,22 +78,22 @@ const CustomerCard = ({ customer }) => {
               <CustomToggle variant="primary" eventKey="2" customFunc={setEditMode}>
                 Car List
               </CustomToggle>
+              <DeleteButtonWithPopover handleDeleteButton={handleDeleteButton} />
             </div>
           </Card.Header>
           <Accordion.Collapse eventKey="1">
             <Card.Body>
-              <CustomerCardDetailed key={customer.userId} customer={customer} editMode={editMode} setEditMode={setEditMode} />
+              <CustomerCardDetailed
+                key={customer.userId}
+                customer={customer}
+                editMode={editMode}
+                setEditMode={setEditMode}
+              />
             </Card.Body>
           </Accordion.Collapse>
           <Accordion.Collapse eventKey="2">
             <Card.Body>
-              {data.length
-                ? (
-                <ul>{vehiclesListToShow}</ul>
-                  )
-                : (
-                <h2> No vehicles found on this customer </h2>
-                  )}
+              {data.length ? <ul>{vehiclesListToShow}</ul> : <h2> No vehicles found on this customer </h2>}
             </Card.Body>
           </Accordion.Collapse>
         </Card>

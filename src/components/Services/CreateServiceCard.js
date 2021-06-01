@@ -24,14 +24,14 @@ const CreateServiceCard = ({ setCreateServiceMode }) => {
 
   const isValid = Object.values(inputErrors).every((v) => !v) && Object.values(services).every((v) => v);
 
-  const createService = (prop, value) => setService({ ...services, [prop]: value });
+  const updateService = (prop, value) => setService({ ...services, [prop]: value });
 
   const handleInput = (prop, value) => {
     setInputErrors({
       ...inputErrors,
       [prop]: validateService[prop](value)
     });
-    createService(prop, value);
+    updateService(prop, value);
   };
 
   const handleFormSubmit = (e) => {

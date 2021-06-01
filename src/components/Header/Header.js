@@ -9,7 +9,7 @@ const Header = ({ toggleModal, num, setCreatePartMode, createPartMode, setCreate
   // const [content, setContent] = useState('customers');
   const initialContent = getUser().role === 'employee' ? 'customers' : 'account';
   const [content, setContent] = useState(initialContent);
-  const [sideNavVisible, toggleSideNavVisible] = useState(true);
+  const [sideNavVisible, toggleSideNavVisible] = useState(false);
 
   const handleHamburgerClick = () => {
     toggleSideNavVisible(!sideNavVisible);

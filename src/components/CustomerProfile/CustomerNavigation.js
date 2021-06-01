@@ -7,14 +7,14 @@ import { Form } from 'react-bootstrap';
 const CustomerNavigation = ({ setContent, setQuery, username, vehicles }) => {
   const [selected, setSelected] = useState('all');
   const [input, setInput] = useState({
-    visitRangeLow: '1900-01-01',
+    visitRangeLow: '',
     visitRangeHigh: new Date().toLocaleDateString('fr-CA')
   });
 
   const handleClick = (vehicleId) => {
     setContent('history');
     setSelected(vehicleId);
-    setQuery(`&vehicleId=${vehicleId}&visitRangeHigh=${input.visitRangeHigh}&visitRangeLow=${input.visitRangeLow}`);
+    setQuery(`&vehicleId=${vehicleId}&visitRangeHigh=${input.visitRangeHigh}&visitRangeLow=${input.visitRangeLow || '1900-01-01'}`);
   };
 
   const createNavBtn = (licensePlate, vehicleId) => {
@@ -40,9 +40,13 @@ const CustomerNavigation = ({ setContent, setQuery, username, vehicles }) => {
         <div className="about">
           <Form.Group>
             <MDBBtn
+              active={selected === 'changePassword'}
               variant="primary"
               className="btn btn-lg btn-block"
-              onClick={() => setContent('changePassword')}
+              onClick={() => {
+                setContent('changePassword');
+                setSelected('changePassword');
+              }}
             >
               Change Password
             </MDBBtn>
@@ -78,7 +82,7 @@ const CustomerNavigation = ({ setContent, setQuery, username, vehicles }) => {
               onClick={() => {
                 setContent('history');
                 setSelected('all');
-                setQuery(`&visitRangeHigh=${input.visitRangeHigh}&visitRangeLow=${input.visitRangeLow}`);
+                setQuery(`&visitRangeHigh=${input.visitRangeHigh}&visitRangeLow=${input.visitRangeLow || '1900-01-01'}`);
               }}
             >
               All visits

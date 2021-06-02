@@ -4,8 +4,9 @@ import { BASE_URL } from '../../common/constants';
 // import Loading from '../../components/UI/Loading';
 import { useState } from 'react';
 import VehicleCard from '../../components/Vehicles.js/VehicleCard';
+import PropTypes from 'prop-types';
 
-const Vehicles = () => {
+const Vehicles = ({ allCurrencies }) => {
   const [query, setQuery] = useState('');
   const {
     data
@@ -24,7 +25,7 @@ const Vehicles = () => {
   //   history.push('/serviceUnavailable');
   // }
 
-  console.log(data);
+  // console.log(data);
   const vehiclesListToShow = (
     <div className="vehicle-list">
       {data.map((vehicle) => {
@@ -33,6 +34,7 @@ const Vehicles = () => {
             className="vehicle-card"
             key={vehicle.vehicleId}
             vehicle={vehicle}
+            allCurrencies={allCurrencies}
           />
         );
       })}
@@ -57,6 +59,10 @@ const Vehicles = () => {
       </div>
     </main>
   );
+};
+
+Vehicles.propTypes = {
+  allCurrencies: PropTypes.array.isRequired
 };
 
 export default Vehicles;

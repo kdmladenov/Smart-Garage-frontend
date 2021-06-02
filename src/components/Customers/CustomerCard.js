@@ -14,7 +14,7 @@ import DeleteButtonWithPopover from '../UI/DeleteButtonWithPopover/DeleteButtonW
 import { getToken } from '../../providers/AuthContext';
 import { MDBBtn } from 'mdbreact';
 
-const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode }) => {
+const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode, allCurrencies }) => {
   const [editMode, setEditMode] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const [registerVehicleMode, setRegisterVehicleMode] = useState(false);
@@ -80,6 +80,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode 
             vehicle={vehicle}
             registerVehicleMode={registerVehicleMode}
             setRegisterVehicleMode={setRegisterVehicleMode}
+            allCurrencies={allCurrencies}
           />
         );
       })}
@@ -228,7 +229,8 @@ CustomerCard.propTypes = {
     role: PropTypes.string
   }).isRequired,
   registerCustomerMode: PropTypes.bool.isRequired,
-  setRegisterCustomerMode: PropTypes.func.isRequired
+  setRegisterCustomerMode: PropTypes.func.isRequired,
+  allCurrencies: PropTypes.array.isRequired
 };
 
 export default CustomerCard;

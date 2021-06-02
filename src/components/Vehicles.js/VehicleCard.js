@@ -16,7 +16,8 @@ const VehicleCard = ({
   setRegisterVehicleMode,
   registerCustomerMode,
   setRegisterCustomerMode,
-  newCustomerId
+  newCustomerId,
+  allCurrencies
 }) => {
   const [editMode, setEditMode] = useState(false);
   const {
@@ -35,11 +36,18 @@ const VehicleCard = ({
   // //   history.push('/serviceUnavailable');
   // // }
   const visitListToShow = (
-    <div className="visit-list">
-      {data.map((visit) => {
-        return <VisitCard className="visit-card" key={visit.visitId} visit={visit} />;
-      })}
-    </div>
+      <div className="visit-list">
+        {data.map((visit) => {
+          return (
+            <VisitCard
+              className="visit-card"
+              key={visit.visitId}
+              visit={visit}
+              allCurrencies={allCurrencies}
+            />
+          );
+        })}
+      </div>
   );
 
   if (registerVehicleMode || registerCustomerMode) {
@@ -147,7 +155,8 @@ VehicleCard.propTypes = {
   registerCustomerMode: PropTypes.bool,
   setRegisterVehicleMode: PropTypes.func,
   newCustomerId: PropTypes.number,
-  setRegisterCustomerMode: PropTypes.func
+  setRegisterCustomerMode: PropTypes.func,
+  allCurrencies: PropTypes.array.isRequired
 };
 
 export default VehicleCard;

@@ -11,7 +11,7 @@ import { BASE_URL } from '../../common/constants';
 // import { useState } from 'react';
 import CustomerCard from '../../components/Customers/CustomerCard';
 import Loading from '../../components/UI/Loading';
-const Customers = ({ registerCustomerMode, setRegisterCustomerMode }) => {
+const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencies }) => {
   // const user = getUser();
   // const history = useHistory();
   const { search: query } = useLocation();
@@ -42,6 +42,7 @@ const Customers = ({ registerCustomerMode, setRegisterCustomerMode }) => {
             customer={customer}
             registerCustomerMode={registerCustomerMode}
             setRegisterCustomerMode={setRegisterCustomerMode}
+            allCurrencies={allCurrencies}
           />
         );
       })}
@@ -100,7 +101,8 @@ Customers.defaultProps = {
 
 Customers.propTypes = {
   registerCustomerMode: PropTypes.bool.isRequired,
-  setRegisterCustomerMode: PropTypes.func.isRequired
+  setRegisterCustomerMode: PropTypes.func.isRequired,
+  allCurrencies: PropTypes.array.isRequired
 };
 
 export default Customers;

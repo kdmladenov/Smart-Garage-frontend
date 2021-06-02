@@ -6,12 +6,12 @@ import {
 // import Sort from '../../components/Sort/Sort';
 // import Paging from '../../components/Paging/Paging';
 import useHttp from '../../hooks/useHttp';
+import PropTypes from 'prop-types';
 import { BASE_URL } from '../../common/constants';
 // import { useState } from 'react';
 import CustomerCard from '../../components/Customers/CustomerCard';
 import Loading from '../../components/UI/Loading';
-
-const Customers = () => {
+const Customers = ({ registerCustomerMode, setRegisterCustomerMode }) => {
   // const user = getUser();
   // const history = useHistory();
   const { search: query } = useLocation();
@@ -32,7 +32,6 @@ const Customers = () => {
   //   history.push('/serviceUnavailable');
   // }
 
-  // console.log(data);
   const customersListToShow = (
     <div className="customer-list">
       {data.map((customer) => {
@@ -40,14 +39,27 @@ const Customers = () => {
           <CustomerCard
             className="customer-card"
             key={customer.userId}
-
             customer={customer}
+            registerCustomerMode={registerCustomerMode}
+            setRegisterCustomerMode={setRegisterCustomerMode}
           />
         );
       })}
     </div>
   );
 
+  const emptyCustomer = {
+    firstName: '',
+    lastName: '',
+    companyName: '',
+    phone: '',
+    email: '',
+    reenteredEmail: '',
+    country: '',
+    city: '',
+    postalCode: '',
+    streetAddress: ''
+  };
   return (
     <main>
       <div className="container-inner">
@@ -65,19 +77,30 @@ const Customers = () => {
             </Button>
           )} */}
         </div>
-        {data.length
-          ? (
-          <ul>{customersListToShow}</ul>
-            )
-          : (
-          <h2> No customers are found... </h2>
-            )}
+        {registerCustomerMode && (
+          <CustomerCard
+            className="customer-card"
+            customer={emptyCustomer}
+            registerCustomerMode={registerCustomerMode}
+            setRegisterCustomerMode={setRegisterCustomerMode}
+          />
+        )}
+        {!registerCustomerMode && (data.length ? <ul>{customersListToShow}</ul> : <h2> No customers are found... </h2>)}
         {/* <div id="paging-customers">
           <Paging resource="/customers" />
         </div> */}
       </div>
     </main>
   );
+};
+
+Customers.defaultProps = {
+  registerCustomerMode: false
+};
+
+Customers.propTypes = {
+  registerCustomerMode: PropTypes.bool.isRequired,
+  setRegisterCustomerMode: PropTypes.func.isRequired
 };
 
 export default Customers;

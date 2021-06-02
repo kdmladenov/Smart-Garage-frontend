@@ -4,9 +4,10 @@ import './Services.css';
 import { BASE_URL } from '../../common/constants';
 import { getToken } from '../../providers/AuthContext';
 import { Card, Form } from 'react-bootstrap';
-import { MDBBtn, MDBIcon, MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdbreact';
+import { MDBBtn, MDBIcon } from 'mdbreact';
 import carSegment from '../../common/car-secment.enum';
 import validateService from './serviceValidator';
+import DeleteButtonWithPopover from '../UI/DeleteButtonWithPopover/DeleteButtonWithPopover';
 
 const ServiceCard = ({ service }) => {
   const [editMode, setEditMode] = useState(false);
@@ -87,10 +88,7 @@ const ServiceCard = ({ service }) => {
           <Form className="service-detailed">
             <div className="row gutters">
               <div className="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 name">
-                <Form.Group
-                  controlId="formBasicName"
-                  className={inputErrors.name ? 'error' : ''}
-                >
+                <Form.Group controlId="formBasicName" className={inputErrors.name ? 'error' : ''}>
                   <Form.Control
                     type="text"
                     name="name"
@@ -99,16 +97,11 @@ const ServiceCard = ({ service }) => {
                     onChange={(e) => handleInput(e.target.name, e.target.value)}
                     disabled={!editMode}
                   />
-                  <Form.Label
-                    className={editMode ? 'visible' : ''}
-                  >{`Service Name${inputErrors.name}`}</Form.Label>
+                  <Form.Label className={editMode ? 'visible' : ''}>{`Service Name${inputErrors.name}`}</Form.Label>
                 </Form.Group>
               </div>
               <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12 car-segment">
-                <Form.Group
-                  controlId="formBasicCarSegment"
-                  className={inputErrors.carSegment ? 'error' : ''}
-                >
+                <Form.Group controlId="formBasicCarSegment" className={inputErrors.carSegment ? 'error' : ''}>
                   <Form.Control
                     as="select"
                     name="carSegment"
@@ -129,10 +122,7 @@ const ServiceCard = ({ service }) => {
                 </Form.Group>
               </div>
               <div className="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12 price">
-                <Form.Group
-                  controlId="formBasicPrice"
-                  className={inputErrors.price ? 'error' : ''}
-                >
+                <Form.Group controlId="formBasicPrice" className={inputErrors.price ? 'error' : ''}>
                   <Form.Control
                     type="text"
                     name="price"
@@ -141,9 +131,7 @@ const ServiceCard = ({ service }) => {
                     onChange={(e) => handleInput(e.target.name, e.target.value)}
                     disabled={!editMode}
                   />
-                  <Form.Label
-                    className={editMode ? 'visible' : ''}
-                  >{`Price${inputErrors.price} `}</Form.Label>
+                  <Form.Label className={editMode ? 'visible' : ''}>{`Price${inputErrors.price} `}</Form.Label>
                 </Form.Group>
               </div>
               <div className="col-xl-2 col-lg-2 col-md-2 col-sm-12 col-12 buttons">
@@ -183,29 +171,7 @@ const ServiceCard = ({ service }) => {
                     >
                       <MDBIcon icon="edit" />
                     </MDBBtn>
-                    <MDBPopover
-                      placement="left"
-                      popover
-                      clickable
-                      id="delete-popover"
-                    >
-                      <MDBBtn type="button">
-                        <MDBIcon icon="trash-alt" />
-                      </MDBBtn>
-                      <div>
-                        <MDBPopoverHeader>Are you sure?</MDBPopoverHeader>
-                        <MDBPopoverBody>
-                          <MDBBtn
-                            color="red"
-                            onClick={() => {
-                              handleDeleteButton(true);
-                            }}
-                          >
-                            Delete
-                          </MDBBtn>
-                        </MDBPopoverBody>
-                      </div>
-                    </MDBPopover>
+                    <DeleteButtonWithPopover handleDeleteButton={handleDeleteButton} />
                   </>
                 )}
               </div>

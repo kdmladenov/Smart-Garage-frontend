@@ -4,9 +4,10 @@ import './Parts.css';
 import { BASE_URL } from '../../common/constants';
 import { getToken } from '../../providers/AuthContext';
 import { Card, Form } from 'react-bootstrap';
-import { MDBBtn, MDBIcon, MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdbreact';
+import { MDBBtn, MDBIcon } from 'mdbreact';
 import carSegment from '../../common/car-secment.enum';
 import validatePart from './partValidator';
+import DeleteButtonWithPopover from '../UI/DeleteButtonWithPopover/DeleteButtonWithPopover';
 
 const PartCard = ({ part }) => {
   const [editMode, setEditMode] = useState(false);
@@ -115,7 +116,9 @@ const PartCard = ({ part }) => {
                       </option>
                     ))}
                   </Form.Control>
-                  <Form.Label className={editMode ? 'visible' : ''}>{`Car Segment ${inputErrors.carSegment}`}</Form.Label>
+                  <Form.Label
+                    className={editMode ? 'visible' : ''}
+                  >{`Car Segment ${inputErrors.carSegment}`}</Form.Label>
                 </Form.Group>
               </div>
               <div className="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12 price">
@@ -168,24 +171,7 @@ const PartCard = ({ part }) => {
                     >
                       <MDBIcon icon="edit" />
                     </MDBBtn>
-                    <MDBPopover placement="left" popover clickable id="delete-popover">
-                      <MDBBtn type="button">
-                        <MDBIcon icon="trash-alt" />
-                      </MDBBtn>
-                      <div>
-                        <MDBPopoverHeader>Are you sure?</MDBPopoverHeader>
-                        <MDBPopoverBody>
-                          <MDBBtn
-                            color="red"
-                            onClick={() => {
-                              handleDeleteButton(true);
-                            }}
-                          >
-                            Delete
-                          </MDBBtn>
-                        </MDBPopoverBody>
-                      </div>
-                    </MDBPopover>
+                      <DeleteButtonWithPopover handleDeleteButton={handleDeleteButton} />
                   </>
                 )}
               </div>

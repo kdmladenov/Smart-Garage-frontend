@@ -18,11 +18,11 @@ const App = () => {
   // const [customerQuery, setCustomerQuery] = useState();
   const [createPartMode, setCreatePartMode] = useState(false);
   const [createServiceMode, setCreateServiceMode] = useState(false);
+  const [registerCustomerMode, setRegisterCustomerMode] = useState(false);
   const [authValue, setAuthValue] = useState({
     isLoggedIn: !!getUser(),
     user: getUser()
   });
-
   const modalNumber = 'Modal14';
   const [modalIsOpen, toggleModalIsOpen] = useState({ [modalNumber]: false });
   const toggleModal = () => {
@@ -61,6 +61,8 @@ const App = () => {
             createServiceMode={createServiceMode}
             setCreatePartMode={setCreatePartMode}
             createPartMode={createPartMode}
+            registerCustomerMode={registerCustomerMode}
+            setRegisterCustomerMode={setRegisterCustomerMode}
           />
         )}
         <Switch>
@@ -68,7 +70,12 @@ const App = () => {
           <GuardedRoute
             path="/customers"
             exact
-            component={Customers}
+            component={() => (
+              <Customers
+                registerCustomerMode={registerCustomerMode}
+                setRegisterCustomerMode={setRegisterCustomerMode}
+              />
+            )}
             isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
           />
           <GuardedRoute
@@ -91,12 +98,7 @@ const App = () => {
             component={() => <Parts createPartMode={createPartMode} setCreatePartMode={setCreatePartMode} />}
             isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
           />
-          <GuardedRoute
-            path="/customer-profile"
-            exact
-            component={CustomerProfile}
-            isLoggedIn={authValue.isLoggedIn}
-          />
+          <GuardedRoute path="/customer-profile" exact component={CustomerProfile} isLoggedIn={authValue.isLoggedIn} />
         </Switch>
         <Modal
           modalHeader="Are you leaving?"

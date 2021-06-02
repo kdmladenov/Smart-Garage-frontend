@@ -152,24 +152,28 @@ const VehicleCardDetailed = ({
             )}
             {(editMode || registerVehicleMode || registerCustomerMode) && (
               <>
-                <MDBBtn type="submit" onClick={handleFormSubmit} disabled={Object.values(inputErrors).some(e => e !== '')}>
+                <MDBBtn type="submit" onClick={handleFormSubmit} disabled={!isValid}>
                   <MDBIcon icon="check" />
                 </MDBBtn>
-                <MDBBtn type="button" onClick={() => {
-                  setEditMode(false);
-                  setVehicle(vehicleCopy);
-                  setInputErrors({
-                    vin: '',
-                    licensePlate: '',
-                    engineType: '',
-                    transmission: '',
-                    manufacturedYear: '',
-                    modelName: '',
-                    manufacturer: '',
-                    carSegment: ''
-                  });
-                  setError('');
-                }}>
+                <MDBBtn
+                  type="button"
+                  onClick={() => {
+                    setEditMode(false);
+                    setRegisterCustomerMode(false);
+                    setVehicle(vehicleCopy);
+                    setInputErrors({
+                      vin: '',
+                      licensePlate: '',
+                      engineType: '',
+                      transmission: '',
+                      manufacturedYear: '',
+                      modelName: '',
+                      manufacturer: '',
+                      carSegment: ''
+                    });
+                    setError('');
+                  }}
+                >
                   <MDBIcon icon="times" />
                 </MDBBtn>
               </>
@@ -220,9 +224,7 @@ const VehicleCardDetailed = ({
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
                 disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
               >
-                <option value=''>
-                  Select Engine Type
-                </option>
+                <option value="">Select Engine Type</option>
                 {Object.keys(engineType).map((k) => (
                   <option key={k} value={engineType[k]}>
                     {engineType[k]}
@@ -241,9 +243,7 @@ const VehicleCardDetailed = ({
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
                 disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
               >
-                <option value=''>
-                  Select Transmission
-                </option>
+                <option value="">Select Transmission</option>
                 {Object.keys(transmission).map((k) => (
                   <option key={k} value={transmission[k]}>
                     {transmission[k]}
@@ -264,9 +264,7 @@ const VehicleCardDetailed = ({
                 }}
                 disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
               >
-                <option value="">
-                  Select Manufacturer
-                </option>
+                <option value="">Select Manufacturer</option>
                 {manufacturers.map((manuf) => (
                   <option key={manuf} value={manuf}>
                     {manuf}
@@ -287,9 +285,7 @@ const VehicleCardDetailed = ({
                 }}
                 disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
               >
-                <option value=''>
-                  Select Model
-                </option>
+                <option value="">Select Model</option>
                 {models.map((model) => (
                   <option key={model.modelId} value={model.modelName}>
                     {model.modelName}
@@ -308,10 +304,7 @@ const VehicleCardDetailed = ({
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
                 disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
               >
-                <option value=''
-                >
-                  Select Car Segment
-                </option>
+                <option value="">Select Car Segment</option>
                 {carSegment.map((m) => (
                   <option key={m.modelId} value={m.carSegment}>
                     {m.carSegment}

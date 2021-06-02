@@ -110,7 +110,7 @@ VehicleCard.defaultProps = {
   engineType: '',
   licensePlate: '',
   manufacturer: '',
-  manufacturedYear: '',
+  manufacturedYear: null,
   manufacturerId: null,
   modelName: '',
   modelId: null,

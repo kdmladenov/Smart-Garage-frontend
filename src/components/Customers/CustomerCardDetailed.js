@@ -86,7 +86,7 @@ const CustomerCardDetailed = ({
         });
     }
   };
-  console.log(user, 'user');
+  console.log(!editMode && !registerCustomerMode, '!editMode && !registerCustomerMode');
   return (
     <div>
       <Form className="customer-detailed">
@@ -236,8 +236,9 @@ const CustomerCardDetailed = ({
                 name="role"
                 value={user.role || 'Select User Role'}
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
+                disabled={!editMode && !registerCustomerMode}
               >
-                <option value="">Select User Role</option>
+                <option value='' >Select User Role</option>
                 {Object.keys(roleType).map((k) => (
                   <option value={roleType[k]} key={k}>
                     {roleType[k]}

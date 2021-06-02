@@ -12,8 +12,8 @@ const Header = ({
   setCreateServiceMode,
   createPartMode,
   setCreatePartMode,
-  createCustomerMode,
-  setCreateCustomerMode
+  registerCustomerMode,
+  setRegisterCustomerMode
 }) => {
   const initialContent = getUser().role === 'employee' ? 'customers' : 'account';
   const [content, setContent] = useState(initialContent);
@@ -56,8 +56,8 @@ const Header = ({
         <div className={`side-nav ${sideNavVisible ? 'open' : ''}`} style={sideNavStyle}>
           {content === 'customers' && (
             <div>
-              <MDBBtn type="button" onClick={() => setCreateCustomerMode(!createCustomerMode)}>
-                {!createCustomerMode ? 'Register New Customer' : 'Close Register Form'}
+              <MDBBtn type="button" onClick={() => setRegisterCustomerMode(!registerCustomerMode)}>
+                {!registerCustomerMode ? 'Register New Customer' : 'Close Register Form'}
               </MDBBtn>
             </div>
           )}
@@ -161,7 +161,7 @@ export default Header;
 Header.defaultProps = {
   createPartMode: false,
   createServiceMode: false,
-  createCustomerMode: false
+  registerCustomerMode: false
 };
 
 Header.propTypes = {
@@ -171,6 +171,6 @@ Header.propTypes = {
   createPartMode: PropTypes.bool.isRequired,
   setCreateServiceMode: PropTypes.func.isRequired,
   createServiceMode: PropTypes.bool.isRequired,
-  setCreateCustomerMode: PropTypes.func.isRequired,
-  createCustomerMode: PropTypes.bool.isRequired
+  setRegisterCustomerMode: PropTypes.func.isRequired,
+  registerCustomerMode: PropTypes.bool.isRequired
 };

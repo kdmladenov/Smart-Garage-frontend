@@ -9,7 +9,16 @@ import transmission from '../../common/transmission.enum';
 import engineType from '../../common/engine-type.enum';
 import './VehicleCardDetailed.css';
 
-const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) => {
+const VehicleCardDetailed = ({
+  vehicle: vehicleData,
+  editMode,
+  setEditMode,
+  registerVehicleMode,
+  setRegisterVehicleMode,
+  registerCustomerMode,
+  setRegisterCustomerMode,
+  newCustomerId
+}) => {
   const [error, setError] = useState('');
   const [vehicle, setVehicle] = useState({ ...vehicleData });
   const [inputErrors, setInputErrors] = useState({
@@ -36,31 +45,31 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
         Authorization: `Bearer ${getToken()}`
       }
     })
-      .then(res => {
+      .then((res) => {
         if (!res.ok) {
           throw new Error(res.status);
         }
         return res.json();
       })
-      .then(res => {
+      .then((res) => {
         setModelsData(res);
 
         const makes = new Set();
-        res.forEach(m => makes.add(m.manufacturer));
+        res.forEach((m) => makes.add(m.manufacturer));
         setManufacturers([...makes]);
-        filterModels(res.filter(m => m.manufacturer === vehicle.manufacturer));
+        filterModels(res.filter((m) => m.manufacturer === vehicle.manufacturer));
 
-        filterCarSegment(res.filter(m => m.modelName === vehicle.modelName));
+        filterCarSegment(res.filter((m) => m.modelName === vehicle.modelName));
       })
       .catch((e) => setError(e.message));
   }, []);
 
   useEffect(() => {
-    filterModels(modelsData.filter(m => m.manufacturer === vehicle.manufacturer));
+    filterModels(modelsData.filter((m) => m.manufacturer === vehicle.manufacturer));
   }, [vehicle.manufacturer]);
 
   useEffect(() => {
-    filterCarSegment(modelsData.filter(m => m.modelName === vehicle.modelName));
+    filterCarSegment(modelsData.filter((m) => m.modelName === vehicle.modelName));
   }, [vehicle.modelName]);
 
   // const modelsByMake = (make) => {
@@ -81,32 +90,55 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
     setInputErrors({ ...inputErrors, [prop]: validateInput[prop](value) });
     updateVehicle(prop, value);
   };
+  const isValid =
+    registerVehicleMode || registerCustomerMode
+      ? Object.values(inputErrors).every((v) => v === '') && Object.values(vehicle).every((v) => v)
+      : Object.values(inputErrors).every((v) => v === '');
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setVehicleCopy({ ...vehicleCopy, ...vehicle });
-    setEditMode(false);
     setError('');
 
-    fetch(`${BASE_URL}/vehicles/${vehicle.vehicleId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
-      },
-      body: JSON.stringify(vehicle)
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (res.message) {
-          setError(res.message);
-        } else {
-          setEditMode(false);
-        }
-      });
-  };
+    if ((registerVehicleMode || registerCustomerMode) && isValid) {
+      fetch(`${BASE_URL}/vehicles`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`
+        },
+        body: JSON.stringify({ ...vehicle, userId: newCustomerId })
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.message) {
+            setError(res.message);
+          } else {
+            setVehicleCopy({ ...vehicleCopy, ...vehicle });
+            // setEditMode(false);
+          }
+        });
+    }
 
-  // console.log(models);
+    if (editMode && isValid) {
+      fetch(`${BASE_URL}/vehicles/${vehicle.vehicleId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(vehicle)
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.message) {
+            setError(res.message);
+          } else {
+            setVehicleCopy({ ...vehicleCopy, ...vehicle });
+            setEditMode(false);
+          }
+        });
+    }
+  };
 
   return (
     <div>
@@ -118,36 +150,43 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
                 <p>{`${error}`}</p>
               </Form.Group>
             )}
-            {editMode && (
+            {(editMode || registerVehicleMode || registerCustomerMode) && (
               <>
-                <MDBBtn type="submit" onClick={handleFormSubmit}>
+                <MDBBtn type="submit" onClick={handleFormSubmit} disabled={!isValid}>
                   <MDBIcon icon="check" />
                 </MDBBtn>
-                <MDBBtn type="button" onClick={() => {
-                  setEditMode(false);
-                  setVehicle(vehicleCopy);
-                  setInputErrors({
-                    vin: '',
-                    licensePlate: '',
-                    engineType: '',
-                    transmission: '',
-                    manufacturedYear: '',
-                    modelName: '',
-                    manufacturer: '',
-                    carSegment: ''
-                  });
-                }}>
+                <MDBBtn
+                  type="button"
+                  onClick={() => {
+                    setRegisterVehicleMode(false);
+                    setEditMode(false);
+                    setVehicle(vehicleCopy);
+                    setInputErrors({
+                      vin: '',
+                      licensePlate: '',
+                      engineType: '',
+                      transmission: '',
+                      manufacturedYear: '',
+                      modelName: '',
+                      manufacturer: '',
+                      carSegment: ''
+                    });
+                  }}
+                >
                   <MDBIcon icon="times" />
                 </MDBBtn>
               </>
             )}
-            {!editMode &&
-              <MDBBtn type="button" onClick={() => {
-                setEditMode(true);
-              }}>
+            {!editMode && !(registerVehicleMode || registerCustomerMode) && (
+              <MDBBtn
+                type="button"
+                onClick={() => {
+                  setEditMode(true);
+                }}
+              >
                 <MDBIcon icon="edit" />
               </MDBBtn>
-            }
+            )}
           </div>
           <div className="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
             <Form.Group controlId="formBasicVin" className={inputErrors.vin ? 'error' : ''}>
@@ -157,11 +196,9 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
                 placeholder="Enter VIN"
                 value={vehicle.vin}
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
-                disabled={!editMode}
-                />
-                <Form.Label>
-                  {`VIN${inputErrors.vin}`}
-                </Form.Label>
+                disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
+              />
+              <Form.Label>{`VIN${inputErrors.vin}`}</Form.Label>
             </Form.Group>
           </div>
           <div className="col-xl-2 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -172,11 +209,9 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
                 placeholder="Enter License Plate"
                 value={vehicle.licensePlate}
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
-                disabled={!editMode}
-                />
-                <Form.Label>
-                  {`License Plate${inputErrors.licensePlate}`}
-                </Form.Label>
+                disabled={!editMode && !registerVehicleMode && !registerCustomerMode}
+              />
+              <Form.Label>{`License Plate${inputErrors.licensePlate}`}</Form.Label>
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -186,14 +221,18 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
                 name="engineType"
                 value={vehicle.engineType || 'Select Engine Type'}
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
-                disabled={!editMode}
-                >
-                  <option value disabled>Select Engine Type</option>
-                  {Object.keys(engineType).map(k => <option key={k} value={engineType[k]}>{engineType[k]}</option>)}
-                </Form.Control>
-                <Form.Label>
-                  {`Engine Type${inputErrors.engineType}`}
-                </Form.Label>
+                disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
+              >
+                <option value=''>
+                  Select Engine Type
+                </option>
+                {Object.keys(engineType).map((k) => (
+                  <option key={k} value={engineType[k]}>
+                    {engineType[k]}
+                  </option>
+                ))}
+              </Form.Control>
+              <Form.Label>{`Engine Type${inputErrors.engineType}`}</Form.Label>
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -203,14 +242,18 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
                 name="transmission"
                 value={vehicle.transmission || 'Select Transmission'}
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
-                disabled={!editMode}
-                >
-                  <option value disabled>Select Transmission</option>
-                  {Object.keys(transmission).map(k => <option key={k} value={transmission[k]}>{transmission[k]}</option>)}
-                </Form.Control>
-                <Form.Label>
-                  {`Transmission ${inputErrors.transmission}`}
-                </Form.Label>
+                disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
+              >
+                <option value=''>
+                  Select Transmission
+                </option>
+                {Object.keys(transmission).map((k) => (
+                  <option key={k} value={transmission[k]}>
+                    {transmission[k]}
+                  </option>
+                ))}
+              </Form.Control>
+              <Form.Label>{`Transmission ${inputErrors.transmission}`}</Form.Label>
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -222,14 +265,18 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
                 onChange={(e) => {
                   handleInput(e.target.name, e.target.value);
                 }}
-                disabled={!editMode}
-                >
-                  <option value="none" disabled>Select Manufacturer</option>
-                  {manufacturers.map(manuf => <option key={manuf} value={manuf}>{manuf}</option>)}
-                </Form.Control>
-                <Form.Label>
-                  {`Manufacturer${inputErrors.manufacturer}`}
-                </Form.Label>
+                disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
+              >
+                <option value="">
+                  Select Manufacturer
+                </option>
+                {manufacturers.map((manuf) => (
+                  <option key={manuf} value={manuf}>
+                    {manuf}
+                  </option>
+                ))}
+              </Form.Control>
+              <Form.Label>{`Manufacturer${inputErrors.manufacturer}`}</Form.Label>
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -241,14 +288,18 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
                 onChange={(e) => {
                   handleInput(e.target.name, e.target.value);
                 }}
-                disabled={!editMode}
-                >
-                  <option value disabled>Select Model</option>
-                  {models.map(model => <option key={model.modelId} value={model.modelName}>{model.modelName}</option>)}
-                </Form.Control>
-                <Form.Label>
-                  {`Model ${inputErrors.modelName}`}
-                </Form.Label>
+                disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
+              >
+                <option value=''>
+                  Select Model
+                </option>
+                {models.map((model) => (
+                  <option key={model.modelId} value={model.modelName}>
+                    {model.modelName}
+                  </option>
+                ))}
+              </Form.Control>
+              <Form.Label>{`Model ${inputErrors.modelName}`}</Form.Label>
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -258,14 +309,19 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
                 name="carSegment"
                 value={vehicle.carSegment}
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
-                disabled={!editMode}
+                disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
+              >
+                <option value=''
                 >
-                  <option disabled>Select Car Segment</option>
-                  {carSegment.map(m => <option key={m.modelId} value={m.carSegment}>{m.carSegment}</option>)}
+                  Select Car Segment
+                </option>
+                {carSegment.map((m) => (
+                  <option key={m.modelId} value={m.carSegment}>
+                    {m.carSegment}
+                  </option>
+                ))}
               </Form.Control>
-                <Form.Label>
-                  {`Car Segment${inputErrors.carSegment}`}
-                </Form.Label>
+              <Form.Label>{`Car Segment${inputErrors.carSegment}`}</Form.Label>
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -276,11 +332,9 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
                 placeholder="Year of Manufacturing"
                 value={vehicle.manufacturedYear}
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
-                disabled={!editMode}
-                />
-                <Form.Label>
-                  {`Year of Manufacturing ${inputErrors.manufacturedYear}`}
-                </Form.Label>
+                disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
+              />
+              <Form.Label>{`Year of Manufacturing ${inputErrors.manufacturedYear}`}</Form.Label>
             </Form.Group>
           </div>
         </div>
@@ -292,30 +346,55 @@ const VehicleCardDetailed = ({ vehicle: vehicleData, editMode, setEditMode }) =>
 VehicleCardDetailed.defaultProps = {
   carSegment: '',
   carSegmentId: '',
-  fullName: null,
-  companyName: ''
+  companyName: '',
+  email: '',
+  engineType: '',
+  fullName: '',
+  licensePlate: '',
+  manufacturer: '',
+  manufacturedYear: '',
+  manufacturerId: null,
+  modelName: '',
+  modelId: null,
+  transmission: '',
+  userId: null,
+  vehicleId: null,
+  vin: '',
+  setNewCustomerId: () => {},
+  editMode: false,
+  setEditMode: () => {},
+  registerCustomerMode: false,
+  setRegisterCustomerMode: () => {},
+  registerVehicleMode: false,
+  setRegisterVehicleMode: () => {},
+  newCustomerId: null
 };
 
 VehicleCardDetailed.propTypes = {
   vehicle: PropTypes.shape({
     carSegment: PropTypes.string,
     carSegmentId: PropTypes.number,
-    email: PropTypes.string.isRequired,
-    engineType: PropTypes.string.isRequired,
+    email: PropTypes.string,
+    engineType: PropTypes.string,
     fullName: PropTypes.string,
-    licensePlate: PropTypes.string.isRequired,
-    manufacturer: PropTypes.string.isRequired,
-    manufacturedYear: PropTypes.number.isRequired,
-    manufacturerId: PropTypes.number.isRequired,
-    modelName: PropTypes.string.isRequired,
-    modelId: PropTypes.number.isRequired,
-    transmission: PropTypes.string.isRequired,
-    userId: PropTypes.number.isRequired,
-    vehicleId: PropTypes.number.isRequired,
-    vin: PropTypes.string.isRequired
+    licensePlate: PropTypes.string,
+    manufacturer: PropTypes.string,
+    manufacturedYear: PropTypes.string,
+    manufacturerId: PropTypes.number,
+    modelName: PropTypes.string,
+    modelId: PropTypes.number,
+    transmission: PropTypes.string,
+    userId: PropTypes.number,
+    vehicleId: PropTypes.number,
+    vin: PropTypes.string
   }).isRequired,
-  editMode: PropTypes.bool.isRequired,
-  setEditMode: PropTypes.func.isRequired
+  editMode: PropTypes.bool,
+  setEditMode: PropTypes.func,
+  registerVehicleMode: PropTypes.bool,
+  setRegisterVehicleMode: PropTypes.func,
+  registerCustomerMode: PropTypes.bool,
+  setRegisterCustomerMode: PropTypes.func,
+  newCustomerId: PropTypes.number
 };
 
 export default VehicleCardDetailed;

@@ -18,12 +18,11 @@ const App = () => {
   // const [customerQuery, setCustomerQuery] = useState();
   const [createPartMode, setCreatePartMode] = useState(false);
   const [createServiceMode, setCreateServiceMode] = useState(false);
-  const [createCustomerMode, setCreateCustomerMode] = useState(false);
+  const [registerCustomerMode, setRegisterCustomerMode] = useState(false);
   const [authValue, setAuthValue] = useState({
     isLoggedIn: !!getUser(),
     user: getUser()
   });
-
   const modalNumber = 'Modal14';
   const [modalIsOpen, toggleModalIsOpen] = useState({ [modalNumber]: false });
   const toggleModal = () => {
@@ -62,8 +61,8 @@ const App = () => {
             createServiceMode={createServiceMode}
             setCreatePartMode={setCreatePartMode}
             createPartMode={createPartMode}
-            createCustomerMode={createCustomerMode}
-            setCreateCustomerMode={setCreateCustomerMode}
+            registerCustomerMode={registerCustomerMode}
+            setRegisterCustomerMode={setRegisterCustomerMode}
           />
         )}
         <Switch>
@@ -72,7 +71,10 @@ const App = () => {
             path="/customers"
             exact
             component={() => (
-              <Customers createCustomerMode={createCustomerMode} setCreateCustomerMode={setCreateCustomerMode} />
+              <Customers
+                registerCustomerMode={registerCustomerMode}
+                setRegisterCustomerMode={setRegisterCustomerMode}
+              />
             )}
             isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
           />

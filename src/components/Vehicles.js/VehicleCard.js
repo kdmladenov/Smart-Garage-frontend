@@ -10,9 +10,15 @@ import VehicleCardDetailed from './VehicleCardDetailed';
 import VisitCard from '../Visits/VisitCard';
 import './Vehicles.css';
 
-const VehicleCard = ({ vehicle }) => {
+const VehicleCard = ({
+  vehicle,
+  registerVehicleMode,
+  setRegisterVehicleMode,
+  registerCustomerMode,
+  setRegisterCustomerMode,
+  newCustomerId
+}) => {
   const [editMode, setEditMode] = useState(false);
-  // console.log('vehiclekk', vehicle);
   const {
     data,
     // setLocalData,
@@ -23,67 +29,75 @@ const VehicleCard = ({ vehicle }) => {
   if (loading) {
     return <Loading />;
   }
-
   // // if (error === '404') {
   // //   history.push('*');
   // // } else if (error) {
   // //   history.push('/serviceUnavailable');
   // // }
-  // console.log('visits', data);
   const visitListToShow = (
-      <div className="visit-list">
-        {data.map((visit) => {
-          return (
-            <VisitCard
-              className="visit-card"
-              key={visit.visitId}
-              visit={visit}
-            />
-          );
-        })}
-      </div>
+    <div className="visit-list">
+      {data.map((visit) => {
+        return <VisitCard className="visit-card" key={visit.visitId} visit={visit} />;
+      })}
+    </div>
   );
-  // console.log('visitListToShow', visitListToShow);
+
+  if (registerVehicleMode || registerCustomerMode) {
+    return (
+      <VehicleCardDetailed
+        vehicle={vehicle}
+        editMode={editMode}
+        setEditMode={setEditMode}
+        registerVehicleMode={registerVehicleMode}
+        setRegisterVehicleMode={setRegisterVehicleMode}
+        registerCustomerMode={registerCustomerMode}
+        setRegisterCustomerMode={setRegisterCustomerMode}
+        newCustomerId={newCustomerId}
+      />
+    );
+  }
+
   return (
-    <>
-      <Accordion>
-        <Card key={vehicle.vehicleId}>
-          <Card.Header className="card-header">
-            <div className="card-header-text">
-              <div className="card-header-text-item">{vehicle.manufacturer}</div>
-              <div className="card-header-text-item">{vehicle.modelName}</div>
-              <div className="card-header-text-item">
-                {vehicle.licensePlate}
+    !registerVehicleMode && (
+      <>
+        <Accordion>
+          <Card key={vehicle.vehicleId}>
+            <Card.Header className="card-header">
+              <div className="card-header-text">
+                <div className="card-header-text-item">{vehicle.manufacturer}</div>
+                <div className="card-header-text-item">{vehicle.modelName}</div>
+                <div className="card-header-text-item">{vehicle.licensePlate}</div>
               </div>
-            </div>
-            <div className="card-header-buttons">
-              <CustomToggle variant="primary" eventKey="1" setEditMode={setEditMode}>
-                Details
-              </CustomToggle>
-              <CustomToggle variant="primary" eventKey="2" setEditMode={setEditMode}>
-                History
-              </CustomToggle>
-            </div>
-          </Card.Header>
-          <Accordion.Collapse eventKey="1">
-            <Card.Body>
-              <VehicleCardDetailed key={vehicle.vehicleId} vehicle={vehicle} editMode={editMode} setEditMode={setEditMode} />
-            </Card.Body>
-          </Accordion.Collapse>
-          <Accordion.Collapse eventKey="2">
-            <Card.Body>
-              {data.length
-                ? (
-                <ul>{visitListToShow}</ul>
-                  )
-                : (
-                <h2> No visits found for this vehicle </h2>
-                  )}
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion>
-    </>
+              <div className="card-header-buttons">
+                <CustomToggle variant="primary" eventKey="1" setEditMode={setEditMode}>
+                  Details
+                </CustomToggle>
+                <CustomToggle variant="primary" eventKey="2" setEditMode={setEditMode}>
+                  History
+                </CustomToggle>
+              </div>
+            </Card.Header>
+            <Accordion.Collapse eventKey="1">
+              <Card.Body>
+                <VehicleCardDetailed
+                  key={vehicle.vehicleId}
+                  vehicle={vehicle}
+                  editMode={editMode}
+                  setEditMode={setEditMode}
+                  registerVehicleMode={registerVehicleMode}
+                  setRegisterVehicleMode={setRegisterVehicleMode}
+                />
+              </Card.Body>
+            </Accordion.Collapse>
+            <Accordion.Collapse eventKey="2">
+              <Card.Body>
+                {data.length ? <ul>{visitListToShow}</ul> : <h2> No visits found for this vehicle </h2>}
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        </Accordion>
+      </>
+    )
   );
 };
 
@@ -91,27 +105,49 @@ VehicleCard.defaultProps = {
   carSegment: '',
   carSegmentId: '',
   fullName: null,
-  companyName: ''
+  companyName: '',
+  email: '',
+  engineType: '',
+  licensePlate: '',
+  manufacturer: '',
+  manufacturedYear: '',
+  manufacturerId: null,
+  modelName: '',
+  modelId: null,
+  transmission: '',
+  userId: null,
+  vehicleId: null,
+  vin: '',
+  registerVehicleMode: false,
+  registerCustomerMode: false,
+  setRegisterVehicleMode: () => {},
+  newCustomerId: null,
+  setRegisterCustomerMode: () => {}
 };
 
 VehicleCard.propTypes = {
   vehicle: PropTypes.shape({
     carSegment: PropTypes.string,
     carSegmentId: PropTypes.number,
-    email: PropTypes.string.isRequired,
-    engineType: PropTypes.string.isRequired,
+    email: PropTypes.string,
+    engineType: PropTypes.string,
     fullName: PropTypes.string,
-    licensePlate: PropTypes.string.isRequired,
-    manufacturer: PropTypes.string.isRequired,
-    manufacturedYear: PropTypes.number.isRequired,
-    manufacturerId: PropTypes.number.isRequired,
-    modelName: PropTypes.string.isRequired,
-    modelId: PropTypes.number.isRequired,
-    transmission: PropTypes.string.isRequired,
-    userId: PropTypes.number.isRequired,
-    vehicleId: PropTypes.number.isRequired,
-    vin: PropTypes.string.isRequired
-  }).isRequired
+    licensePlate: PropTypes.string,
+    manufacturer: PropTypes.string,
+    manufacturedYear: PropTypes.number,
+    manufacturerId: PropTypes.number,
+    modelName: PropTypes.string,
+    modelId: PropTypes.number,
+    transmission: PropTypes.string,
+    userId: PropTypes.number,
+    vehicleId: PropTypes.number,
+    vin: PropTypes.string
+  }).isRequired,
+  registerVehicleMode: PropTypes.bool,
+  registerCustomerMode: PropTypes.bool,
+  setRegisterVehicleMode: PropTypes.func,
+  newCustomerId: PropTypes.number,
+  setRegisterCustomerMode: PropTypes.func
 };
 
 export default VehicleCard;

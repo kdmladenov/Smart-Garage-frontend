@@ -11,10 +11,7 @@ import { BASE_URL } from '../../common/constants';
 // import { useState } from 'react';
 import CustomerCard from '../../components/Customers/CustomerCard';
 import Loading from '../../components/UI/Loading';
-import Card from 'react-bootstrap/Card';
-import CreateCustomerCard from '../../components/Customers/CreateCustomerCard';
-import CreateVehicleCard from '../../components/Vehicles.js/CreateVehicleCard';
-const Customers = ({ createCustomerMode, setCreateCustomerMode }) => {
+const Customers = ({ registerCustomerMode, setRegisterCustomerMode }) => {
   // const user = getUser();
   // const history = useHistory();
   const { search: query } = useLocation();
@@ -35,15 +32,34 @@ const Customers = ({ createCustomerMode, setCreateCustomerMode }) => {
   //   history.push('/serviceUnavailable');
   // }
 
-  // console.log(data);
   const customersListToShow = (
     <div className="customer-list">
       {data.map((customer) => {
-        return <CustomerCard className="customer-card" key={customer.userId} customer={customer} />;
+        return (
+          <CustomerCard
+            className="customer-card"
+            key={customer.userId}
+            customer={customer}
+            registerCustomerMode={registerCustomerMode}
+            setRegisterCustomerMode={setRegisterCustomerMode}
+          />
+        );
       })}
     </div>
   );
 
+  const emptyCustomer = {
+    firstName: '',
+    lastName: '',
+    companyName: '',
+    phone: '',
+    email: '',
+    reenteredEmail: '',
+    country: '',
+    city: '',
+    postalCode: '',
+    streetAddress: ''
+  };
   return (
     <main>
       <div className="container-inner">
@@ -61,23 +77,15 @@ const Customers = ({ createCustomerMode, setCreateCustomerMode }) => {
             </Button>
           )} */}
         </div>
-        {createCustomerMode && (
-          <Card>
-            <Card.Header className="card-header">
-              <div className="card-header-text">Register New Customer</div>
-            </Card.Header>
-            <Card.Body>
-              <CreateCustomerCard setCreateCustomerMode={setCreateCustomerMode} createCustomerMode={createCustomerMode} />
-            </Card.Body>
-            <Card.Header className="card-header">
-              <div className="card-header-text ">Create New Car</div>
-            </Card.Header>
-            <Card.Body>
-              <CreateVehicleCard />
-            </Card.Body>
-          </Card>
+        {registerCustomerMode && (
+          <CustomerCard
+            className="customer-card"
+            customer={emptyCustomer}
+            registerCustomerMode={registerCustomerMode}
+            setRegisterCustomerMode={setRegisterCustomerMode}
+          />
         )}
-        {data.length ? <ul>{customersListToShow}</ul> : <h2> No customers are found... </h2>}
+        {!registerCustomerMode && (data.length ? <ul>{customersListToShow}</ul> : <h2> No customers are found... </h2>)}
         {/* <div id="paging-customers">
           <Paging resource="/customers" />
         </div> */}
@@ -87,12 +95,12 @@ const Customers = ({ createCustomerMode, setCreateCustomerMode }) => {
 };
 
 Customers.defaultProps = {
-  createCustomerMode: false
+  registerCustomerMode: false
 };
 
 Customers.propTypes = {
-  createCustomerMode: PropTypes.bool.isRequired,
-  setCreateCustomerMode: PropTypes.func.isRequired
+  registerCustomerMode: PropTypes.bool.isRequired,
+  setRegisterCustomerMode: PropTypes.func.isRequired
 };
 
 export default Customers;

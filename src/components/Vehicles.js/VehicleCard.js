@@ -10,7 +10,7 @@ import VehicleCardDetailed from './VehicleCardDetailed';
 import VisitCard from '../Visits/VisitCard';
 import './Vehicles.css';
 
-const VehicleCard = ({ vehicle }) => {
+const VehicleCard = ({ vehicle, allCurrencies }) => {
   const [editMode, setEditMode] = useState(false);
   // console.log('vehiclekk', vehicle);
   const {
@@ -38,6 +38,7 @@ const VehicleCard = ({ vehicle }) => {
               className="visit-card"
               key={visit.visitId}
               visit={visit}
+              allCurrencies={allCurrencies}
             />
           );
         })}
@@ -67,7 +68,12 @@ const VehicleCard = ({ vehicle }) => {
           </Card.Header>
           <Accordion.Collapse eventKey="1">
             <Card.Body>
-              <VehicleCardDetailed key={vehicle.vehicleId} vehicle={vehicle} editMode={editMode} setEditMode={setEditMode} />
+              <VehicleCardDetailed
+                key={vehicle.vehicleId}
+                vehicle={vehicle}
+                editMode={editMode}
+                setEditMode={setEditMode}
+              />
             </Card.Body>
           </Accordion.Collapse>
           <Accordion.Collapse eventKey="2">
@@ -111,7 +117,8 @@ VehicleCard.propTypes = {
     userId: PropTypes.number.isRequired,
     vehicleId: PropTypes.number.isRequired,
     vin: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  allCurrencies: PropTypes.array.isRequired
 };
 
 export default VehicleCard;

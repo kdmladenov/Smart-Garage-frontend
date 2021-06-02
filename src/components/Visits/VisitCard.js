@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import CustomToggle from '../UI/Accordion/CustomToggle';
 import VisitCardDetailed from './VisitCardDetailed';
-import './Visits.css';
 
-const VisitCard = ({ visit }) => {
+const VisitCard = ({ visit, allCurrencies }) => {
   // console.log('visits1', visit);
+  const [editMode, setEditMode] = useState(false);
 
   return (
     <>
@@ -32,7 +32,14 @@ const VisitCard = ({ visit }) => {
           </Card.Header>
           <Accordion.Collapse eventKey="1">
             <Card.Body>
-              <VisitCardDetailed key={visit.visitId} visit={visit} />
+              <VisitCardDetailed
+                key={visit.visitId}
+                visitId={visit.visitId}
+                carSegment={visit.carSegment}
+                editMode={editMode}
+                setEditMode={setEditMode}
+                allCurrencies={allCurrencies}
+              />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
@@ -53,7 +60,8 @@ VisitCard.propTypes = {
   visit: PropTypes.shape({
     addressId: PropTypes.number.isRequired,
     visitId: PropTypes.number.isRequired,
-    carSegment: PropTypes.number.isRequired,
+    carSegmentId: PropTypes.number.isRequired,
+    carSegment: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,
     companyName: PropTypes.string,
     country: PropTypes.string.isRequired,
@@ -77,7 +85,8 @@ VisitCard.propTypes = {
     vin: PropTypes.string.isRequired,
     visitEnd: PropTypes.string,
     visitStart: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  allCurrencies: PropTypes.array.isRequired
 };
 
 export default VisitCard;

@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
-import { BASE_URL, modals } from './common/constants';
+import { BASE_URL, CURRENCY_API_KEY, CURRENCY_URL, modals } from './common/constants';
 import Customers from './containers/Users/Customers';
 import Vehicles from './containers/Vehicles/Vehicles';
 import Header from './components/Header/Header';
@@ -28,6 +28,15 @@ const App = () => {
   const toggleModal = () => {
     toggleModalIsOpen({ [modalNumber]: !modalIsOpen[modalNumber] });
   };
+
+  const [allCurrencies, setAllCurrencies] = useState([]);
+
+  useEffect(() => {
+    fetch(`${CURRENCY_URL}/api/v7/currencies?apiKey=${CURRENCY_API_KEY}`)
+      .then(res => res.json())
+      .then(res => setAllCurrencies([...Object.keys(res.results)]))
+      .catch(e => setAllCurrencies(['BGN']));
+  }, []);
 
   const logout = () => {
     fetch(`${BASE_URL}/auth/logout`, {
@@ -68,13 +77,13 @@ const App = () => {
           <GuardedRoute
             path="/customers"
             exact
-            component={Customers}
+            component={(props) => <Customers { ...props } allCurrencies={allCurrencies} />}
             isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
           />
           <GuardedRoute
             path="/vehicles"
             exact
-            component={Vehicles}
+            component={(props) => <Vehicles { ...props } allCurrencies={allCurrencies} />}
             isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
           />
           <GuardedRoute

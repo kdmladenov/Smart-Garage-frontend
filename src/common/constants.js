@@ -1,5 +1,10 @@
 export const BASE_URL = 'http://localhost:5555';
 
+export const CURRENCY_API_KEY = '3999479f12222de128aa';
+export const FOREX_API_KEY = 'c05f8e71-8525-460f-9465-277a0bc89cce';
+export const CURRENCY_URL = 'https://free.currconv.com';
+export const FOREX_API_URL = 'https://v2.api.forex';
+
 export const userInput = {
   MIN_FIRST_NAME_LENGTH: 2,
   MAX_FIRST_NAME_LENGTH: 20,
@@ -45,4 +50,9 @@ export const partInput = {
   PART_NAME_MAX_LENGTH: 100,
   PART_PRICE_MIN_VALUE: 0.1,
   PART_PRICE_MAX_VALUE: 100000
+};
+
+export const visitInput = {
+  NOTES_MIN_LENGTH: 10,
+  NOTES_MAX_LENGTH: 255
 };

@@ -3,13 +3,13 @@ import { getToken } from '../providers/AuthContext';
 
 const useHttp = (url, method = 'GET', initialData = null) => {
   const [data, setData] = useState(initialData);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const token = getToken();
 
   useEffect(() => {
-    // setLoading(true);
+    setLoading(true);
 
     fetch(url, {
       method,
@@ -24,17 +24,17 @@ const useHttp = (url, method = 'GET', initialData = null) => {
         return response.json();
       })
       .then((result) => {
-        // setLoading(false);
+        setLoading(false);
         setData(result);
       })
-      .catch((e) => setError(e.message));
-    // .finally(() => setLoading(false));
+      .catch((e) => setError(e.message))
+      .finally(() => setLoading(false));
   }, [url]);
 
   return {
     data,
     setLocalData: setData,
-    // loading,
+    loading,
     error
   };
 };

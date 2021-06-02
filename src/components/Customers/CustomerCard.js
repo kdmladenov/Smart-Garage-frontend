@@ -11,7 +11,7 @@ import { BASE_URL } from '../../common/constants';
 import Loading from '../UI/Loading';
 import './Customers.css';
 
-const CustomerCard = ({ customer }) => {
+const CustomerCard = ({ customer, allCurrencies }) => {
   const [editMode, setEditMode] = useState(false);
   // const { search: query } = useLocation();
   const {
@@ -38,6 +38,7 @@ const CustomerCard = ({ customer }) => {
           <VehicleCard
             key={vehicle.vehicleId}
             vehicle={vehicle}
+            allCurrencies={allCurrencies}
           />
         );
       })}
@@ -114,7 +115,8 @@ CustomerCard.propTypes = {
     visitId: PropTypes.number.isRequired,
     visitStartDate: PropTypes.string.isRequired,
     visitStatus: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  allCurrencies: PropTypes.array.isRequired
 };
 
 export default CustomerCard;

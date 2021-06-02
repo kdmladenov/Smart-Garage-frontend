@@ -10,8 +10,9 @@ import { BASE_URL } from '../../common/constants';
 // import { useState } from 'react';
 import CustomerCard from '../../components/Customers/CustomerCard';
 import Loading from '../../components/UI/Loading';
+import PropTypes from 'prop-types';
 
-const Customers = () => {
+const Customers = ({ allCurrencies }) => {
   // const user = getUser();
   // const history = useHistory();
   const { search: query } = useLocation();
@@ -40,8 +41,8 @@ const Customers = () => {
           <CustomerCard
             className="customer-card"
             key={customer.userId}
-
             customer={customer}
+            allCurrencies={allCurrencies}
           />
         );
       })}
@@ -80,4 +81,7 @@ const Customers = () => {
   );
 };
 
+Customers.propTypes = {
+  allCurrencies: PropTypes.array.isRequired
+};
 export default Customers;

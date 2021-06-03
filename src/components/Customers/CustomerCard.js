@@ -56,7 +56,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
   };
 
   const emptyVehicle = {
-    // userId: customer.userId || newCustomerId,
+    userId: customer.userId || newCustomerId,
     vin: '',
     licensePlate: '',
     engineType: '',
@@ -116,7 +116,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
             setRegisterVehicleMode={setRegisterVehicleMode}
             registerCustomerMode={registerCustomerMode}
             setRegisterCustomerMode={setRegisterCustomerMode}
-            newCustomerId={newCustomerId}
+            newCustomerId={newCustomerId || customer.userId}
           />
         </Card.Body>
       </Card>
@@ -184,7 +184,6 @@ CustomerCard.defaultProps = {
   companyName: '',
   street: '',
   visitEndDate: '',
-  userId: null,
   phone: '',
   email: '',
   city: '',
@@ -195,6 +194,7 @@ CustomerCard.defaultProps = {
   licensePlate: '',
   make: '',
   modelId: null,
+  userId: null,
   model: '',
   vehicleId: null,
   vin: '',

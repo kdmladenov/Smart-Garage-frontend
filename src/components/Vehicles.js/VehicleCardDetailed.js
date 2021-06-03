@@ -92,7 +92,8 @@ const VehicleCardDetailed = ({
   };
   const isValid =
     registerVehicleMode || registerCustomerMode
-      ? Object.values(inputErrors).every((v) => v === '') && Object.values(vehicle).every((v) => v)
+      ? Object.values(inputErrors).every((v) => v === '') &&
+        Object.values({ ...vehicle, userId: newCustomerId || vehicle.userId }).every((v) => v)
       : Object.values(inputErrors).every((v) => v === '');
 
   const handleFormSubmit = (e) => {
@@ -106,7 +107,7 @@ const VehicleCardDetailed = ({
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`
         },
-        body: JSON.stringify({ ...vehicle, userId: newCustomerId })
+        body: JSON.stringify({ ...vehicle, userId: (newCustomerId || vehicle.userId) })
       })
         .then((res) => res.json())
         .then((res) => {

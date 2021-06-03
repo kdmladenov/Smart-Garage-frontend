@@ -44,12 +44,13 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
     // setLocalData: setServices
   } = useHttp(`${BASE_URL}/services?carSegment=${carSegment}`, 'GET', []);
 
-  // const {
-  //   data: parts,
-  //   // setLocalData: setParts
-  // } = useHttp(`${BASE_URL}/parts?carSegment=${carSegment}`, 'GET', []);
+  const {
+    data: parts
+    // setLocalData: setParts
+  } = useHttp(`${BASE_URL}/parts?carSegment=${carSegment}`, 'GET', []);
 
   const [service, setService] = useState({ serviceId: 0, name: 'Select Service', serviceQty: 0 });
+  const [part, setPart] = useState({ partId: 0, name: 'Select Part', partQty: 0 });
 
   const [currency, setCurrency] = useState({ id: 'BGN', rate: 1 });
 
@@ -81,8 +82,10 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
     const newService = { ...services.find(s => s.serviceId === +serviceId), serviceQty: qty };
     setVisit({ ...visit, performedServices: [newService, ...visit.performedServices] });
   };
-
-  console.log(visit.performedServices);
+  const addPart = (partId, qty) => {
+    const newPart = { ...parts.find(p => p.partId === +partId), partQty: qty };
+    setVisit({ ...visit, usedParts: [newPart, ...visit.usedParts] });
+  };
 
   const updatePerformedServiceQty = (serviceId, serviceQty) => {
     const updatedServices = visit.performedServices.map(s => {
@@ -90,6 +93,18 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
         return { ...s, serviceQty: serviceQty };
       } else {
         return { ...s };
+      }
+    });
+
+    setVisit({ ...visit, performedServices: updatedServices });
+  };
+
+  const updateUsedPartsQty = (partId, partQty) => {
+    const updatedServices = visit.performedServices.map(p => {
+      if (p.partId === partId) {
+        return { ...p, partQty: partQty };
+      } else {
+        return { ...p };
       }
     });
 
@@ -238,30 +253,93 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
           </div>
         </div>
         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <MDBTable>
-          <MDBTableHead>
-            <tr>
-              <th>service ID</th>
-              <th>Car Segment</th>
-              <th>Name</th>
-              <th style={{ textAlign: 'center' }}>Qty</th>
-              <th>Unit Price</th>
-              <th>Amount</th>
-            </tr>
-          </MDBTableHead>
-          <MDBTableBody>
-            {visit.performedServices.map(s => (
-              <TableRow
-                key={s.serviceId}
-                service={s}
-                carSegment={carSegment}
-                editMode={editMode}
-                updateQty={updatePerformedServiceQty}
-                currency={currency}
-              />)
-            )}
-          </MDBTableBody>
-        </MDBTable>
+          <MDBTable>
+            <MDBTableHead>
+              <tr>
+                <th>service ID</th>
+                <th>Car Segment</th>
+                <th>Name</th>
+                <th style={{ textAlign: 'center' }}>Qty</th>
+                <th>Unit Price</th>
+                <th>Amount</th>
+              </tr>
+            </MDBTableHead>
+            <MDBTableBody>
+              {visit.performedServices.map(s => (
+                <TableRow
+                  key={s.serviceId}
+                  id={s.serviceId}
+                  name={s.name}
+                  quantity={s.serviceQty}
+                  price={s.price}
+                  carSegment={carSegment}
+                  editMode={editMode}
+                  updateQty={updatePerformedServiceQty}
+                  currency={currency}
+                />)
+              )}
+            </MDBTableBody>
+          </MDBTable>
+        </div>
+        <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <div className="performed-services">
+            <span>Used Parts</span>
+            {editMode &&
+            <span className="select-service">
+              <Form.Group controlId="formBasicSelectService">
+                <Form.Control
+                  as="select"
+                  name="service"
+                  value={part.partId}
+                  onChange={(e) => setPart({ partId: e.target.value, name: parts.find(({ partId }) => partId === +e.target.value).name })}
+                  >
+                    <option value={0} >Select Part</option>
+                    {services.map(p => <option key={p.partId} value={p.partId}>{p.name}</option>)}
+                </Form.Control>
+              </Form.Group>
+              <Form.Group controlId="formBasicServiceQty">
+                <Form.Control
+                  style={{ width: '50px' }}
+                  type="number"
+                  name="serviceQty"
+                  value={service.partQty}
+                  onChange={(e) => setPart({ ...part, partQty: e.target.value })}
+                />
+              </Form.Group>
+              <MDBBtn onClick={() => addPart(part.partId, part.partQty)}>
+                <MDBIcon icon="plus-square" />
+              </MDBBtn>
+            </span>}
+          </div>
+        </div>
+        <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <MDBTable>
+            <MDBTableHead>
+              <tr>
+                <th>setParts ID</th>
+                <th>Car Segment</th>
+                <th>Name</th>
+                <th style={{ textAlign: 'center' }}>Qty</th>
+                <th>Unit Price</th>
+                <th>Amount</th>
+              </tr>
+            </MDBTableHead>
+            <MDBTableBody>
+              {visit.usedParts.map(p => (
+                <TableRow
+                  key={p.partId}
+                  id={p.partId}
+                  name={p.name}
+                  quantity={p.partQty}
+                  price={p.price}
+                  carSegment={carSegment}
+                  editMode={editMode}
+                  updateQty={updateUsedPartsQty}
+                  currency={currency}
+                />)
+              )}
+            </MDBTableBody>
+          </MDBTable>
         </div>
       </div>
     </Form>

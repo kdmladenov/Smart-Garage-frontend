@@ -2,19 +2,19 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 
-const TableRow = ({ service, carSegment, editMode, updateQty, currency }) => {
-  const [qty, setQty] = useState(service.serviceQty);
-  const [amount, setAmount] = useState(service.serviceQty * service.price * currency.rate);
-  const [unitPrice, setUnitPrice] = useState(service.price);
+const TableRow = ({ id, name, quantity, price, carSegment, editMode, updateQty, currency }) => {
+  const [qty, setQty] = useState(quantity);
+  const [amount, setAmount] = useState(quantity * price * currency.rate);
+  const [unitPrice, setUnitPrice] = useState(price);
   useEffect(() => {
-    setAmount(Math.round(service.serviceQty * service.price * currency.rate * 100) / 100);
-    setUnitPrice(Math.round(service.price * currency.rate * 100) / 100);
+    setAmount(Math.round(qty * price * currency.rate * 100) / 100);
+    setUnitPrice(Math.round(price * currency.rate * 100) / 100);
   }, [currency]);
   return (
     <tr>
-      <td>{service.serviceId}</td>
+      <td>{id}</td>
       <td>{carSegment}</td>
-      <td>{service.name}</td>
+      <td>{name}</td>
       <td>
         <Form.Group controlId="formBasicQty" style={{ height: 'initial', margin: 'initial', padding: 'initial' }}>
           <Form.Control
@@ -24,8 +24,8 @@ const TableRow = ({ service, carSegment, editMode, updateQty, currency }) => {
             value={qty}
             onChange={(e) => {
               setQty(e.target.value);
-              setAmount(Math.round(e.target.value * service.price * currency.rate * 100) / 100);
-              updateQty(service.serviceId, +e.target.value);
+              setAmount(Math.round(e.target.value * price * currency.rate * 100) / 100);
+              updateQty(id, +e.target.value);
             }}
             disabled={!editMode}
             />
@@ -38,12 +38,10 @@ const TableRow = ({ service, carSegment, editMode, updateQty, currency }) => {
 };
 
 TableRow.propTypes = {
-  service: PropTypes.shape({
-    serviceId: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    serviceQty: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired
-  }),
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
   carSegment: PropTypes.string.isRequired,
   editMode: PropTypes.bool.isRequired,
   updateQty: PropTypes.func.isRequired,

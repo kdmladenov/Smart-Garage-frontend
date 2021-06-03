@@ -65,10 +65,13 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
   };
 
   const changeCurrency = (curr) => {
-    // https://free.currconv.com/api/v7/convert?q=USD_PHP&compact=ultra&apiKey=3999479f12222de128aa
-    fetch(`${CURRENCY_URL}/api/v7/convert?compact=ultra&q=BGN_${currency.id}&apiKey=${CURRENCY_API_KEY}`)
-      .than(res => res.json())
-      .than(res => setCurrency({ id: curr, rate: res[`BGN_${curr}`] }))
+    fetch(`${CURRENCY_URL}/api/v7/convert?compact=ultra&q=BGN_${curr}&apiKey=${CURRENCY_API_KEY}`)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        console.log(res[`BGN_${curr}`]);
+        setCurrency({ id: curr, rate: res[`BGN_${curr}`] });
+      })
       .catch(e => {
         setError('Currency converter is currently unavailable. Please try again later.');
       });
@@ -135,6 +138,7 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
               <MDBBtn type="button" onClick={() => {
                 setEditMode(false);
                 setVisit({ ...visitCopy, usedParts: visitCopy.usedParts.map(p => ({ ...p })), performedServices: visitCopy.performedServices.map(s => ({ ...s })) });
+                setCurrency({ id: 'BGN', rate: 1 });
                 setInputErrors({
                   notes: '',
                   status: '',
@@ -253,6 +257,7 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
                 carSegment={carSegment}
                 editMode={editMode}
                 updateQty={updatePerformedServiceQty}
+                currency={currency}
               />)
             )}
           </MDBTableBody>
@@ -272,34 +277,6 @@ VisitCardDetailed.defaultProps = {
 };
 
 VisitCardDetailed.propTypes = {
-  // visit: PropTypes.shape({
-  //   addressId: PropTypes.number.isRequired,
-  //   visitId: PropTypes.number.isRequired,
-  //   carSegment: PropTypes.number.isRequired,
-  //   city: PropTypes.string.isRequired,
-  //   companyName: PropTypes.string,
-  //   country: PropTypes.string.isRequired,
-  //   email: PropTypes.string.isRequired,
-  //   engineType: PropTypes.string.isRequired,
-  //   firstName: PropTypes.string,
-  //   lastName: PropTypes.string,
-  //   licensePlate: PropTypes.string.isRequired,
-  //   manufacturedYear: PropTypes.number.isRequired,
-  //   manufacturerId: PropTypes.number.isRequired,
-  //   manufacturerName: PropTypes.string.isRequired,
-  //   modelId: PropTypes.number.isRequired,
-  //   modelName: PropTypes.string.isRequired,
-  //   notes: PropTypes.string.isRequired,
-  //   phone: PropTypes.string.isRequired,
-  //   status: PropTypes.string.isRequired,
-  //   streetAddress: PropTypes.string,
-  //   transmission: PropTypes.string.isRequired,
-  //   userId: PropTypes.number.isRequired,
-  //   vehicleId: PropTypes.number.isRequired,
-  //   vin: PropTypes.string.isRequired,
-  //   visitEnd: PropTypes.string,
-  //   visitStart: PropTypes.string.isRequired
-  // }).isRequired,
   visitId: PropTypes.number.isRequired,
   editMode: PropTypes.bool.isRequired,
   setEditMode: PropTypes.func.isRequired,

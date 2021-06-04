@@ -141,6 +141,10 @@ button.nav-link {
   text-align: center;
 }
 
+.d-none {
+  display: none!important;
+}
+
 @media only screen and (min-width: 450px) {
   .username {
     width: initial;
@@ -168,10 +172,12 @@ button.nav-link {
   .side-nav {
     visibility: visible;
   }
-}
 
-@media only screen and (min-width: 992px) {
   .username {
     color: #ffffff;
+  }
+
+  .d-md-inline {
+    display: inline!important;
   }
 }

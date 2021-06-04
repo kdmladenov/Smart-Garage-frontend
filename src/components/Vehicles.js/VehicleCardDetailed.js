@@ -208,7 +208,7 @@ const VehicleCardDetailed = ({
               <Form.Control
                 type="text"
                 name="licensePlate"
-                placeholder="Enter License Plate"
+                placeholder="License Plate"
                 value={vehicle.licensePlate}
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
                 disabled={!editMode && !registerVehicleMode && !registerCustomerMode}

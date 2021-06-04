@@ -83,7 +83,7 @@ const Header = ({
           expand="md"
           fixed="top"
           scrolling
-          style={{ backgroundColor: `${content === 'account' ? '#42414094' : 'transparent'}` }}
+          style={{ backgroundColor: `${content === 'account' ? '#42414094' : '#f7f7f7'}` }}
         >
           <MDBNavbarNav right style={specialCaseNavbarStyles}>
             {getUser().role === 'employee' && (

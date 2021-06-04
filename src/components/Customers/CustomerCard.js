@@ -95,7 +95,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
         </Card.Header>
         <Card.Body>
           <CustomerCardDetailed
-            key={customer.userId}
+            // key={customer.userId}
             customer={customer}
             editMode={editMode}
             setEditMode={setEditMode}

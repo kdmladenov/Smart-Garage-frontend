@@ -17,7 +17,7 @@ const validate = {
   transmission: value => {
     return Object.values(transmission).includes(value);
   },
-  manufacturedYear: value => value > vehicleInput.MIN_MANUFACTURED_YEAR && value < new Date().getFullYear(),
+  manufacturedYear: value => value > vehicleInput.MIN_MANUFACTURED_YEAR && value <= new Date().getFullYear(),
   modelName: value => typeof value === 'string',
   manufacturer: value => typeof value === 'string',
   carSegment: value => typeof value === 'string'

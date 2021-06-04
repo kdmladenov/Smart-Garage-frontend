@@ -17,7 +17,9 @@ const VehicleCardDetailed = ({
   setRegisterVehicleMode,
   registerCustomerMode,
   setRegisterCustomerMode,
-  newCustomerId
+  newCustomerId,
+  setVehicleList,
+  vehicleList
 }) => {
   const [error, setError] = useState('');
   const [vehicle, setVehicle] = useState({ ...vehicleData });
@@ -107,7 +109,7 @@ const VehicleCardDetailed = ({
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`
         },
-        body: JSON.stringify({ ...vehicle, userId: (newCustomerId || vehicle.userId) })
+        body: JSON.stringify({ ...vehicle, userId: newCustomerId || vehicle.userId })
       })
         .then((res) => res.json())
         .then((res) => {
@@ -115,7 +117,7 @@ const VehicleCardDetailed = ({
             setError(res.message);
           } else {
             setVehicleCopy({ ...vehicleCopy, ...vehicle });
-            // setEditMode(false);
+            setVehicleList([...vehicleList, { ...vehicle, userId: newCustomerId || vehicle.userId }]);
           }
         });
     }
@@ -358,7 +360,9 @@ VehicleCardDetailed.defaultProps = {
   setRegisterCustomerMode: () => {},
   registerVehicleMode: false,
   setRegisterVehicleMode: () => {},
-  newCustomerId: null
+  newCustomerId: null,
+  setVehicleList: () => {},
+  vehicleList: []
 };
 
 VehicleCardDetailed.propTypes = {
@@ -385,7 +389,9 @@ VehicleCardDetailed.propTypes = {
   setRegisterVehicleMode: PropTypes.func,
   registerCustomerMode: PropTypes.bool,
   setRegisterCustomerMode: PropTypes.func,
-  newCustomerId: PropTypes.number
+  newCustomerId: PropTypes.number,
+  setVehicleList: PropTypes.func,
+  vehicleList: PropTypes.array
 };
 
 export default VehicleCardDetailed;

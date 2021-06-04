@@ -86,7 +86,7 @@ const CustomerCardDetailed = ({
         });
     }
   };
-  console.log(!editMode && !registerCustomerMode, '!editMode && !registerCustomerMode');
+
   return (
     <div>
       <Form className="customer-detailed">

@@ -55,7 +55,6 @@ const validateInput = {
   },
 
   transmission: value => {
-    console.log(value);
     if (!value) {
       return ' is required!';
     }

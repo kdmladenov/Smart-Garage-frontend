@@ -33,7 +33,7 @@ const useHttp = (url, method = 'GET', initialData = null) => {
 
   return {
     data,
-    setLocalData: setData,
+    setData,
     loading,
     error
   };

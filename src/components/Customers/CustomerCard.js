@@ -23,7 +23,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
   // const { search: query } = useLocation();
   const {
     data,
-    // setLocalData,
+    setData,
     loading
     // error
   } = useHttp(`${BASE_URL}/vehicles?userId=${customer.userId}`, 'GET', []);
@@ -117,6 +117,8 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
             registerCustomerMode={registerCustomerMode}
             setRegisterCustomerMode={setRegisterCustomerMode}
             newCustomerId={newCustomerId || customer.userId}
+            setVehicleList={setData}
+            vehicleList={data}
           />
         </Card.Body>
       </Card>
@@ -167,6 +169,8 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
                   vehicle={emptyVehicle}
                   registerVehicleMode={registerVehicleMode}
                   setRegisterVehicleMode={setRegisterVehicleMode}
+                  setVehicleList={setData}
+                  vehicleList={data}
                 />
               </Card.Body>
             )}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getToken } from '../providers/AuthContext';
 
-const useHttp = (url, method = 'GET', initialData = null) => {
+const useHttp = (url, method = 'GET', initialData = null, dependencies = [url]) => {
   const [data, setData] = useState(initialData);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -29,7 +29,7 @@ const useHttp = (url, method = 'GET', initialData = null) => {
       })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
-  }, [url]);
+  }, dependencies);
 
   return {
     data,

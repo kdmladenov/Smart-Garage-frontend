@@ -9,13 +9,13 @@ import ServiceCard from '../../components/Services/ServiceCard';
 import CreateServiceCard from '../../components/Services/CreateServiceCard';
 // import Loading from '../../components/UI/Loading';
 
-const Services = ({ createServiceMode, setCreateServiceMode }) => {
+const Services = ({ createServiceMode, setCreateServiceMode, servicesQuery }) => {
   const {
     data
     // setLocalData,
     // loading
     // error
-  } = useHttp(`${BASE_URL}/services`, 'GET', []);
+  } = useHttp(`${BASE_URL}/services${servicesQuery}`, 'GET', [], [servicesQuery]);
 
   // if (loading) {
   //   return <Loading />;
@@ -66,7 +66,8 @@ Services.defaultProps = {
 
 Services.propTypes = {
   createServiceMode: PropTypes.bool.isRequired,
-  setCreateServiceMode: PropTypes.func.isRequired
+  setCreateServiceMode: PropTypes.func.isRequired,
+  servicesQuery: PropTypes.string.isRequired
 };
 
 export default Services;

@@ -137,6 +137,15 @@ button.nav-link {
   color: #ffffff;
 }
 
+.side-nav div.search-field {
+  padding-top: initial;
+}
+
+.search {
+  border-radius: 0.25rem;
+  margin: initial !important;
+}
+
 @media only screen and (min-width: 450px) {
   .username {
     width: initial;

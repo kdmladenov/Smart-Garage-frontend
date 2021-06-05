@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import CustomToggle from '../UI/Accordion/CustomToggle';
-import Loading from '../UI/Loading';
+// import Loading from '../UI/Loading';
 import { BASE_URL } from '../../common/constants';
 import useHttp from '../../hooks/useHttp';
 import VehicleCardDetailed from './VehicleCardDetailed';
@@ -23,15 +23,15 @@ const VehicleCard = ({
 }) => {
   const [editMode, setEditMode] = useState(false);
   const {
-    data,
+    data
     // setLocalData,
-    loading
+    // loading
     // error
   } = useHttp(`${BASE_URL}/visits?vehicleId=${vehicle.vehicleId}`, 'GET', []);
 
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
   // // if (error === '404') {
   // //   history.push('*');
   // // } else if (error) {

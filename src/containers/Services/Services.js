@@ -7,19 +7,19 @@ import { BASE_URL } from '../../common/constants';
 // import { useState } from 'react';
 import ServiceCard from '../../components/Services/ServiceCard';
 import CreateServiceCard from '../../components/Services/CreateServiceCard';
-// import Loading from '../../components/UI/Loading';
+import Loading from '../../components/UI/Loading';
 
-const Services = ({ createServiceMode, setCreateServiceMode }) => {
+const Services = ({ createServiceMode, setCreateServiceMode, servicesQuery }) => {
   const {
-    data
+    data,
     // setLocalData,
-    // loading
+    loading
     // error
-  } = useHttp(`${BASE_URL}/services`, 'GET', []);
+  } = useHttp(`${BASE_URL}/services${servicesQuery}`, 'GET', [], [servicesQuery]);
 
-  // if (loading) {
-  //   return <Loading />;
-  // }
+  if (loading) {
+    return <Loading />;
+  }
 
   // if (error === '404') {
   //   history.push('*');
@@ -66,7 +66,8 @@ Services.defaultProps = {
 
 Services.propTypes = {
   createServiceMode: PropTypes.bool.isRequired,
-  setCreateServiceMode: PropTypes.func.isRequired
+  setCreateServiceMode: PropTypes.func.isRequired,
+  servicesQuery: PropTypes.string.isRequired
 };
 
 export default Services;

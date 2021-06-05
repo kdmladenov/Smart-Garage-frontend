@@ -1,9 +1,13 @@
 import { NavLink } from 'react-router-dom';
-import { MDBNavbar, MDBNavbarNav, MDBNavItem, MDBIcon, MDBBtn } from 'mdbreact';
+import { MDBNavbar, MDBNavbarNav, MDBNavItem, MDBIcon } from 'mdbreact';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Header.css';
 import { getUser } from '../../providers/AuthContext';
+import PartsSideNav from './PartsSideNav';
+import ServicesSideNav from './ServicesSideNav';
+import CustomersSideNav from './CustomersSideNav';
+import VehiclesSideNav from './VehiclesSideNav';
 
 const Header = ({
   toggleModal,
@@ -13,7 +17,11 @@ const Header = ({
   createPartMode,
   setCreatePartMode,
   registerCustomerMode,
-  setRegisterCustomerMode
+  setRegisterCustomerMode,
+  setCustomersQuery,
+  setVehiclesQuery,
+  setServicesQuery,
+  setPartsQuery
 }) => {
   const initialContent = getUser().role === 'employee' ? 'customers' : 'account';
   const [content, setContent] = useState(initialContent);
@@ -54,28 +62,28 @@ const Header = ({
         <div className={`username ${sideNavVisible ? 'open' : ''}`}>{username.toUpperCase()}</div>
         {content !== 'account' &&
         <div className={`side-nav ${sideNavVisible ? 'open' : ''}`} style={sideNavStyle}>
-          {content === 'customers' && (
-            <div>
-              <MDBBtn type="button" onClick={() => setRegisterCustomerMode(!registerCustomerMode)}>
-                {!registerCustomerMode ? 'Register New Customer' : 'Close Register Form'}
-              </MDBBtn>
-            </div>
-          )}
-          {content === 'vehicles' && <div>Vehicles sidebar</div>}
-          {content === 'services' && (
-            <div>
-              <MDBBtn type="button" onClick={() => setCreateServiceMode(!createServiceMode)}>
-                {!createServiceMode ? 'Create New Service' : 'Close Create Form'}
-              </MDBBtn>
-            </div>
-          )}
-          {content === 'parts' && (
-            <div>
-              <MDBBtn type="button" onClick={() => setCreatePartMode(!createPartMode)}>
-                {!createPartMode ? 'Create New Part' : 'Close Create Form'}
-              </MDBBtn>
-            </div>
-          )}
+          {content === 'customers' &&
+            <CustomersSideNav
+              setRegisterCustomerMode={setRegisterCustomerMode}
+              registerCustomerMode={registerCustomerMode}
+              setCustomersQuery={setCustomersQuery}
+            />}
+          {content === 'vehicles' &&
+            <VehiclesSideNav
+              setVehiclesQuery={setVehiclesQuery}
+            />}
+          {content === 'services' &&
+            <ServicesSideNav
+              setCreateServiceMode={setCreateServiceMode}
+              createServiceMode={createServiceMode}
+              setServicesQuery={setServicesQuery}
+            />}
+          {content === 'parts' &&
+            <PartsSideNav
+              setCreatePartMode={setCreatePartMode}
+              createPartMode={createPartMode}
+              setPartsQuery={setPartsQuery}
+            />}
           {content === 'invoices' && <div>Invoices sidebar</div>}
         </div>}
         <MDBNavbar
@@ -172,5 +180,9 @@ Header.propTypes = {
   setCreateServiceMode: PropTypes.func.isRequired,
   createServiceMode: PropTypes.bool.isRequired,
   setRegisterCustomerMode: PropTypes.func.isRequired,
-  registerCustomerMode: PropTypes.bool.isRequired
+  registerCustomerMode: PropTypes.bool.isRequired,
+  setCustomersQuery: PropTypes.func.isRequired,
+  setVehiclesQuery: PropTypes.func.isRequired,
+  setServicesQuery: PropTypes.func.isRequired,
+  setPartsQuery: PropTypes.func.isRequired
 };

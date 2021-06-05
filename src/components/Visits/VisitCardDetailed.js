@@ -100,7 +100,7 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
   };
 
   const updateUsedPartsQty = (partId, partQty) => {
-    const updatedServices = visit.performedServices.map(p => {
+    const updatedParts = visit.usedParts.map(p => {
       if (p.partId === partId) {
         return { ...p, partQty: partQty };
       } else {
@@ -108,7 +108,7 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
       }
     });
 
-    setVisit({ ...visit, performedServices: updatedServices });
+    setVisit({ ...visit, usedParts: updatedParts });
   };
 
   const handleFormSubmit = (e) => {
@@ -243,6 +243,7 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
                   type="number"
                   name="serviceQty"
                   value={service.serviceQty}
+                  min="1"
                   onChange={(e) => setService({ ...service, serviceQty: e.target.value })}
                 />
               </Form.Group>
@@ -286,23 +287,24 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
             <span>Used Parts</span>
             {editMode &&
             <span className="select-service">
-              <Form.Group controlId="formBasicSelectService">
+              <Form.Group controlId="formBasicSelectPart">
                 <Form.Control
                   as="select"
-                  name="service"
+                  name="part"
                   value={part.partId}
                   onChange={(e) => setPart({ partId: e.target.value, name: parts.find(({ partId }) => partId === +e.target.value).name })}
                   >
                     <option value={0} >Select Part</option>
-                    {services.map(p => <option key={p.partId} value={p.partId}>{p.name}</option>)}
+                    {parts.map(p => <option key={p.partId} value={p.partId}>{p.name}</option>)}
                 </Form.Control>
               </Form.Group>
-              <Form.Group controlId="formBasicServiceQty">
+              <Form.Group controlId="formBasicPartQty">
                 <Form.Control
                   style={{ width: '50px' }}
                   type="number"
-                  name="serviceQty"
-                  value={service.partQty}
+                  name="partQty"
+                  value={part.partQty}
+                  min="1"
                   onChange={(e) => setPart({ ...part, partQty: e.target.value })}
                 />
               </Form.Group>

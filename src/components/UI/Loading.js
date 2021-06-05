@@ -3,11 +3,20 @@ import Spinner from 'react-bootstrap/Spinner';
 
 const Loading = () => {
   return (
-    <div className="d-flex justify-content-center">
-      <Spinner animation="border" role="status">
+    <main className="d-flex justify-content-center align-content-center">
+      <Spinner
+        animation="border"
+        role="status"
+        style={{
+          marginTop: '35vh',
+          width: '5rem',
+          height: '5rem',
+          color: '#00695a'
+        }}
+      >
         <span className="sr-only">Loading...</span>
       </Spinner>
-    </div>
+    </main>
   );
 };
 

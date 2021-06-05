@@ -3,13 +3,10 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { partPrice } from '../../common/constants';
-import MultiRangeSlider from '../UI/MultiRangeSleder/MultiRangeSlider';
+import MultiRangeSlider from '../UI/MultiRangeSlider/MultiRangeSlider';
 import carSegmentEnum from '../../common/car-segment.enum';
-// import { useState } from 'react';
-// import { Form } from 'react-bootstrap';
 
 const PartsSideNav = ({ setCreatePartMode, createPartMode, setPartsQuery }) => {
-  // const [searchParams, setSearchParams] = useState({});
   const [minValue, setMinValue] = useState(partPrice.MIN);
   const [maxValue, setMaxValue] = useState(partPrice.MAX);
   const [carSegment, setCarSegment] = useState('');

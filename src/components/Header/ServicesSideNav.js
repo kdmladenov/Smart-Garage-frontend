@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const ServicesSideNav = ({ setCreateServiceMode, createServiceMode, setServicesQuery }) => {
   return (
-    <div>
+    <div className="side-nav-content">
       <MDBBtn type="button" onClick={() => setCreateServiceMode(!createServiceMode)}>
         {!createServiceMode ? 'Create New Service' : 'Close Create Form'}
       </MDBBtn>

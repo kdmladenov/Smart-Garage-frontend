@@ -56,3 +56,8 @@ export const visitInput = {
   NOTES_MIN_LENGTH: 10,
   NOTES_MAX_LENGTH: 255
 };
+
+export const partPrice = {
+  MIN: 0,
+  MAX: 2000
+}

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 const CustomersSideNav = ({ setRegisterCustomerMode, registerCustomerMode, setCustomersQuery }) => {
   return (
-    <div>
-              <MDBBtn type="button" onClick={() => setRegisterCustomerMode(!registerCustomerMode)}>
-                {!registerCustomerMode ? 'Register New Customer' : 'Close Register Form'}
-              </MDBBtn>
-            </div>
+    <div className="side-nav-content">
+      <MDBBtn type="button" onClick={() => setRegisterCustomerMode(!registerCustomerMode)}>
+        {!registerCustomerMode ? 'Register New Customer' : 'Close Register Form'}
+      </MDBBtn>
+    </div>
   );
 };
 

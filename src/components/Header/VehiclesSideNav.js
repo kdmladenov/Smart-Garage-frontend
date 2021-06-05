@@ -54,15 +54,15 @@ const VehiclesSideNav = ({ setVehiclesQuery }) => {
   }, [searchParams.modelName]);
 
   return (
-    <div>
+    <div className="side-nav-content">
           <Form.Group className="search-field">
             <Form.Label>
-              Owner Email
+              Search By Owner Email
             </Form.Label>
             <Form.Control
               type="text"
               name="email"
-              placeholder="Search by email"
+              placeholder="Enter Owner Email"
               value={searchParams.email}
               onChange={(e) => setSearchParams({ ...searchParams, [e.target.name]: e.target.value })}
               autoComplete="off"
@@ -70,12 +70,12 @@ const VehiclesSideNav = ({ setVehiclesQuery }) => {
           </Form.Group>
           <Form.Group className="search-field">
             <Form.Label>
-              Owner Name
+            Search By Owner Name
             </Form.Label>
             <Form.Control
               type="text"
               name="name"
-              placeholder="Search by name"
+              placeholder="Enter Owner Name"
               value={searchParams.name}
               onChange={(e) => setSearchParams({ ...searchParams, [e.target.name]: e.target.value })}
               autoComplete="off"
@@ -83,16 +83,15 @@ const VehiclesSideNav = ({ setVehiclesQuery }) => {
           </Form.Group>
           <Form.Group className="search-field">
             <Form.Label>
-              Manufacturer
+              Search By Manufacturer
             </Form.Label>
             <Form.Control
               as="select"
               name="manufacturer"
-              placeholder="Search by Manufacturer"
               value={searchParams.manufacturer}
               onChange={(e) => setSearchParams({ ...searchParams, [e.target.name]: e.target.value })}
             >
-              <option value="">Search By Make</option>
+              <option value="">Select Manufacturer</option>
               {manufacturers.map((manuf) => (
                 <option key={manuf} value={manuf}>
                   {manuf}
@@ -102,7 +101,7 @@ const VehiclesSideNav = ({ setVehiclesQuery }) => {
           </Form.Group>
           <Form.Group className="search-field">
             <Form.Label>
-              Model
+              Search By Model
             </Form.Label>
             <Form.Control
               as="select"
@@ -110,7 +109,7 @@ const VehiclesSideNav = ({ setVehiclesQuery }) => {
               value={searchParams.modelName}
               onChange={(e) => setSearchParams({ ...searchParams, [e.target.name]: e.target.value })}
             >
-              <option value="">Search By Model</option>
+              <option value="">Select Model</option>
               {models.map((model) => (
                 <option key={model.modelId} value={model.modelName}>
                   {model.modelName}
@@ -120,7 +119,7 @@ const VehiclesSideNav = ({ setVehiclesQuery }) => {
           </Form.Group>
           <Form.Group className="search-field">
             <Form.Label>
-              Car Segment
+              Search By Car Segment
             </Form.Label>
             <Form.Control
               as="select"
@@ -128,7 +127,7 @@ const VehiclesSideNav = ({ setVehiclesQuery }) => {
               value={searchParams.carSegment}
               onChange={(e) => setSearchParams({ ...searchParams, [e.target.name]: e.target.value })}
             >
-              <option value="">Search By Car Segment</option>
+              <option value="">Select Car Segment</option>
               {carSegments.map((m) => (
                   <option key={m.modelId || m.id} value={m.carSegment}>
                     {m.carSegment}
@@ -159,9 +158,10 @@ const VehiclesSideNav = ({ setVehiclesQuery }) => {
                 });
                 filterModels(modelsData);
                 filterCarSegments(Object.keys(carSegmentsEnum).map(key => ({ id: key, carSegment: carSegmentsEnum[key] })));
+                setVehiclesQuery('');
               }}
             >
-              clear fields
+              clear search
             </MDBBtn>
           </Form.Group>
     </div>

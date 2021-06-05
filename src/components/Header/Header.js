@@ -82,7 +82,7 @@ const Header = ({
             <PartsSideNav
               setCreatePartMode={setCreatePartMode}
               createPartMode={createPartMode}
-              setPartsQuery={createPartMode}
+              setPartsQuery={setPartsQuery}
             />}
           {content === 'invoices' && <div>Invoices sidebar</div>}
         </div>}

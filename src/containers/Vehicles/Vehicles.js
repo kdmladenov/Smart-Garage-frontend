@@ -24,7 +24,6 @@ const Vehicles = ({ allCurrencies, vehiclesQuery }) => {
   //   history.push('/serviceUnavailable');
   // }
 
-  // console.log(data);
   const vehiclesListToShow = (
     <div className="vehicle-list">
       {data.map((vehicle) => {

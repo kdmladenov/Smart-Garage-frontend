@@ -5,7 +5,7 @@ import { BASE_URL } from '../../common/constants';
 import { getToken } from '../../providers/AuthContext';
 import { Card, Form } from 'react-bootstrap';
 import { MDBBtn, MDBIcon } from 'mdbreact';
-import carSegment from '../../common/car-secment.enum';
+import carSegment from '../../common/car-segment.enum';
 import validatePart from './partValidator';
 import DeleteButtonWithPopover from '../UI/DeleteButtonWithPopover/DeleteButtonWithPopover';
 

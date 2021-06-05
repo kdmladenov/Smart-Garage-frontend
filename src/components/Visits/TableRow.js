@@ -22,6 +22,7 @@ const TableRow = ({ id, name, quantity, price, carSegment, editMode, updateQty, 
             type="number"
             name="serviceQty"
             value={qty}
+            min="0"
             onChange={(e) => {
               setQty(e.target.value);
               setAmount(Math.round(e.target.value * price * currency.rate * 100) / 100);

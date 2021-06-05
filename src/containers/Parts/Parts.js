@@ -7,20 +7,20 @@ import { BASE_URL } from '../../common/constants';
 // import { useState } from 'react';
 import PartCard from '../../components/Parts/PartCard';
 import CreatePartCard from '../../components/Parts/CreatePartCard';
-// import Loading from '../../components/UI/Loading';
+import Loading from '../../components/UI/Loading';
 
 const Parts = ({ createPartMode, setCreatePartMode, partsQuery }) => {
   console.log(partsQuery);
   const {
-    data
+    data,
     // setLocalData,
-    // loading
+    loading
     // error
   } = useHttp(`${BASE_URL}/parts${partsQuery}`, 'GET', [], [partsQuery]);
 
-  // if (loading) {
-  //   return <Loading />;
-  // }
+  if (loading) {
+    return <Loading />;
+  }
 
   // if (error === '404') {
   //   history.push('*');

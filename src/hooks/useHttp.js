@@ -24,7 +24,7 @@ const useHttp = (url, method = 'GET', initialData = null, dependencies = [url]) 
         return response.json();
       })
       .then((result) => {
-        setLoading(false);
+        // setLoading(false);
         setData(result);
       })
       .catch((e) => setError(e.message))

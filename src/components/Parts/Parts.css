@@ -1,3 +1,7 @@
+.part-detailed .row.gutters {
+  padding-bottom: 2rem;
+}
+
 .part-detailed .form-label {
   color: #009b85;
   font-size: 13px;
@@ -13,6 +17,7 @@
   background-color: transparent;
   border-radius: 0;
   text-align: center;
+  border-bottom: 1px solid;
 }
 
 .part-detailed .form-group {
@@ -29,9 +34,8 @@
 .part-detailed .btn-default {
   background: transparent !important;
   padding: 0;
-  padding-top: 20px;
-  margin-bottom: -10px;
   box-shadow: none;
+  margin-bottom: -10px;
   font-size: 25px;
   color: #009b85;
 }
@@ -68,9 +72,17 @@
   margin-right: 30px;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 768px) {
   .part-detailed .form-control:disabled {
-    border-bottom: 1px solid;
+    border-bottom: none;
+  }
+
+  .part-detailed .btn-default {
+    padding-top: 20px;
+  }
+  
+  .part-detailed .row.gutters {
+    padding-bottom: initial;
   }
 }
 

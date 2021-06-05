@@ -1,23 +1,22 @@
 import useHttp from '../../hooks/useHttp';
 import { BASE_URL } from '../../common/constants';
 // import { useState } from 'react';
-// import Loading from '../../components/UI/Loading';
-import { useState } from 'react';
+import Loading from '../../components/UI/Loading';
+// import { useState } from 'react';
 import VehicleCard from '../../components/Vehicles.js/VehicleCard';
 import PropTypes from 'prop-types';
 
-const Vehicles = ({ allCurrencies }) => {
-  const [query, setQuery] = useState('');
+const Vehicles = ({ allCurrencies, vehiclesQuery }) => {
   const {
-    data
+    data,
     // setLocalData,
-    // loading
+    loading
     // error
-  } = useHttp(`${BASE_URL}/vehicles${query}`, 'GET', []);
-  console.log(setQuery);
-  // if (loading) {
-  //   return <Loading />;
-  // }
+  } = useHttp(`${BASE_URL}/vehicles${vehiclesQuery}`, 'GET', [], [vehiclesQuery]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   // if (error === '404') {
   //   history.push('*');
@@ -62,7 +61,8 @@ const Vehicles = ({ allCurrencies }) => {
 };
 
 Vehicles.propTypes = {
-  allCurrencies: PropTypes.array.isRequired
+  allCurrencies: PropTypes.array.isRequired,
+  vehiclesQuery: PropTypes.string.isRequired
 };
 
 export default Vehicles;

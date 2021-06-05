@@ -15,7 +15,10 @@ import Parts from './containers/Parts/Parts';
 import CustomerProfile from './containers/CustomerProfile/CustomerProfile';
 
 const App = () => {
-  // const [customerQuery, setCustomerQuery] = useState();
+  const [customersQuery, setCustomersQuery] = useState('');
+  const [vehiclesQuery, setVehiclesQuery] = useState('');
+  const [servicesQuery, setServicesQuery] = useState('');
+  const [partsQuery, setPartsQuery] = useState('');
   const [createPartMode, setCreatePartMode] = useState(false);
   const [createServiceMode, setCreateServiceMode] = useState(false);
   const [registerCustomerMode, setRegisterCustomerMode] = useState(false);
@@ -72,6 +75,10 @@ const App = () => {
             createPartMode={createPartMode}
             registerCustomerMode={registerCustomerMode}
             setRegisterCustomerMode={setRegisterCustomerMode}
+            setCustomersQuery = {setCustomersQuery}
+            setVehiclesQuery = {setVehiclesQuery}
+            setServicesQuery = {setServicesQuery}
+            setPartsQuery = {setPartsQuery}
           />
         )}
         <Switch>
@@ -84,6 +91,7 @@ const App = () => {
                 registerCustomerMode={registerCustomerMode}
                 setRegisterCustomerMode={setRegisterCustomerMode}
                 allCurrencies={allCurrencies}
+                customersQuery={customersQuery}
               />
             )}
             isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
@@ -91,21 +99,21 @@ const App = () => {
           <GuardedRoute
             path="/vehicles"
             exact
-            component={(props) => <Vehicles { ...props } allCurrencies={allCurrencies} />}
+            component={(props) => <Vehicles { ...props } allCurrencies={allCurrencies} vehiclesQuery={vehiclesQuery} />}
             isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
           />
           <GuardedRoute
             path="/services"
             exact
             component={() => (
-              <Services createServiceMode={createServiceMode} setCreateServiceMode={setCreateServiceMode} />
+              <Services createServiceMode={createServiceMode} setCreateServiceMode={setCreateServiceMode} servicesQuery={servicesQuery} />
             )}
             isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
           />
           <GuardedRoute
             path="/parts"
             exact
-            component={() => <Parts createPartMode={createPartMode} setCreatePartMode={setCreatePartMode} />}
+            component={() => <Parts createPartMode={createPartMode} setCreatePartMode={setCreatePartMode} partsQuery={partsQuery} />}
             isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
           />
           <GuardedRoute path="/customer-profile" exact component={CustomerProfile} isLoggedIn={authValue.isLoggedIn} />

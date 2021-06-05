@@ -8,7 +8,7 @@ import VehicleCard from '../Vehicles.js/VehicleCard';
 // import { useLocation } from 'react-router';
 import useHttp from '../../hooks/useHttp';
 import { BASE_URL } from '../../common/constants';
-import Loading from '../UI/Loading';
+// import Loading from '../UI/Loading';
 import './Customers.css';
 import DeleteButtonWithPopover from '../UI/DeleteButtonWithPopover/DeleteButtonWithPopover';
 import { getToken } from '../../providers/AuthContext';
@@ -22,15 +22,15 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
   // const [error, setError] = useState('');
   // const { search: query } = useLocation();
   const {
-    data,
+    data
     // setLocalData,
-    loading
+    // loading
     // error
   } = useHttp(`${BASE_URL}/vehicles?userId=${customer.userId}`, 'GET', []);
 
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
   // // if (error === '404') {
   // //   history.push('*');
   // // } else if (error) {

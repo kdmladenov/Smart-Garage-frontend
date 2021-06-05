@@ -1,3 +1,7 @@
+.service-detailed .row.gutters {
+  padding-bottom: 2rem;
+}
+
 .service-detailed .form-label {
   color: #009b85;
   font-size: 13px;
@@ -13,6 +17,7 @@
   background-color: transparent;
   border-radius: 0;
   text-align: center;
+  border-bottom: 1px solid;
 }
 
 .service-detailed .form-group {
@@ -30,7 +35,6 @@
   background: transparent !important;
   padding: 0;
   box-shadow: none;
-  padding-top: 20px;
   margin-bottom: -10px;
   font-size: 25px;
   color: #009b85;
@@ -68,9 +72,18 @@
   margin-right: 30px;
 }
 
-@media only screen and (max-width: 768px) {
+
+@media only screen and (min-width: 768px) {
   .service-detailed .form-control:disabled {
-    border-bottom: 1px solid;
+    border-bottom: none;
+  }
+
+  .service-detailed .btn-default {
+    padding-top: 20px;
+  }
+  
+  .service-detailed .row.gutters {
+    padding-bottom: initial;
   }
 }
 

@@ -1,26 +1,18 @@
-// import { Form } from 'react-bootstrap';
-import {
-  // useHistory,
-  useLocation
-} from 'react-router-dom';
 // import Sort from '../../components/Sort/Sort';
 // import Paging from '../../components/Paging/Paging';
 import useHttp from '../../hooks/useHttp';
 import PropTypes from 'prop-types';
 import { BASE_URL } from '../../common/constants';
-// import { useState } from 'react';
 import CustomerCard from '../../components/Customers/CustomerCard';
 import Loading from '../../components/UI/Loading';
-const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencies }) => {
-  // const user = getUser();
-  // const history = useHistory();
-  const { search: query } = useLocation();
+
+const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencies, customersQuery }) => {
   const {
     data,
     // setLocalData,
     loading
     // error
-  } = useHttp(`${BASE_URL}/users${query}`, 'GET', []);
+  } = useHttp(`${BASE_URL}/users${customersQuery}`, 'GET', [], [customersQuery]);
 
   if (loading) {
     return <Loading />;
@@ -102,7 +94,8 @@ Customers.defaultProps = {
 Customers.propTypes = {
   registerCustomerMode: PropTypes.bool.isRequired,
   setRegisterCustomerMode: PropTypes.func.isRequired,
-  allCurrencies: PropTypes.array.isRequired
+  allCurrencies: PropTypes.array.isRequired,
+  customersQuery: PropTypes.string
 };
 
 export default Customers;

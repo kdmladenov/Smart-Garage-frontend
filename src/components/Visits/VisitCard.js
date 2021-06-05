@@ -16,13 +16,9 @@ const VisitCard = ({ visit, allCurrencies }) => {
           <Card.Header className="card-header">
             <div className="card-header-text">
               <div className="card-header-text-item">{visit.notes}</div>
-              <div className="card-header-text-item">{visit.status}</div>
-              <div className="card-header-text-item">
-                {new Date(visit.visitStart).toISOString().slice(0, 10)}
-              </div>
-              <div className="card-header-text-item">
-                {new Date(visit.visitEnd).toISOString().slice(0, 10)}
-              </div>
+              <div className="card-header-text-item">{visit.visitStatus}</div>
+              <div className="card-header-text-item">{new Date(visit.visitStart).toISOString().slice(0, 10)}</div>
+              <div className="card-header-text-item">{new Date(visit.visitEnd).toISOString().slice(0, 10)}</div>
             </div>
             <div className="card-header-buttons">
               <CustomToggle variant="primary" eventKey="1">
@@ -72,12 +68,12 @@ VisitCard.propTypes = {
     licensePlate: PropTypes.string.isRequired,
     manufacturedYear: PropTypes.number.isRequired,
     manufacturerId: PropTypes.number.isRequired,
-    manufacturerName: PropTypes.string.isRequired,
+    manufacturer: PropTypes.string.isRequired,
     modelId: PropTypes.number.isRequired,
     modelName: PropTypes.string.isRequired,
     notes: PropTypes.string.isRequired,
     phone: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
+    visitStatus: PropTypes.string.isRequired,
     streetAddress: PropTypes.string,
     transmission: PropTypes.string.isRequired,
     userId: PropTypes.number.isRequired,

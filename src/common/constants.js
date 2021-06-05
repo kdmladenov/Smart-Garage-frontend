@@ -60,8 +60,9 @@ export const visitInput = {
 export const partPrice = {
   MIN: 0,
   MAX: 2000
-}
+};
+
 export const servicePrice = {
   MIN: 0,
   MAX: 1000
-}
+};

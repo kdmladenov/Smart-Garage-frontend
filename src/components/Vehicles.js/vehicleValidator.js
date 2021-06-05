@@ -6,7 +6,7 @@ import transmission from '../../common/transmission.enum';
 // engineType: '',
 // transmission: '',
 // manufacturedYear: '',
-// model: '',
+// modelName: '',
 // manufacturer: '',
 // carSegment: ''
 

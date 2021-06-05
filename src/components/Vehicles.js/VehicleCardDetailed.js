@@ -375,7 +375,7 @@ VehicleCardDetailed.propTypes = {
     licensePlate: PropTypes.string,
     manufacturer: PropTypes.string,
     manufacturedYear: PropTypes.number,
-    manufacturerId: PropTypes.string,
+    manufacturerId: PropTypes.number,
     modelName: PropTypes.string,
     modelId: PropTypes.number,
     transmission: PropTypes.string,

@@ -76,6 +76,7 @@ const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencie
             customer={emptyCustomer}
             registerCustomerMode={registerCustomerMode}
             setRegisterCustomerMode={setRegisterCustomerMode}
+            allCurrencies={allCurrencies}
           />
         )}
         {!registerCustomerMode && (data.length ? <ul>{customersListToShow}</ul> : <h2> No customers are found... </h2>)}

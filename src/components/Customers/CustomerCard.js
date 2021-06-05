@@ -19,6 +19,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
   const [isDeleted, setIsDeleted] = useState(false);
   const [registerVehicleMode, setRegisterVehicleMode] = useState(false);
   const [newCustomerId, setNewCustomerId] = useState(customer.userId);
+  const [registerVisitMode, setRegisterVisitMode] = useState(false);
   // const [error, setError] = useState('');
   // const { search: query } = useLocation();
   const {
@@ -66,6 +67,36 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
     manufacturer: '',
     carSegment: ''
   };
+
+  const emptyVisit = {
+    carSegment: '',
+    city: '',
+    companyName: '',
+    country: '',
+    email: '',
+    engineType: '',
+    firstName: '',
+    lastName: '',
+    licensePlate: '',
+    manufacturedYear: 0,
+    manufacturerId: 0,
+    manufacturer: '',
+    modelId: 0,
+    modelName: '',
+    notes: '',
+    performedServices: [],
+    phone: '',
+    visitStatus: '',
+    streetAddress: '',
+    transmission: '',
+    usedParts: [],
+    userId: customer.userId,
+    vehicleId: 0,
+    vin: '',
+    visitEnd: '',
+    visitStart: '',
+    addressId: 0
+  };
   // `{${customer.userId}` || `${newCustomerId}}`
   // useEffect(() => {
   //   emptyVehicle.userId = customer.userId || newCustomerId;
@@ -81,6 +112,9 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
             registerVehicleMode={registerVehicleMode}
             setRegisterVehicleMode={setRegisterVehicleMode}
             allCurrencies={allCurrencies}
+            registerVisitMode={registerVisitMode}
+            setRegisterVisitMode={setRegisterVisitMode}
+            visits={{ ...emptyVisit, ...vehicle, ...customer }}
           />
         );
       })}
@@ -187,7 +221,7 @@ CustomerCard.defaultProps = {
   lastName: '',
   companyName: '',
   street: '',
-  visitEndDate: '',
+  visitEnd: '',
   phone: '',
   email: '',
   city: '',
@@ -196,14 +230,14 @@ CustomerCard.defaultProps = {
   streetAddress: '',
   role: '',
   licensePlate: '',
-  make: '',
+  manufacturer: '',
   modelId: null,
   userId: null,
-  model: '',
+  modelName: '',
   vehicleId: null,
   vin: '',
   visitId: null,
-  visitStartDate: '',
+  visitStart: '',
   visitStatus: ''
 };
 
@@ -221,14 +255,14 @@ CustomerCard.propTypes = {
     postalCode: PropTypes.number,
     streetAddress: PropTypes.string,
     licensePlate: PropTypes.string,
-    make: PropTypes.string,
+    manufacturer: PropTypes.string,
     modelId: PropTypes.number,
-    model: PropTypes.string,
+    modelName: PropTypes.string,
     vehicleId: PropTypes.number,
     vin: PropTypes.string,
-    visitEndDate: PropTypes.string,
+    visitEnd: PropTypes.string,
     visitId: PropTypes.number,
-    visitStartDate: PropTypes.string,
+    visitStart: PropTypes.string,
     visitStatus: PropTypes.string,
     role: PropTypes.string
   }).isRequired,

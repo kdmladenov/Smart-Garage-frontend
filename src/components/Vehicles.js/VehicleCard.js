@@ -9,6 +9,7 @@ import useHttp from '../../hooks/useHttp';
 import VehicleCardDetailed from './VehicleCardDetailed';
 import VisitCard from '../Visits/VisitCard';
 import './Vehicles.css';
+import VisitCardDetailed from '../Visits/VisitCardDetailed';
 
 const VehicleCard = ({
   vehicle,
@@ -19,7 +20,10 @@ const VehicleCard = ({
   newCustomerId,
   allCurrencies,
   setVehicleList,
-  vehicleList
+  vehicleList,
+  registerVisitMode,
+  setRegisterVisitMode,
+  visits
 }) => {
   const [editMode, setEditMode] = useState(false);
   const {
@@ -61,7 +65,7 @@ const VehicleCard = ({
       />
     );
   }
-
+  console.log(registerVisitMode, 'registerVisitMode');
   return (
     !registerVehicleMode && (
       <>
@@ -74,15 +78,24 @@ const VehicleCard = ({
                 <div className="card-header-text-item">{vehicle.licensePlate}</div>
               </div>
               <div className="card-header-buttons">
-                <CustomToggle variant="primary" eventKey="1" setEditMode={setEditMode}>
-                  Details
+                <CustomToggle
+                  variant="primary"
+                  eventKey="1"
+                  setEditMode={setEditMode}
+                  createMode={registerVisitMode}
+                  setCreateMode={setRegisterVisitMode}
+                >
+                  Add Visit
                 </CustomToggle>
                 <CustomToggle variant="primary" eventKey="2" setEditMode={setEditMode}>
+                  Details
+                </CustomToggle>
+                <CustomToggle variant="primary" eventKey="3" setEditMode={setEditMode}>
                   History
                 </CustomToggle>
               </div>
             </Card.Header>
-            <Accordion.Collapse eventKey="1">
+            <Accordion.Collapse eventKey="2">
               <Card.Body>
                 <VehicleCardDetailed
                   key={vehicle.vehicleId}
@@ -94,9 +107,36 @@ const VehicleCard = ({
                 />
               </Card.Body>
             </Accordion.Collapse>
-            <Accordion.Collapse eventKey="2">
+            <Accordion.Collapse eventKey="3">
               <Card.Body>
                 {data.length ? <ul>{visitListToShow}</ul> : <h2> No visits found for this vehicle </h2>}
+              </Card.Body>
+            </Accordion.Collapse>
+            <Accordion.Collapse eventKey="1">
+              <Card.Body>
+                <>Register Visit Form in Car List</>
+                {/* {(registerVehicleMode || registerCustomerMode) && (
+                  <VisitCard
+                    className="visit-card"
+                    visit={{ ...visits, ...vehicle }}
+                    allCurrencies={allCurrencies}
+                    registerVisitMode={registerVisitMode}
+                    setRegisterVisitMode={setRegisterVisitMode}
+                  />
+                )} */}
+                {registerVisitMode && (
+                  <VisitCardDetailed
+                    // key={visit.visitId}
+                    // visitId={visit.visitId}
+                    visits={{ ...visits, ...vehicle }}
+                    carSegment={vehicle.carSegment}
+                    editMode={editMode}
+                    setEditMode={setEditMode}
+                    allCurrencies={allCurrencies}
+                    registerVisitMode={registerVisitMode}
+                    setRegisterVisitMode={setRegisterVisitMode}
+                  />
+                )}
               </Card.Body>
             </Accordion.Collapse>
           </Card>
@@ -123,13 +163,28 @@ VehicleCard.defaultProps = {
   userId: null,
   vehicleId: null,
   vin: '',
+  city: '',
+  country: '',
+  firstName: '',
+  lastName: '',
+  notes: '',
+  performedServices: [],
+  phone: '',
+  visitStatus: '',
+  streetAddress: '',
+  usedParts: [],
+  visitEnd: '',
+  visitStart: '',
+  addressId: 0,
   registerVehicleMode: false,
   registerCustomerMode: false,
   setRegisterVehicleMode: () => {},
   newCustomerId: null,
   setRegisterCustomerMode: () => {},
   setVehicleList: () => {},
-  vehicleList: []
+  vehicleList: [],
+  setRegisterVisitMode: () => {},
+  registerVisitMode: false
 };
 
 VehicleCard.propTypes = {
@@ -157,7 +212,38 @@ VehicleCard.propTypes = {
   setRegisterCustomerMode: PropTypes.func,
   allCurrencies: PropTypes.array.isRequired,
   setVehicleList: PropTypes.func,
-  vehicleList: PropTypes.array
+  vehicleList: PropTypes.array,
+  setRegisterVisitMode: PropTypes.func,
+  registerVisitMode: PropTypes.bool,
+  visits: PropTypes.shape({
+    carSegment: PropTypes.string,
+    city: PropTypes.string,
+    companyName: PropTypes.string,
+    country: PropTypes.string,
+    email: PropTypes.string,
+    engineType: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    licensePlate: PropTypes.string,
+    manufacturedYear: PropTypes.number,
+    manufacturerId: PropTypes.number,
+    manufacturer: PropTypes.string,
+    modelId: PropTypes.number,
+    modelName: PropTypes.string,
+    notes: PropTypes.string,
+    performedServices: PropTypes.array,
+    phone: PropTypes.string,
+    visitStatus: PropTypes.string,
+    streetAddress: PropTypes.string,
+    transmission: PropTypes.string,
+    usedParts: PropTypes.number,
+    userId: PropTypes.number,
+    vehicleId: PropTypes.number,
+    vin: PropTypes.string,
+    visitEnd: PropTypes.string,
+    visitStart: PropTypes.string,
+    addressId: PropTypes.number
+  })
 };
 
 export default VehicleCard;

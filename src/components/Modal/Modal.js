@@ -21,11 +21,15 @@ const Modal = ({ modalHeader, modalBody, buttonText, buttonOnClick, num, toggle,
 
 export default Modal;
 
+Modal.defaultTypes = {
+  buttonOnClick: () => {}
+};
+
 Modal.propTypes = {
   modalHeader: PropTypes.string.isRequired,
   modalBody: PropTypes.string.isRequired,
   buttonText: PropTypes.string.isRequired,
-  buttonOnClick: PropTypes.func.isRequired,
+  buttonOnClick: PropTypes.func,
   num: PropTypes.number.isRequired,
   toggle: PropTypes.func.isRequired,
   isOpen: PropTypes.object.isRequired

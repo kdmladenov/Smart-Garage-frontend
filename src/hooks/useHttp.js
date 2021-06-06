@@ -9,6 +9,7 @@ const useHttp = (url, method = 'GET', initialData = null, dependencies = [url]) 
   const token = getToken();
 
   useEffect(() => {
+    let isMounted = true;
     setLoading(true);
 
     fetch(url, {
@@ -24,11 +25,20 @@ const useHttp = (url, method = 'GET', initialData = null, dependencies = [url]) 
         return response.json();
       })
       .then((result) => {
-        setLoading(false);
-        setData(result);
+        if (isMounted) {
+          setLoading(false);
+          setData(result);
+        }
       })
-      .catch((e) => setError(e.message))
-      .finally(() => setLoading(false));
+      .catch((e) => {
+        if (isMounted) setError(e.message);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+    return () => {
+      isMounted = false;
+    };
   }, dependencies);
 
   return {

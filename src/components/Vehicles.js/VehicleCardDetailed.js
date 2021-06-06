@@ -39,6 +39,7 @@ const VehicleCardDetailed = ({
   const [carSegment, filterCarSegment] = useState([]);
 
   useEffect(() => {
+    let isMounted = true;
     fetch(`${BASE_URL}/models`, {
       method: 'GET',
       headers: {
@@ -52,16 +53,25 @@ const VehicleCardDetailed = ({
         return res.json();
       })
       .then((res) => {
-        setModelsData(res);
+        if (isMounted) {
+          setModelsData(res);
 
-        const makes = new Set();
-        res.forEach((m) => makes.add(m.manufacturer));
-        setManufacturers([...makes]);
-        filterModels(res.filter((m) => m.manufacturer === vehicle.manufacturer));
+          const makes = new Set();
+          res.forEach((m) => makes.add(m.manufacturer));
+          setManufacturers([...makes]);
+          filterModels(res.filter((m) => m.manufacturer === vehicle.manufacturer));
 
-        filterCarSegment(res.filter((m) => m.modelName === vehicle.modelName));
+          filterCarSegment(res.filter((m) => m.modelName === vehicle.modelName));
+        }
       })
-      .catch((e) => setError(e.message));
+      .catch((e) => {
+        if (isMounted) {
+          setError(e.message);
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {

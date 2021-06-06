@@ -8,7 +8,7 @@ import Loading from '../../components/UI/Loading';
 import { useState } from 'react';
 
 const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencies, customersQuery }) => {
-  const [created, setCreated] = useState(false)
+  const [created, setCreated] = useState(false);
   const {
     data,
     // setLocalData,

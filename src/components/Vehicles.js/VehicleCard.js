@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import CustomToggle from '../UI/Accordion/CustomToggle';
-import { BASE_URL } from '../../common/constants';
+import { BASE_URL, emptyVisit } from '../../common/constants';
 import useHttp from '../../hooks/useHttp';
 import VehicleCardDetailed from './VehicleCardDetailed';
 import VisitCard from '../Visits/VisitCard';
@@ -161,7 +161,8 @@ VehicleCard.defaultProps = {
   setRegisterVisitMode: () => {},
   registerVisitMode: false,
   setNewVehicle: () => {},
-  setCreated: () => {}
+  setCreated: () => {},
+  newVisit: { ...emptyVisit }
 };
 
 VehicleCard.propTypes = {

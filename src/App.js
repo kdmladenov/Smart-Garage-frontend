@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import { BASE_URL, CURRENCY_API_KEY, CURRENCY_URL, modals } from './common/constants';
-import Customers from './containers/Users/Customers';
+import Customers from './containers/Customers/Customers';
 import Vehicles from './containers/Vehicles/Vehicles';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';

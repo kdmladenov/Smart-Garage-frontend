@@ -481,7 +481,7 @@ VisitCardDetailed.defaultProps = {
   allCurrencies: [],
   setRegisterVisitMode: () => {},
   registerVisitMode: false,
-  setCreated: false
+  setCreated: () => {}
 };
 
 VisitCardDetailed.propTypes = {

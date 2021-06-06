@@ -5,14 +5,12 @@ import Loading from '../../components/UI/Loading';
 // import { useState } from 'react';
 import VehicleCard from '../../components/Vehicles.js/VehicleCard';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 const Vehicles = ({ allCurrencies, vehiclesQuery }) => {
-  const {
-    data,
-    // setLocalData,
-    loading
-    // error
-  } = useHttp(`${BASE_URL}/vehicles${vehiclesQuery}`, 'GET', [], [vehiclesQuery]);
+  const [registerVisitMode, setRegisterVisitMode] = useState(false);
+  const [created, setCreated] = useState(false);
+  const { data, loading } = useHttp(`${BASE_URL}/vehicles${vehiclesQuery}`, 'GET', [], [vehiclesQuery, created]);
 
   if (loading) {
     return <Loading />;
@@ -33,6 +31,9 @@ const Vehicles = ({ allCurrencies, vehiclesQuery }) => {
             key={vehicle.vehicleId}
             vehicle={vehicle}
             allCurrencies={allCurrencies}
+            registerVisitMode={registerVisitMode}
+            setRegisterVisitMode={setRegisterVisitMode}
+            setCreated={setCreated}
           />
         );
       })}

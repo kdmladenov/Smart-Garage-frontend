@@ -62,7 +62,7 @@ const CreateServiceCard = ({ setCreateServiceMode }) => {
         <Form className="service-detailed">
           <div className="row gutters">
             <div className="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 name">
-              <Form.Group controlId="formBasicName" className={inputErrors.name ? 'error' : ''}>
+              <Form.Group className={inputErrors.name ? 'error' : ''}>
                 <Form.Control
                   type="text"
                   name="name"
@@ -74,7 +74,7 @@ const CreateServiceCard = ({ setCreateServiceMode }) => {
               </Form.Group>
             </div>
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12 car-segment">
-              <Form.Group controlId="formBasicCarSegment" className={inputErrors.carSegment ? 'error' : ''}>
+              <Form.Group className={inputErrors.carSegment ? 'error' : ''}>
                 <Form.Control
                   as="select"
                   name="carSegment"
@@ -92,7 +92,7 @@ const CreateServiceCard = ({ setCreateServiceMode }) => {
               </Form.Group>
             </div>
             <div className="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12 price">
-              <Form.Group controlId="formBasicPrice" className={inputErrors.price ? 'error' : ''}>
+              <Form.Group className={inputErrors.price ? 'error' : ''}>
                 <Form.Control
                   type="text"
                   name="price"

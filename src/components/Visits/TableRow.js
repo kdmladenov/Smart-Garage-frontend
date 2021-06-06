@@ -18,7 +18,7 @@ const TableRow = ({ id, name, quantity, price, carSegment, editMode, updateQty, 
       <td>{carSegment}</td>
       <td>{name}</td>
       <td>
-        <Form.Group controlId="formBasicQty" style={{ height: 'initial', margin: 'initial', padding: 'initial' }}>
+        <Form.Group style={{ height: 'initial', margin: 'initial', padding: 'initial' }}>
           <Form.Control
             style={{ width: '80px' }}
             type="number"

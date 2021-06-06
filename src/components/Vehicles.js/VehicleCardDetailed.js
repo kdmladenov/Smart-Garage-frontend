@@ -181,7 +181,7 @@ const VehicleCardDetailed = ({
             )}
           </div>
           <div className="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
-            <Form.Group controlId="formBasicVin" className={inputErrors.vin ? 'error' : ''}>
+            <Form.Group className={inputErrors.vin ? 'error' : ''}>
               <Form.Control
                 type="text"
                 name="vin"
@@ -194,7 +194,7 @@ const VehicleCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-2 col-lg-6 col-md-6 col-sm-12 col-12">
-            <Form.Group controlId="formBasicLicensePlate" className={inputErrors.licensePlate ? 'error' : ''}>
+            <Form.Group className={inputErrors.licensePlate ? 'error' : ''}>
               <Form.Control
                 type="text"
                 name="licensePlate"
@@ -207,7 +207,7 @@ const VehicleCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
-            <Form.Group controlId="formEngineType" className={inputErrors.engineType ? 'error' : ''}>
+            <Form.Group className={inputErrors.engineType ? 'error' : ''}>
               <Form.Control
                 as="select"
                 name="engineType"
@@ -226,7 +226,7 @@ const VehicleCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
-            <Form.Group controlId="formBasicTransmission" className={inputErrors.transmission ? 'error' : ''}>
+            <Form.Group className={inputErrors.transmission ? 'error' : ''}>
               <Form.Control
                 as="select"
                 name="transmission"
@@ -245,7 +245,7 @@ const VehicleCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
-            <Form.Group controlId="formBasicManufacturer" className={inputErrors.manufacturer ? 'error' : ''}>
+            <Form.Group className={inputErrors.manufacturer ? 'error' : ''}>
               <Form.Control
                 as="select"
                 name="manufacturer"
@@ -266,7 +266,7 @@ const VehicleCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
-            <Form.Group controlId="FormBasicModel" className={inputErrors.modelName ? 'error' : ''}>
+            <Form.Group className={inputErrors.modelName ? 'error' : ''}>
               <Form.Control
                 as="select"
                 name="modelName"
@@ -287,7 +287,7 @@ const VehicleCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
-            <Form.Group controlId="formBasicCarSegment" className={inputErrors.carSegment ? 'error' : ''}>
+            <Form.Group className={inputErrors.carSegment ? 'error' : ''}>
               <Form.Control
                 as="select"
                 name="carSegment"
@@ -306,7 +306,7 @@ const VehicleCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
-            <Form.Group controlId="formBasicManufacturedYear" className={inputErrors.manufacturedYear ? 'error' : ''}>
+            <Form.Group className={inputErrors.manufacturedYear ? 'error' : ''}>
               <Form.Control
                 type="year"
                 name="manufacturedYear"

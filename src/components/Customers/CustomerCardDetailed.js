@@ -144,7 +144,7 @@ const CustomerCardDetailed = ({
             )}
           </div>
           <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-            <Form.Group controlId="formBasicFirstName" className={inputErrors.firstName ? 'error' : ''}>
+            <Form.Group className={inputErrors.firstName ? 'error' : ''}>
               <Form.Control
                 type="text"
                 name="firstName"
@@ -157,7 +157,7 @@ const CustomerCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-            <Form.Group controlId="formBasicLastName" className={inputErrors.lastName ? 'error' : ''}>
+            <Form.Group className={inputErrors.lastName ? 'error' : ''}>
               <Form.Control
                 type="text"
                 name="lastName"
@@ -170,7 +170,7 @@ const CustomerCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-            <Form.Group controlId="formBasicCompanyName" className={inputErrors.companyName ? 'error' : ''}>
+            <Form.Group className={inputErrors.companyName ? 'error' : ''}>
               <Form.Control
                 type="text"
                 name="companyName"
@@ -189,7 +189,7 @@ const CustomerCardDetailed = ({
                 : 'col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12'
             }
           >
-            <Form.Group controlId="formBasicEmail" className={inputErrors.email ? 'error' : ''}>
+            <Form.Group className={inputErrors.email ? 'error' : ''}>
               <Form.Control
                 type="email"
                 name="email"
@@ -203,7 +203,7 @@ const CustomerCardDetailed = ({
           </div>
           {(editMode || registerCustomerMode) && (
             <div className="col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12">
-              <Form.Group controlId="formBasicConfirmEmail" className={inputErrors.reenteredEmail ? 'error' : ''}>
+              <Form.Group className={inputErrors.reenteredEmail ? 'error' : ''}>
                 <Form.Control
                   type="email"
                   name="reenteredEmail"
@@ -223,7 +223,7 @@ const CustomerCardDetailed = ({
                 : 'col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12'
             }
           >
-            <Form.Group controlId="FormBasicPhone" className={inputErrors.phone ? 'error' : ''}>
+            <Form.Group className={inputErrors.phone ? 'error' : ''}>
               <Form.Control
                 type="tel"
                 name="phone"
@@ -236,7 +236,7 @@ const CustomerCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12">
-            <Form.Group controlId="formBasicRole" className={inputErrors.role ? 'error' : ''}>
+            <Form.Group className={inputErrors.role ? 'error role' : 'role'}>
               <Form.Control
                 as="select"
                 name="role"
@@ -255,7 +255,7 @@ const CustomerCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-2 col-lg-4 col-md-3 col-sm-4 col-12">
-            <Form.Group controlId="formBasicCountry" className={inputErrors.country ? 'error' : ''}>
+            <Form.Group className={inputErrors.country ? 'error' : ''}>
               <Form.Control
                 type="text"
                 name="country"
@@ -268,7 +268,7 @@ const CustomerCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-2 col-lg-3 col-md-3 col-sm-4 col-12">
-            <Form.Group controlId="formBasicCity" className={inputErrors.city ? 'error' : ''}>
+            <Form.Group className={inputErrors.city ? 'error' : ''}>
               <Form.Control
                 type="text"
                 name="city"
@@ -281,7 +281,7 @@ const CustomerCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-2 col-lg-3 col-md-6 col-sm-4 col-12">
-            <Form.Group controlId="formBasicPostalCode" className={inputErrors.postalCode ? 'error' : ''}>
+            <Form.Group className={inputErrors.postalCode ? 'error' : ''}>
               <Form.Control
                 type="text"
                 name="postalCode"
@@ -294,7 +294,7 @@ const CustomerCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
-            <Form.Group controlId="formBasicStreetAddress" className={inputErrors.streetAddress ? 'error' : ''}>
+            <Form.Group className={inputErrors.streetAddress ? 'error' : ''}>
               <Form.Control
                 type="text"
                 name="streetAddress"

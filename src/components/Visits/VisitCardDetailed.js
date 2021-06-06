@@ -237,7 +237,7 @@ const VisitCardDetailed = ({
           )}
         </div>
         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-          <Form.Group controlId="formBasicNotes" className={inputErrors.notes ? 'error' : ''}>
+          <Form.Group className={inputErrors.notes ? 'error notes' : 'notes'}>
             <Form.Control
               type="text"
               name="notes"
@@ -250,7 +250,7 @@ const VisitCardDetailed = ({
           </Form.Group>
         </div>
         <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
-          <Form.Group controlId="formBasicStatus" className={inputErrors.visitStatus ? 'error' : ''}>
+          <Form.Group className={inputErrors.visitStatus ? 'error status' : 'status'}>
             <Form.Control
               as="select"
               name="visitStatus"
@@ -269,7 +269,7 @@ const VisitCardDetailed = ({
           </Form.Group>
         </div>
         <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
-          <Form.Group controlId="formBasicCurrency">
+          <Form.Group>
             <Form.Control
               as="select"
               name="currency"
@@ -290,7 +290,7 @@ const VisitCardDetailed = ({
             <span>Performed Services</span>
             {(editMode || registerVisitMode) && (
               <span className="select-service">
-                <Form.Group controlId="formBasicSelectService">
+                <Form.Group className="select-service-drop-down">
                   <Form.Control
                     as="select"
                     name="service"
@@ -368,7 +368,7 @@ const VisitCardDetailed = ({
             <span>Used Parts</span>
             {(editMode || registerVisitMode) && (
               <span className="select-service">
-                <Form.Group controlId="formBasicSelectPart">
+                <Form.Group>
                   <Form.Control
                     as="select"
                     name="part"
@@ -388,7 +388,7 @@ const VisitCardDetailed = ({
                     ))}
                   </Form.Control>
                 </Form.Group>
-                <Form.Group controlId="formBasicPartQty">
+                <Form.Group>
                   <Form.Control
                     style={{ width: '50px' }}
                     type="number"

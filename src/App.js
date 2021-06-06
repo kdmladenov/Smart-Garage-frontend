@@ -26,9 +26,11 @@ const App = () => {
     isLoggedIn: !!getUser(),
     user: getUser()
   });
-  const modalNumber = 'Modal14';
-  const [modalIsOpen, toggleModalIsOpen] = useState({ [modalNumber]: false });
-  const toggleModal = () => {
+  // const modalNumber = 'Modal14';
+  const [detailedVisitReport, setDetailedVisitReport] = useState('');
+  const [modalIsOpen, toggleModalIsOpen] = useState({ modal14: false });
+  const toggleModal = (modalNumber) => {
+    console.log(modalNumber);
     toggleModalIsOpen({ [modalNumber]: !modalIsOpen[modalNumber] });
   };
 
@@ -54,7 +56,7 @@ const App = () => {
           user: null,
           isLoggedIn: false
         });
-        toggleModal(modals.VERTICALLY_CENTERED);
+        toggleModal(modals.VERTICALLY_CENTERED.name);
         localStorage.removeItem('token');
       });
   };
@@ -68,7 +70,7 @@ const App = () => {
         {authValue.isLoggedIn && (
           <Header
             toggleModal={toggleModal}
-            num={modals.VERTICALLY_CENTERED}
+            num={modals.VERTICALLY_CENTERED.num}
             setCreateServiceMode={setCreateServiceMode}
             createServiceMode={createServiceMode}
             setCreatePartMode={setCreatePartMode}
@@ -116,14 +118,35 @@ const App = () => {
             component={() => <Parts createPartMode={createPartMode} setCreatePartMode={setCreatePartMode} partsQuery={partsQuery} />}
             isLoggedIn={authValue.isLoggedIn && authValue.user.role === 'employee'}
           />
-          <GuardedRoute path="/customer-profile" exact component={CustomerProfile} isLoggedIn={authValue.isLoggedIn} />
+          <GuardedRoute
+            path="/customer-profile"
+            exact
+            component={() => (
+              <CustomerProfile
+                toggleModal={toggleModal}
+                num={modals.SCROLLING_LONG_CONTENT.num}
+                setDetailedVisitReport={setDetailedVisitReport}
+                allCurrencies={allCurrencies}
+              />
+            )}
+            isLoggedIn={authValue.isLoggedIn}
+          />
         </Switch>
         <Modal
           modalHeader="Are you leaving?"
-          modalMessage="Are you sure want to logout?"
+          modalBody="Are you sure want to logout?"
           buttonText="logout"
           buttonOnClick={logout}
-          num={modals.VERTICALLY_CENTERED}
+          num={modals.VERTICALLY_CENTERED.num}
+          toggle={toggleModal}
+          isOpen={modalIsOpen}
+        />
+        <Modal
+          modalHeader="Detailed Visit Report"
+          modalBody={detailedVisitReport}
+          buttonText="PDF"
+          // buttonOnClick={}
+          num={modals.SCROLLING_LONG_CONTENT.num}
           toggle={toggleModal}
           isOpen={modalIsOpen}
         />

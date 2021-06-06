@@ -1,13 +1,13 @@
 import { useContext, useState, useEffect } from 'react';
-
 import { BASE_URL } from '../../common/constants';
 import ChangePassword from '../../components/CustomerProfile/ChangePassword';
 import ServiceHistory from '../../components/CustomerProfile/ServiceHistory';
 import CustomerNavigation from '../../components/CustomerProfile/CustomerNavigation';
 import AuthContext, { getToken } from '../../providers/AuthContext';
+import PropTypes from 'prop-types';
 import './CustomerProfile.css';
 
-const CustomerProfile = () => {
+const CustomerProfile = ({ toggleModal, num, setDetailedVisitReport, allCurrencies }) => {
   const [content, setContent] = useState('history');
   const [query, setQuery] = useState('');
   const [visits, setVisits] = useState([]);
@@ -69,13 +69,27 @@ const CustomerProfile = () => {
             </div>
           </div>
           <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
-            {content === 'history' && <ServiceHistory visits={visits} />}
+            {content === 'history' &&
+              <ServiceHistory
+                visits={visits}
+                toggleModal={toggleModal}
+                num={num}
+                setDetailedVisitReport={setDetailedVisitReport}
+                allCurrencies={allCurrencies}
+              />}
             {content === 'changePassword' && <ChangePassword />}
           </div>
         </div>
       </div>
     </main>
   );
+};
+
+CustomerProfile.propTypes = {
+  toggleModal: PropTypes.func.isRequired,
+  num: PropTypes.number.isRequired,
+  setDetailedVisitReport: PropTypes.func.isRequired,
+  allCurrencies: PropTypes.array.isRequired
 };
 
 export default CustomerProfile;

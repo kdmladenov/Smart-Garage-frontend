@@ -23,6 +23,7 @@ const Header = ({
   setServicesQuery,
   setPartsQuery
 }) => {
+  const modalNumber = `modal${num}`;
   const initialContent = getUser().role === 'employee' ? 'customers' : 'account';
   const [content, setContent] = useState(initialContent);
   const [sideNavVisible, toggleSideNavVisible] = useState(false);
@@ -152,7 +153,7 @@ const Header = ({
               </>
             )}
             <MDBNavItem>
-                <button className="nav-link" role="button" onClick={() => toggleModal(num)} style={{ borderLeft: '1px solid #000' }}>
+                <button className="nav-link" role="button" onClick={() => toggleModal(modalNumber)} style={{ borderLeft: '1px solid #000' }}>
                 <MDBIcon icon="sign-out-alt" className="d-inline-inline" style={navColor} />
                 <div className="d-none d-md-inline" style={navColor}>Logout</div>
               </button>

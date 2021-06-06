@@ -35,7 +35,14 @@ export const vehicleInput = {
 };
 
 export const modals = {
-  VERTICALLY_CENTERED: 14
+  VERTICALLY_CENTERED: {
+    num: 14,
+    name: 'modal14'
+  },
+  SCROLLING_LONG_CONTENT: {
+    num: 13,
+    name: 'modal13'
+  }
 };
 
 export const serviceInput = {
@@ -60,8 +67,8 @@ export const visitInput = {
 export const partPrice = {
   MIN: 0,
   MAX: 2000
-}
+};
 export const servicePrice = {
   MIN: 0,
   MAX: 1000
-}
+};

@@ -329,19 +329,24 @@ const VisitCardDetailed = ({
                     ))}
                   </Form.Control>
                 </Form.Group>
-                <Form.Group controlId="formBasicServiceQty">
+                <Form.Group
+                // controlId="formBasicServiceQty"
+                >
                   <Form.Control
                     style={{ width: '50px' }}
                     type="number"
                     name="serviceQty"
                     value={service.serviceQty}
                     min="1"
-                    onChange={(e) => setService({ ...service, serviceQty: e.target.value })}
+                    onChange={(e) => setService({ ...service, serviceQty: +e.target.value })}
                   />
                 </Form.Group>
                 <MDBBtn
-                  onClick={() => addService(service.serviceId, service.serviceQty)}
-                  disabled={service && (service.name === 'Select Service')}
+                  onClick={() => {
+                    addService(service.serviceId, service.serviceQty);
+                    setService({ serviceId: 0, name: 'Select Service', serviceQty: 0 });
+                  }}
+                  disabled={service && (service.name === 'Select Service' || !(service.serviceQty > 0))}
                 >
                   <MDBIcon icon="plus-square" />
                 </MDBBtn>
@@ -369,7 +374,7 @@ const VisitCardDetailed = ({
                     key={s.serviceId}
                     id={s.serviceId}
                     name={s.name}
-                    quantity={+s.serviceQty}
+                    quantity={s.serviceQty || 1}
                     price={s.price}
                     carSegment={carSegment}
                     editMode={editMode || registerVisitMode}
@@ -417,7 +422,7 @@ const VisitCardDetailed = ({
                 </Form.Group>
                 <MDBBtn
                   onClick={() => addPart(part.partId, part.partQty)}
-                  disabled={part && (part.name === 'Select Part')}
+                  disabled={part && part.name === 'Select Part'}
                 >
                   <MDBIcon icon="plus-square" />
                 </MDBBtn>

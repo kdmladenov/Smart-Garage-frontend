@@ -5,30 +5,32 @@ import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 import './CustomToggle.css';
 import { MDBBtn } from 'mdbreact';
 
-const CustomToggle = ({ children, eventKey, variant, customFunc }) => {
-  const handleClick = useAccordionToggle(
-    eventKey,
-    () => {
-      customFunc && customFunc(false);
-    }
-  );
+const CustomToggle = ({ children, eventKey, variant, customFunc, createMode, setCreateMode, disabled }) => {
+  const handleClick = useAccordionToggle(eventKey, () => {
+    customFunc && customFunc(false);
+    setCreateMode && setCreateMode(!createMode);
+  });
 
   return (
-    <MDBBtn type="button" variant={variant} onClick={handleClick}>
+    <MDBBtn type="button" variant={variant} onClick={handleClick} disabled={disabled}>
       {children}
     </MDBBtn>
   );
 };
 
 CustomToggle.defaultProp = {
-  func: () => {}
+  func: () => {},
+  disabled: false
 };
 
 CustomToggle.propTypes = {
   children: PropTypes.string.isRequired,
   eventKey: PropTypes.string.isRequired,
   variant: PropTypes.string.isRequired,
-  customFunc: PropTypes.func
+  customFunc: PropTypes.func,
+  createMode: PropTypes.bool,
+  setCreateMode: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 export default CustomToggle;

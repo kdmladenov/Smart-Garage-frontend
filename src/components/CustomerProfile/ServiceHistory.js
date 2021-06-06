@@ -16,18 +16,20 @@ const ServiceHistory = ({ visits }) => {
         icon={<MDBIcon icon="galactic-republic" />}
       >
         <span className="date-top">{new Date(e.visitStart).toLocaleDateString('ca-ES')}</span>
-        {e.status === 'ready' && <span className="date-bottom">{new Date(e.visitEnd).toLocaleDateString('ca-ES')}</span>}
+        {e.visitStatus === 'ready' && (
+          <span className="date-bottom">{new Date(e.visitEnd).toLocaleDateString('ca-ES')}</span>
+        )}
         {/* <Link to={`/books/${bookId}`}>
           <img className="book-cover" src={`${BASE_URL}/${e.front_cover}`} alt="front cover" />
         </Link> */}
         <div className="timeline-element-info">
           <div className="left">
-            <h4 className="vertical-timeline-element-vehicle">{`${e.licensePlate}  ${e.manufacturerName} ${e.modelName}`}</h4>
+            <h4 className="vertical-timeline-element-vehicle">{`${e.licensePlate}  ${e.manufacturer} ${e.modelName}`}</h4>
             <h5 className="vertical-timeline-element-notes">{e.notes}</h5>
           </div>
           <div className="right">
             <MDBBtn type="button">details</MDBBtn>
-            <h5 className="vertical-timeline-element-status">{e.status}</h5>
+            <h5 className="vertical-timeline-element-status">{e.visitStatus}</h5>
           </div>
         </div>
       </VerticalTimelineElement>

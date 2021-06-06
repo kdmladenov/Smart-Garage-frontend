@@ -6,10 +6,12 @@ const TableRow = ({ id, name, quantity, price, carSegment, editMode, updateQty, 
   const [qty, setQty] = useState(quantity);
   const [amount, setAmount] = useState(quantity * price * currency.rate);
   const [unitPrice, setUnitPrice] = useState(price);
+
   useEffect(() => {
     setAmount(Math.round(qty * price * currency.rate * 100) / 100);
     setUnitPrice(Math.round(price * currency.rate * 100) / 100);
   }, [currency]);
+
   return (
     <tr>
       <td>{id}</td>

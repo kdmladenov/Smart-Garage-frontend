@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import { MDBBtn, MDBIcon, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
-import { BASE_URL, CURRENCY_API_KEY, CURRENCY_URL } from '../../common/constants';
+import { BASE_URL, CURRENCY_API_KEY, CURRENCY_URL, emptyVisit } from '../../common/constants';
 import { getToken } from '../../providers/AuthContext';
 import Loading from '../UI/Loading';
 import useHttp from '../../hooks/useHttp';
@@ -11,43 +11,66 @@ import validateInput from './visitValidator';
 import visitStatusEnum from '../../common/visit-status.enum';
 import './VisitsCardDetailed.css';
 
-const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurrencies }) => {
+const VisitCardDetailed = ({
+  visitId,
+  carSegment,
+  editMode,
+  setEditMode,
+  allCurrencies,
+  registerVisitMode,
+  setRegisterVisitMode,
+  newVisit,
+  newVehicle,
+  setRegisterVehicleMode,
+  setCreated
+}) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState('false');
-  const [visit, setVisit] = useState({});
-  const [visitCopy, setVisitCopy] = useState({});
+  const [visit, setVisit] = useState(emptyVisit);
+  const [visitCopy, setVisitCopy] = useState(emptyVisit);
+
   useEffect(() => {
     setLoading(true);
-
-    fetch(`${BASE_URL}/visits/${visitId}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
-    })
-      .then(res => res.json())
-      .then(res => {
-        setVisit(res);
-        setVisitCopy({ ...res, usedParts: res.usedParts.map(p => ({ ...p })), performedServices: res.performedServices.map(s => ({ ...s })) });
+    if (visitId) {
+      fetch(`${BASE_URL}/visits/${visitId}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`
+        }
       })
-      .catch(e => setError(e.message))
-      .finally(() => setLoading(false));
+        .then((res) => res.json())
+        .then((res) => {
+          setVisit(res);
+          setVisitCopy({
+            ...res,
+            usedParts: res.usedParts.map((p) => ({ ...p })),
+            performedServices: res.performedServices.map((s) => ({ ...s }))
+          });
+        })
+        .catch((e) => setError(e.message))
+        .finally(() => setLoading(false));
+    }
   }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    if (registerVisitMode && newVehicle) {
+      setVisit({ ...newVisit, vehicleId: newVehicle.vehicleId });
+    }
+    if (registerVisitMode && !newVehicle) {
+      setVisit({ ...newVisit });
+    }
+    setLoading(false);
+  }, [registerVisitMode, newVehicle]);
 
   const [inputErrors, setInputErrors] = useState({
     notes: '',
-    status: ''
+    visitStatus: ''
   });
 
-  const {
-    data: services
-    // setLocalData: setServices
-  } = useHttp(`${BASE_URL}/services?carSegment=${carSegment}`, 'GET', []);
+  const { data: services } = useHttp(`${BASE_URL}/services?carSegment=${carSegment}`, 'GET', []);
 
-  const {
-    data: parts
-    // setLocalData: setParts
-  } = useHttp(`${BASE_URL}/parts?carSegment=${carSegment}`, 'GET', []);
+  const { data: parts } = useHttp(`${BASE_URL}/parts?carSegment=${carSegment}`, 'GET', []);
 
   const [service, setService] = useState({ serviceId: 0, name: 'Select Service', serviceQty: 0 });
   const [part, setPart] = useState({ partId: 0, name: 'Select Part', partQty: 0 });
@@ -67,28 +90,29 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
 
   const changeCurrency = (curr) => {
     fetch(`${CURRENCY_URL}/api/v7/convert?compact=ultra&q=BGN_${curr}&apiKey=${CURRENCY_API_KEY}`)
-      .then(res => res.json())
-      .then(res => {
+      .then((res) => res.json())
+      .then((res) => {
         console.log(res);
         console.log(res[`BGN_${curr}`]);
         setCurrency({ id: curr, rate: res[`BGN_${curr}`] });
       })
-      .catch(e => {
+      .catch((e) => {
         setError('Currency converter is currently unavailable. Please try again later.');
       });
   };
 
   const addService = (serviceId, qty) => {
-    const newService = { ...services.find(s => s.serviceId === +serviceId), serviceQty: qty };
+    const newService = { ...services.find((s) => s.serviceId === +serviceId), serviceQty: qty };
     setVisit({ ...visit, performedServices: [newService, ...visit.performedServices] });
   };
+
   const addPart = (partId, qty) => {
-    const newPart = { ...parts.find(p => p.partId === +partId), partQty: qty };
+    const newPart = { ...parts.find((p) => p.partId === +partId), partQty: qty };
     setVisit({ ...visit, usedParts: [newPart, ...visit.usedParts] });
   };
 
   const updatePerformedServiceQty = (serviceId, serviceQty) => {
-    const updatedServices = visit.performedServices.map(s => {
+    const updatedServices = visit.performedServices.map((s) => {
       if (s.serviceId === serviceId) {
         return { ...s, serviceQty: serviceQty };
       } else {
@@ -100,7 +124,7 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
   };
 
   const updateUsedPartsQty = (partId, partQty) => {
-    const updatedParts = visit.usedParts.map(p => {
+    const updatedParts = visit.usedParts.map((p) => {
       if (p.partId === partId) {
         return { ...p, partQty: partQty };
       } else {
@@ -111,29 +135,62 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
     setVisit({ ...visit, usedParts: updatedParts });
   };
 
+  const isValid = registerVisitMode
+    ? Object.values(inputErrors).every((v) => v === '') &&
+      visit.notes &&
+      visit.vehicleId &&
+      Array.isArray(visit.performedServices) &&
+      Array.isArray(visit.usedParts)
+    : Object.values(inputErrors).every((v) => v === '');
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setError('');
 
-    console.log(visit);
-    fetch(`${BASE_URL}/visits/${visit.visitId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
-      },
-      body: JSON.stringify(visit)
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (res.message) {
-          console.log(res.message);
-          setError(res.message);
-        } else {
-          setVisitCopy({ ...visit, usedParts: visit.usedParts.map(p => ({ ...p })), performedServices: visit.performedServices.map(s => ({ ...s })) });
-          setEditMode(false);
-        }
-      });
+    if (registerVisitMode && isValid) {
+      fetch(`${BASE_URL}/visits`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`
+        },
+        body: JSON.stringify({ ...visit, carSegment })
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.message) {
+            setError(res.message);
+          } else {
+            setRegisterVisitMode(false);
+            setRegisterVehicleMode(false);
+            setCreated(true);
+          }
+        });
+    }
+
+    if (editMode && isValid) {
+      fetch(`${BASE_URL}/visits/${visit.visitId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(visit)
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.message) {
+            setError(res.message);
+          } else {
+            setVisitCopy({
+              ...visit,
+              usedParts: visit.usedParts.map((p) => ({ ...p })),
+              performedServices: visit.performedServices.map((s) => ({ ...s }))
+            });
+            setEditMode(false);
+          }
+        });
+    }
   };
 
   return (
@@ -145,34 +202,44 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
               <p>{`${error}`}</p>
             </Form.Group>
           )}
-          {editMode && (
+          {(editMode || registerVisitMode) && (
             <>
-              <MDBBtn type="submit" onClick={handleFormSubmit}>
+              <MDBBtn type="submit" onClick={handleFormSubmit} disabled={!isValid}>
                 <MDBIcon icon="check" />
               </MDBBtn>
-              <MDBBtn type="button" onClick={() => {
-                setEditMode(false);
-                setVisit({ ...visitCopy, usedParts: visitCopy.usedParts.map(p => ({ ...p })), performedServices: visitCopy.performedServices.map(s => ({ ...s })) });
-                setCurrency({ id: 'BGN', rate: 1 });
-                setInputErrors({
-                  notes: '',
-                  status: '',
-                  performedServices: '',
-                  usedParts: ''
-                });
-                setError('');
-              }}>
+              <MDBBtn
+                type="button"
+                onClick={() => {
+                  setEditMode(false);
+                  setVisit({
+                    ...visitCopy,
+                    usedParts: visitCopy.usedParts.map((p) => ({ ...p })),
+                    performedServices: visitCopy.performedServices.map((s) => ({ ...s }))
+                  });
+                  setCurrency({ id: 'BGN', rate: 1 });
+                  setInputErrors({
+                    notes: '',
+                    visitStatus: '',
+                    performedServices: '',
+                    usedParts: ''
+                  });
+                  setError('');
+                }}
+              >
                 <MDBIcon icon="times" />
               </MDBBtn>
             </>
           )}
-          {!editMode &&
-            <MDBBtn type="button" onClick={() => {
-              setEditMode(true);
-            }}>
+          {!editMode && !registerVisitMode && (
+            <MDBBtn
+              type="button"
+              onClick={() => {
+                setEditMode(true);
+              }}
+            >
               <MDBIcon icon="edit" />
             </MDBBtn>
-          }
+          )}
         </div>
         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
           <Form.Group controlId="formBasicNotes" className={inputErrors.notes ? 'error' : ''}>
@@ -182,28 +249,28 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
               placeholder="Enter Notes"
               value={visit.notes}
               onChange={(e) => handleInput(e.target.name, e.target.value)}
-              disabled={!editMode}
-              />
-              <Form.Label>
-                {`Notes${inputErrors.notes}`}
-              </Form.Label>
+              disabled={!editMode && !registerVisitMode}
+            />
+            <Form.Label>{`Notes${inputErrors.notes}`}</Form.Label>
           </Form.Group>
         </div>
         <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
-          <Form.Group controlId="formBasicStatus" className={inputErrors.status ? 'error' : ''}>
+          <Form.Group controlId="formBasicStatus" className={inputErrors.visitStatus ? 'error' : ''}>
             <Form.Control
               as="select"
-              name="status"
-              value={visit.status}
+              name="visitStatus"
+              value={visit.visitStatus}
               onChange={(e) => handleInput(e.target.name, e.target.value)}
-              disabled={!editMode}
-              >
-                <option value=''>Select Status</option>
-                {Object.values(visitStatusEnum).map(s => <option key={s} value={s}>{s}</option>)}
-              </Form.Control>
-              <Form.Label>
-                {`Status${inputErrors.status}`}
-              </Form.Label>
+              disabled={!editMode && !registerVisitMode}
+            >
+              <option value="">Select Status</option>
+              {Object.values(visitStatusEnum).map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </Form.Control>
+            <Form.Label>{`Status${inputErrors.visitStatus}`}</Form.Label>
           </Form.Group>
         </div>
         <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
@@ -213,44 +280,63 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
               name="currency"
               value={currency.id}
               onChange={(e) => changeCurrency(e.target.value)}
-              >
-                {allCurrencies.map(curr => <option key={curr} value={curr}>{curr}</option>)}
+            >
+              {allCurrencies.map((curr) => (
+                <option key={curr} value={curr}>
+                  {curr}
+                </option>
+              ))}
             </Form.Control>
-            <Form.Label>
-              {'Currency'}
-            </Form.Label>
+            <Form.Label>{'Currency'}</Form.Label>
           </Form.Group>
         </div>
         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <div className="performed-services">
             <span>Performed Services</span>
-            {editMode &&
-            <span className="select-service">
-              <Form.Group controlId="formBasicSelectService">
-                <Form.Control
-                  as="select"
-                  name="service"
-                  value={service.serviceId}
-                  onChange={(e) => setService({ serviceId: e.target.value, name: services.find(({ serviceId }) => serviceId === +e.target.value).name })}
+            {(editMode || registerVisitMode) && (
+              <span className="select-service">
+                <Form.Group controlId="formBasicSelectService">
+                  <Form.Control
+                    as="select"
+                    name="service"
+                    value={service.serviceId}
+                    onChange={(e) =>
+                      setService({
+                        serviceId: e.target.value,
+                        name: services.find(({ serviceId }) => serviceId === +e.target.value).name
+                      })
+                    }
                   >
-                    <option value={0} >Select Service</option>
-                    {services.map(s => <option key={s.serviceId} value={s.serviceId}>{s.name}</option>)}
-                </Form.Control>
-              </Form.Group>
-              <Form.Group controlId="formBasicServiceQty">
-                <Form.Control
-                  style={{ width: '50px' }}
-                  type="number"
-                  name="serviceQty"
-                  value={service.serviceQty}
-                  min="1"
-                  onChange={(e) => setService({ ...service, serviceQty: e.target.value })}
-                />
-              </Form.Group>
-              <MDBBtn onClick={() => addService(service.serviceId, service.serviceQty)}>
-                <MDBIcon icon="plus-square" />
-              </MDBBtn>
-            </span>}
+                    <option value={0}>Select Service</option>
+                    {services.map((s) => (
+                      <option key={s.serviceId} value={s.serviceId}>
+                        {s.name}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group
+                >
+                  <Form.Control
+                    style={{ width: '50px' }}
+                    type="number"
+                    name="serviceQty"
+                    value={service.serviceQty}
+                    min="1"
+                    onChange={(e) => setService({ ...service, serviceQty: +e.target.value })}
+                  />
+                </Form.Group>
+                <MDBBtn
+                  onClick={() => {
+                    addService(service.serviceId, service.serviceQty);
+                    setService({ serviceId: 0, name: 'Select Service', serviceQty: 0 });
+                  }}
+                  disabled={service && (service.name === 'Select Service' || !(service.serviceQty > 0))}
+                >
+                  <MDBIcon icon="plus-square" />
+                </MDBBtn>
+              </span>
+            )}
           </div>
         </div>
         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -266,52 +352,68 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
               </tr>
             </MDBTableHead>
             <MDBTableBody>
-              {visit.performedServices.map(s => (
-                <TableRow
-                  key={s.serviceId}
-                  id={s.serviceId}
-                  name={s.name}
-                  quantity={s.serviceQty}
-                  price={s.price}
-                  carSegment={carSegment}
-                  editMode={editMode}
-                  updateQty={updatePerformedServiceQty}
-                  currency={currency}
-                />)
-              )}
+              {visit.performedServices.map((s) => (
+                  <TableRow
+                    key={s.serviceId}
+                    id={s.serviceId}
+                    name={s.name}
+                    quantity={s.serviceQty || 1}
+                    price={s.price}
+                    carSegment={carSegment}
+                    editMode={editMode || registerVisitMode}
+                    updateQty={updatePerformedServiceQty}
+                    currency={currency}
+                  />
+              ))}
             </MDBTableBody>
           </MDBTable>
         </div>
         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <div className="performed-services">
             <span>Used Parts</span>
-            {editMode &&
-            <span className="select-service">
-              <Form.Group controlId="formBasicSelectPart">
-                <Form.Control
-                  as="select"
-                  name="part"
-                  value={part.partId}
-                  onChange={(e) => setPart({ partId: e.target.value, name: parts.find(({ partId }) => partId === +e.target.value).name })}
+            {(editMode || registerVisitMode) && (
+              <span className="select-service">
+                <Form.Group controlId="formBasicSelectPart">
+                  <Form.Control
+                    as="select"
+                    name="part"
+                    value={part.partId}
+                    onChange={(e) =>
+                      setPart({
+                        partId: e.target.value,
+                        name: parts.find(({ partId }) => partId === +e.target.value).name
+                      })
+                    }
                   >
-                    <option value={0} >Select Part</option>
-                    {parts.map(p => <option key={p.partId} value={p.partId}>{p.name}</option>)}
-                </Form.Control>
-              </Form.Group>
-              <Form.Group controlId="formBasicPartQty">
-                <Form.Control
-                  style={{ width: '50px' }}
-                  type="number"
-                  name="partQty"
-                  value={part.partQty}
-                  min="1"
-                  onChange={(e) => setPart({ ...part, partQty: e.target.value })}
-                />
-              </Form.Group>
-              <MDBBtn onClick={() => addPart(part.partId, part.partQty)}>
-                <MDBIcon icon="plus-square" />
-              </MDBBtn>
-            </span>}
+                    <option value={0}>Select Part</option>
+                    {parts.map((p) => (
+                      <option key={p.partId} value={p.partId}>
+                        {p.name}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group controlId="formBasicPartQty">
+                  <Form.Control
+                    style={{ width: '50px' }}
+                    type="number"
+                    name="partQty"
+                    value={part.partQty}
+                    min="1"
+                    onChange={(e) => setPart({ ...part, partQty: e.target.value })}
+                  />
+                </Form.Group>
+                <MDBBtn
+                  onClick={() => {
+                    addPart(part.partId, part.partQty);
+                    setPart({ partId: 0, name: 'Select Part', partQty: 0 });
+                  }}
+                  disabled={part && (part.name === 'Select Part' || !(part.partQty > 0))}
+                >
+                  <MDBIcon icon="plus-square" />
+                </MDBBtn>
+              </span>
+            )}
           </div>
         </div>
         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -327,19 +429,19 @@ const VisitCardDetailed = ({ visitId, carSegment, editMode, setEditMode, allCurr
               </tr>
             </MDBTableHead>
             <MDBTableBody>
-              {visit.usedParts.map(p => (
-                <TableRow
-                  key={p.partId}
-                  id={p.partId}
-                  name={p.name}
-                  quantity={p.partQty}
-                  price={p.price}
-                  carSegment={carSegment}
-                  editMode={editMode}
-                  updateQty={updateUsedPartsQty}
-                  currency={currency}
-                />)
-              )}
+              {visit.usedParts.map((p) => (
+                  <TableRow
+                    key={p.partId}
+                    id={+p.partId}
+                    name={p.name}
+                    quantity={+p.partQty}
+                    price={+p.price}
+                    carSegment={carSegment}
+                    editMode={editMode || registerVisitMode}
+                    updateQty={updateUsedPartsQty}
+                    currency={currency}
+                  />
+              ))}
             </MDBTableBody>
           </MDBTable>
         </div>
@@ -353,15 +455,91 @@ VisitCardDetailed.defaultProps = {
   firstName: '',
   lastName: '',
   companyName: '',
-  visitEnd: ''
+  visitEnd: '',
+  visitId: null,
+  carSegment: '',
+  carSegmentId: '',
+  fullName: null,
+  email: '',
+  engineType: '',
+  licensePlate: '',
+  manufacturer: '',
+  manufacturedYear: null,
+  manufacturerId: null,
+  modelName: '',
+  modelId: null,
+  transmission: '',
+  userId: null,
+  vehicleId: null,
+  vin: '',
+  city: '',
+  country: '',
+  notes: '',
+  performedServices: [],
+  phone: '',
+  visitStatus: '',
+  usedParts: [],
+  visitStart: '',
+  addressId: 0,
+  editMode: false,
+  setEditMode: () => {},
+  allCurrencies: [],
+  setRegisterVisitMode: () => {},
+  registerVisitMode: false,
+  setCreated: false
 };
 
 VisitCardDetailed.propTypes = {
-  visitId: PropTypes.number.isRequired,
+  newVisit: PropTypes.shape({
+    carSegment: PropTypes.string,
+    city: PropTypes.string,
+    companyName: PropTypes.string,
+    country: PropTypes.string,
+    email: PropTypes.string,
+    engineType: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    licensePlate: PropTypes.string,
+    manufacturedYear: PropTypes.number,
+    manufacturerId: PropTypes.number,
+    manufacturer: PropTypes.string,
+    modelId: PropTypes.number,
+    modelName: PropTypes.string,
+    notes: PropTypes.string,
+    performedServices: PropTypes.array,
+    phone: PropTypes.string,
+    visitStatus: PropTypes.string,
+    streetAddress: PropTypes.string,
+    transmission: PropTypes.string,
+    usedParts: PropTypes.array,
+    userId: PropTypes.number,
+    vehicleId: PropTypes.number,
+    vin: PropTypes.string,
+    visitEnd: PropTypes.string,
+    visitStart: PropTypes.string,
+    addressId: PropTypes.number,
+    setRegisterVehicleMode: () => {}
+  }),
+  visitId: PropTypes.number,
   editMode: PropTypes.bool.isRequired,
   setEditMode: PropTypes.func.isRequired,
   allCurrencies: PropTypes.array.isRequired,
-  carSegment: PropTypes.string.isRequired
+  carSegment: PropTypes.string.isRequired,
+  setRegisterVisitMode: PropTypes.func,
+  registerVisitMode: PropTypes.bool,
+  setRegisterVehicleMode: PropTypes.func,
+  newVehicle: PropTypes.shape({
+    carSegment: PropTypes.string,
+    manufacturer: PropTypes.string,
+    vehicleId: PropTypes.number,
+    modelId: PropTypes.number,
+    engineType: PropTypes.string,
+    manufacturedYear: PropTypes.number,
+    userId: PropTypes.number,
+    licensePlate: PropTypes.string,
+    vin: PropTypes.string
+  }),
+  setCreated: PropTypes.func
 };
 
 export default VisitCardDetailed;

@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import CustomToggle from '../UI/Accordion/CustomToggle';
-// import Loading from '../UI/Loading';
 import { BASE_URL } from '../../common/constants';
 import useHttp from '../../hooks/useHttp';
 import VehicleCardDetailed from './VehicleCardDetailed';
 import VisitCard from '../Visits/VisitCard';
 import './Vehicles.css';
+import VisitCardDetailed from '../Visits/VisitCardDetailed';
 
 const VehicleCard = ({
   vehicle,
@@ -18,25 +18,15 @@ const VehicleCard = ({
   setRegisterCustomerMode,
   newCustomerId,
   allCurrencies,
-  setVehicleList,
-  vehicleList
+  registerVisitMode,
+  setRegisterVisitMode,
+  newVisit,
+  setNewVehicle,
+  setCreated
 }) => {
   const [editMode, setEditMode] = useState(false);
-  const {
-    data
-    // setLocalData,
-    // loading
-    // error
-  } = useHttp(`${BASE_URL}/visits?vehicleId=${vehicle.vehicleId}`, 'GET', []);
+  const { data } = useHttp(`${BASE_URL}/visits?vehicleId=${vehicle.vehicleId}`, 'GET', []);
 
-  // if (loading) {
-  //   return <Loading />;
-  // }
-  // // if (error === '404') {
-  // //   history.push('*');
-  // // } else if (error) {
-  // //   history.push('/serviceUnavailable');
-  // // }
   const visitListToShow = (
     <div className="visit-list">
       {data.map((visit) => {
@@ -45,6 +35,7 @@ const VehicleCard = ({
     </div>
   );
 
+  // Case for register customer or register vehicle
   if (registerVehicleMode || registerCustomerMode) {
     return (
       <VehicleCardDetailed
@@ -56,12 +47,12 @@ const VehicleCard = ({
         registerCustomerMode={registerCustomerMode}
         setRegisterCustomerMode={setRegisterCustomerMode}
         newCustomerId={newCustomerId}
-        setVehicleList={setVehicleList}
-        vehicleList={vehicleList}
+        setNewVehicle={setNewVehicle}
       />
     );
   }
 
+  // Case for register visit only with existing customer and vehicle
   return (
     !registerVehicleMode && (
       <>
@@ -74,15 +65,24 @@ const VehicleCard = ({
                 <div className="card-header-text-item">{vehicle.licensePlate}</div>
               </div>
               <div className="card-header-buttons">
-                <CustomToggle variant="primary" eventKey="1" setEditMode={setEditMode}>
-                  Details
+                <CustomToggle
+                  variant="primary"
+                  eventKey="1"
+                  setEditMode={setEditMode}
+                  createMode={registerVisitMode}
+                  setCreateMode={setRegisterVisitMode}
+                >
+                  Add Visit
                 </CustomToggle>
                 <CustomToggle variant="primary" eventKey="2" setEditMode={setEditMode}>
+                  Details
+                </CustomToggle>
+                <CustomToggle variant="primary" eventKey="3" setEditMode={setEditMode}>
                   History
                 </CustomToggle>
               </div>
             </Card.Header>
-            <Accordion.Collapse eventKey="1">
+            <Accordion.Collapse eventKey="2">
               <Card.Body>
                 <VehicleCardDetailed
                   key={vehicle.vehicleId}
@@ -94,9 +94,26 @@ const VehicleCard = ({
                 />
               </Card.Body>
             </Accordion.Collapse>
-            <Accordion.Collapse eventKey="2">
+            <Accordion.Collapse eventKey="3">
               <Card.Body>
                 {data.length ? <ul>{visitListToShow}</ul> : <h2> No visits found for this vehicle </h2>}
+              </Card.Body>
+            </Accordion.Collapse>
+            <Accordion.Collapse eventKey="1">
+              <Card.Body>
+                {registerVisitMode && (
+                  <VisitCardDetailed
+                    newVisit={{ ...newVisit, ...vehicle }}
+                    carSegment={vehicle.carSegment}
+                    editMode={editMode}
+                    setEditMode={setEditMode}
+                    allCurrencies={allCurrencies}
+                    registerVisitMode={registerVisitMode}
+                    setRegisterVisitMode={setRegisterVisitMode}
+                    setRegisterVehicleMode={setRegisterVehicleMode}
+                    setCreated={setCreated}
+                  />
+                )}
               </Card.Body>
             </Accordion.Collapse>
           </Card>
@@ -123,13 +140,28 @@ VehicleCard.defaultProps = {
   userId: null,
   vehicleId: null,
   vin: '',
+  city: '',
+  country: '',
+  firstName: '',
+  lastName: '',
+  notes: '',
+  performedServices: [],
+  phone: '',
+  visitStatus: '',
+  streetAddress: '',
+  usedParts: [],
+  visitEnd: '',
+  visitStart: '',
+  addressId: 0,
   registerVehicleMode: false,
   registerCustomerMode: false,
   setRegisterVehicleMode: () => {},
   newCustomerId: null,
   setRegisterCustomerMode: () => {},
-  setVehicleList: () => {},
-  vehicleList: []
+  setRegisterVisitMode: () => {},
+  registerVisitMode: false,
+  setNewVehicle: () => {},
+  setCreated: () => {}
 };
 
 VehicleCard.propTypes = {
@@ -156,8 +188,39 @@ VehicleCard.propTypes = {
   newCustomerId: PropTypes.number,
   setRegisterCustomerMode: PropTypes.func,
   allCurrencies: PropTypes.array.isRequired,
-  setVehicleList: PropTypes.func,
-  vehicleList: PropTypes.array
+  setRegisterVisitMode: PropTypes.func,
+  registerVisitMode: PropTypes.bool,
+  newVisit: PropTypes.shape({
+    carSegment: PropTypes.string,
+    city: PropTypes.string,
+    companyName: PropTypes.string,
+    country: PropTypes.string,
+    email: PropTypes.string,
+    engineType: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    licensePlate: PropTypes.string,
+    manufacturedYear: PropTypes.number,
+    manufacturerId: PropTypes.number,
+    manufacturer: PropTypes.string,
+    modelId: PropTypes.number,
+    modelName: PropTypes.string,
+    notes: PropTypes.string,
+    performedServices: PropTypes.array,
+    phone: PropTypes.string,
+    visitStatus: PropTypes.string,
+    streetAddress: PropTypes.string,
+    transmission: PropTypes.string,
+    usedParts: PropTypes.array,
+    userId: PropTypes.number,
+    vehicleId: PropTypes.number,
+    vin: PropTypes.string,
+    visitEnd: PropTypes.string,
+    visitStart: PropTypes.string,
+    addressId: PropTypes.number
+  }),
+  setNewVehicle: PropTypes.func,
+  setCreated: PropTypes.func
 };
 
 export default VehicleCard;

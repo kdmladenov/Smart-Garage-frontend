@@ -60,8 +60,64 @@ export const visitInput = {
 export const partPrice = {
   MIN: 0,
   MAX: 2000
-}
+};
+
 export const servicePrice = {
   MIN: 0,
   MAX: 1000
-}
+};
+
+export const emptyVisit = {
+  carSegment: '',
+  city: '',
+  companyName: '',
+  country: '',
+  email: '',
+  engineType: '',
+  firstName: '',
+  lastName: '',
+  licensePlate: '',
+  manufacturedYear: 0,
+  manufacturerId: 0,
+  manufacturer: '',
+  modelId: 0,
+  modelName: '',
+  notes: '',
+  performedServices: [],
+  phone: '',
+  visitStatus: '',
+  streetAddress: '',
+  transmission: '',
+  usedParts: [],
+  userId: 0,
+  vehicleId: 0,
+  vin: '',
+  visitEnd: '',
+  visitStart: '',
+  addressId: 0
+};
+
+export const emptyVehicle = {
+  userId: 0,
+  vin: '',
+  licensePlate: '',
+  engineType: '',
+  transmission: '',
+  manufacturedYear: 0,
+  modelName: '',
+  manufacturer: '',
+  carSegment: ''
+};
+
+export const emptyCustomer = {
+  firstName: '',
+  lastName: '',
+  companyName: '',
+  phone: '',
+  email: '',
+  reenteredEmail: '',
+  country: '',
+  city: '',
+  postalCode: '',
+  streetAddress: ''
+};

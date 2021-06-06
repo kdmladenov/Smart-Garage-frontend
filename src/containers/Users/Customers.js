@@ -2,27 +2,23 @@
 // import Paging from '../../components/Paging/Paging';
 import useHttp from '../../hooks/useHttp';
 import PropTypes from 'prop-types';
-import { BASE_URL } from '../../common/constants';
+import { BASE_URL, emptyCustomer } from '../../common/constants';
 import CustomerCard from '../../components/Customers/CustomerCard';
 import Loading from '../../components/UI/Loading';
+import { useState } from 'react';
 
 const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencies, customersQuery }) => {
+  const [created, setCreated] = useState(false)
   const {
     data,
     // setLocalData,
     loading
     // error
-  } = useHttp(`${BASE_URL}/users${customersQuery}`, 'GET', [], [customersQuery]);
+  } = useHttp(`${BASE_URL}/users${customersQuery}`, 'GET', [], [customersQuery, created]);
 
   if (loading) {
     return <Loading />;
   }
-
-  // if (error === '404') {
-  //   history.push('*');
-  // } else if (error) {
-  //   history.push('/serviceUnavailable');
-  // }
 
   const customersListToShow = (
     <div className="customer-list">
@@ -35,40 +31,17 @@ const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencie
             registerCustomerMode={registerCustomerMode}
             setRegisterCustomerMode={setRegisterCustomerMode}
             allCurrencies={allCurrencies}
+            setCreated={setCreated}
           />
         );
       })}
     </div>
   );
 
-  const emptyCustomer = {
-    firstName: '',
-    lastName: '',
-    companyName: '',
-    phone: '',
-    email: '',
-    reenteredEmail: '',
-    country: '',
-    city: '',
-    postalCode: '',
-    streetAddress: ''
-  };
   return (
     <main>
       <div className="container-inner">
         <div className="customers-container-header">
-          {/* <Form className="sorting">
-            <div>Sorting Options</div>
-            <Sort resource="/customers" />
-          </Form> */}
-          {/* {user.role === 'employee' && (
-            <Button
-              className="create-customer-btn btn-success"
-              onClick={() => history.push('/users/create')}
-            >
-              Create customer
-            </Button>
-          )} */}
         </div>
         {registerCustomerMode && (
           <CustomerCard
@@ -76,6 +49,8 @@ const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencie
             customer={emptyCustomer}
             registerCustomerMode={registerCustomerMode}
             setRegisterCustomerMode={setRegisterCustomerMode}
+            allCurrencies={allCurrencies}
+            setCreated={setCreated}
           />
         )}
         {!registerCustomerMode && (data.length ? <ul>{customersListToShow}</ul> : <h2> No customers are found... </h2>)}

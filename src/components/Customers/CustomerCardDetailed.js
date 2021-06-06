@@ -40,6 +40,7 @@ const CustomerCardDetailed = ({
     setInputErrors({ ...inputErrors, [prop]: validateInput[prop](value, match) });
     updateUser(prop, value);
   };
+
   const isValid = registerCustomerMode
     ? Object.values(inputErrors).every((v) => v === '') && Object.values(user).every((v) => v)
     : Object.values(inputErrors).every((v) => v === '');
@@ -47,6 +48,8 @@ const CustomerCardDetailed = ({
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setError('');
+
+    // Case for register customer
     if (registerCustomerMode && isValid) {
       fetch(`${BASE_URL}/users`, {
         method: 'POST',
@@ -66,6 +69,8 @@ const CustomerCardDetailed = ({
           }
         });
     }
+
+    // Case for edit customer
     if (editMode && isValid) {
       fetch(`${BASE_URL}/users/${customer.userId}`, {
         method: 'PUT',
@@ -126,6 +131,7 @@ const CustomerCardDetailed = ({
                 </MDBBtn>
               </>
             )}
+
             {!editMode && !registerCustomerMode && (
               <MDBBtn
                 type="button"
@@ -312,7 +318,7 @@ CustomerCardDetailed.defaultProps = {
   lastName: '',
   companyName: '',
   street: '',
-  visitEndDate: '',
+  visitEnd: '',
   userId: null,
   phone: '',
   email: '',
@@ -321,13 +327,13 @@ CustomerCardDetailed.defaultProps = {
   postalCode: null,
   streetAddress: '',
   licensePlate: '',
-  make: '',
+  manufacturer: '',
   modelId: null,
-  model: '',
+  modelName: '',
   vehicleId: null,
   vin: '',
   visitId: null,
-  visitStartDate: '',
+  visitStart: '',
   visitStatus: '',
   setNewCustomerId: () => {},
   editMode: false,
@@ -350,14 +356,14 @@ CustomerCardDetailed.propTypes = {
     postalCode: PropTypes.number,
     streetAddress: PropTypes.string,
     licensePlate: PropTypes.string,
-    make: PropTypes.string,
+    manufacturer: PropTypes.string,
     modelId: PropTypes.number,
-    model: PropTypes.string,
+    modelName: PropTypes.string,
     vehicleId: PropTypes.number,
     vin: PropTypes.string,
-    visitEndDate: PropTypes.string,
+    visitEnd: PropTypes.string,
     visitId: PropTypes.number,
-    visitStartDate: PropTypes.string,
+    visitStart: PropTypes.string,
     visitStatus: PropTypes.string
   }).isRequired,
   editMode: PropTypes.bool,

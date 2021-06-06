@@ -159,6 +159,17 @@ button.nav-link {
 .btn.btn-lg {
   margin: 0 auto;
   border-radius: 0.25rem;
+  padding-bottom: 0.8rem;
+  padding-top: 0.8rem;
+}
+
+.side-nav label {
+  margin-bottom: initial;
+  text-align: left;
+}
+
+.side-nav-content.customers .form-group {
+  margin-bottom: 0.5rem;
 }
 
 @media only screen and (min-width: 450px) {

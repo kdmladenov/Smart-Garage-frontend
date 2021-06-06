@@ -72,7 +72,7 @@ VisitCard.propTypes = {
     licensePlate: PropTypes.string.isRequired,
     manufacturedYear: PropTypes.number.isRequired,
     manufacturerId: PropTypes.number.isRequired,
-    manufacturerName: PropTypes.string.isRequired,
+    manufacturer: PropTypes.string.isRequired,
     modelId: PropTypes.number.isRequired,
     modelName: PropTypes.string.isRequired,
     notes: PropTypes.string.isRequired,

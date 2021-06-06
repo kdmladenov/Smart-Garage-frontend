@@ -26,7 +26,7 @@ const ServiceHistory = ({ visits, toggleModal, num, setDetailedVisitReport, allC
                   <div>License Plate: {visit.licensePlate}</div>
                   <div>VIN: {visit.vin}</div>
                   <div>Model: {visit.modelName}</div>
-                  <div>Make: {visit.manufacturerName}</div>
+                  <div>Make: {visit.manufacturer}</div>
                   <div>Production Year: {visit.city}</div>
                   <div>Car-segment: {visit.carSegment}</div>
                 </div>
@@ -56,7 +56,7 @@ const ServiceHistory = ({ visits, toggleModal, num, setDetailedVisitReport, allC
         {e.status === 'ready' && <span className="date-bottom">{new Date(e.visitEnd).toLocaleDateString('ca-ES')}</span>}
         <div className="timeline-element-info">
           <div className="left">
-            <h4 className="vertical-timeline-element-vehicle">{`${e.licensePlate}  ${e.manufacturerName} ${e.modelName}`}</h4>
+            <h4 className="vertical-timeline-element-vehicle">{`${e.licensePlate}  ${e.manufacturer} ${e.modelName}`}</h4>
             <h5 className="vertical-timeline-element-notes">{e.notes}</h5>
           </div>
           <div className="right">

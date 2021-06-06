@@ -187,7 +187,7 @@ CustomerCard.defaultProps = {
   lastName: '',
   companyName: '',
   street: '',
-  visitEndDate: '',
+  visitEnd: '',
   phone: '',
   email: '',
   city: '',
@@ -203,7 +203,7 @@ CustomerCard.defaultProps = {
   vehicleId: null,
   vin: '',
   visitId: null,
-  visitStartDate: '',
+  visitStart: '',
   visitStatus: ''
 };
 
@@ -226,9 +226,9 @@ CustomerCard.propTypes = {
     model: PropTypes.string,
     vehicleId: PropTypes.number,
     vin: PropTypes.string,
-    visitEndDate: PropTypes.string,
+    visitEnd: PropTypes.string,
     visitId: PropTypes.number,
-    visitStartDate: PropTypes.string,
+    visitStart: PropTypes.string,
     visitStatus: PropTypes.string,
     role: PropTypes.string
   }).isRequired,

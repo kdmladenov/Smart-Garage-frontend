@@ -139,6 +139,14 @@ button.nav-link {
   color: #ffffff;
 }
 
+.side-nav div {
+  text-align: center;
+}
+
+.d-none {
+  display: none!important;
+}
+
 .side-nav div.search-field {
   padding-top: initial;
 }
@@ -191,10 +199,12 @@ button.nav-link {
   .side-nav {
     visibility: visible;
   }
-}
 
-@media only screen and (min-width: 992px) {
   .username {
     color: #ffffff;
+  }
+
+  .d-md-inline {
+    display: inline!important;
   }
 }

@@ -22,8 +22,8 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
   // const [error, setError] = useState('');
   // const { search: query } = useLocation();
   const {
-    data
-    // setLocalData,
+    data,
+    setData
     // loading
     // error
   } = useHttp(`${BASE_URL}/vehicles?userId=${customer.userId}`, 'GET', []);
@@ -56,7 +56,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
   };
 
   const emptyVehicle = {
-    // userId: customer.userId || newCustomerId,
+    userId: customer.userId || newCustomerId,
     vin: '',
     licensePlate: '',
     engineType: '',
@@ -95,7 +95,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
         </Card.Header>
         <Card.Body>
           <CustomerCardDetailed
-            key={customer.userId}
+            // key={customer.userId}
             customer={customer}
             editMode={editMode}
             setEditMode={setEditMode}
@@ -116,7 +116,9 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
             setRegisterVehicleMode={setRegisterVehicleMode}
             registerCustomerMode={registerCustomerMode}
             setRegisterCustomerMode={setRegisterCustomerMode}
-            newCustomerId={newCustomerId}
+            newCustomerId={newCustomerId || customer.userId}
+            setVehicleList={setData}
+            vehicleList={data}
           />
         </Card.Body>
       </Card>
@@ -167,6 +169,8 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
                   vehicle={emptyVehicle}
                   registerVehicleMode={registerVehicleMode}
                   setRegisterVehicleMode={setRegisterVehicleMode}
+                  setVehicleList={setData}
+                  vehicleList={data}
                 />
               </Card.Body>
             )}
@@ -184,7 +188,6 @@ CustomerCard.defaultProps = {
   companyName: '',
   street: '',
   visitEndDate: '',
-  userId: null,
   phone: '',
   email: '',
   city: '',
@@ -195,6 +198,7 @@ CustomerCard.defaultProps = {
   licensePlate: '',
   make: '',
   modelId: null,
+  userId: null,
   model: '',
   vehicleId: null,
   vin: '',

@@ -67,6 +67,12 @@
   padding-bottom: 0;
 }
 
+.services-list.card {
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+
 @media only screen and (min-width: 768px) {
   .service-detailed .form-control:disabled {
     border-bottom: none;
@@ -75,6 +81,7 @@
   .service-detailed .btn-default {
     padding-top: 20px;
   }
+  
   .service-detailed .row.gutters {
     padding-bottom: initial;
   }

@@ -17,7 +17,9 @@ const VehicleCardDetailed = ({
   setRegisterVehicleMode,
   registerCustomerMode,
   setRegisterCustomerMode,
-  newCustomerId
+  newCustomerId,
+  setVehicleList,
+  vehicleList
 }) => {
   const [error, setError] = useState('');
   const [vehicle, setVehicle] = useState({ ...vehicleData });
@@ -92,7 +94,8 @@ const VehicleCardDetailed = ({
   };
   const isValid =
     registerVehicleMode || registerCustomerMode
-      ? Object.values(inputErrors).every((v) => v === '') && Object.values(vehicle).every((v) => v)
+      ? Object.values(inputErrors).every((v) => v === '') &&
+        Object.values({ ...vehicle, userId: newCustomerId || vehicle.userId }).every((v) => v)
       : Object.values(inputErrors).every((v) => v === '');
 
   const handleFormSubmit = (e) => {
@@ -106,7 +109,7 @@ const VehicleCardDetailed = ({
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`
         },
-        body: JSON.stringify({ ...vehicle, userId: newCustomerId })
+        body: JSON.stringify({ ...vehicle, userId: newCustomerId || vehicle.userId })
       })
         .then((res) => res.json())
         .then((res) => {
@@ -114,7 +117,7 @@ const VehicleCardDetailed = ({
             setError(res.message);
           } else {
             setVehicleCopy({ ...vehicleCopy, ...vehicle });
-            // setEditMode(false);
+            setVehicleList([...vehicleList, { ...vehicle, userId: newCustomerId || vehicle.userId }]);
           }
         });
     }
@@ -207,7 +210,7 @@ const VehicleCardDetailed = ({
               <Form.Control
                 type="text"
                 name="licensePlate"
-                placeholder="Enter License Plate"
+                placeholder="License Plate"
                 value={vehicle.licensePlate}
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
                 disabled={!editMode && !registerVehicleMode && !registerCustomerMode}
@@ -357,7 +360,9 @@ VehicleCardDetailed.defaultProps = {
   setRegisterCustomerMode: () => {},
   registerVehicleMode: false,
   setRegisterVehicleMode: () => {},
-  newCustomerId: null
+  newCustomerId: null,
+  setVehicleList: () => {},
+  vehicleList: []
 };
 
 VehicleCardDetailed.propTypes = {
@@ -370,7 +375,7 @@ VehicleCardDetailed.propTypes = {
     licensePlate: PropTypes.string,
     manufacturer: PropTypes.string,
     manufacturedYear: PropTypes.number,
-    manufacturerId: PropTypes.string,
+    manufacturerId: PropTypes.number,
     modelName: PropTypes.string,
     modelId: PropTypes.number,
     transmission: PropTypes.string,
@@ -384,7 +389,9 @@ VehicleCardDetailed.propTypes = {
   setRegisterVehicleMode: PropTypes.func,
   registerCustomerMode: PropTypes.bool,
   setRegisterCustomerMode: PropTypes.func,
-  newCustomerId: PropTypes.number
+  newCustomerId: PropTypes.number,
+  setVehicleList: PropTypes.func,
+  vehicleList: PropTypes.array
 };
 
 export default VehicleCardDetailed;

@@ -67,6 +67,11 @@
   padding-bottom: 0;
 }
 
+.parts-list.card {
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
 @media only screen and (min-width: 768px) {
   .part-detailed .form-control:disabled {
     border-bottom: none;
@@ -75,6 +80,7 @@
   .part-detailed .btn-default {
     padding-top: 20px;
   }
+  
   .part-detailed .row.gutters {
     padding-bottom: initial;
   }

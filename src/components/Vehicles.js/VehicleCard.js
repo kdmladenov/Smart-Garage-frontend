@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import CustomToggle from '../UI/Accordion/CustomToggle';
-// import Loading from '../UI/Loading';
 import { BASE_URL } from '../../common/constants';
 import useHttp from '../../hooks/useHttp';
 import VehicleCardDetailed from './VehicleCardDetailed';
@@ -19,8 +18,6 @@ const VehicleCard = ({
   setRegisterCustomerMode,
   newCustomerId,
   allCurrencies,
-  setVehicleList,
-  vehicleList,
   registerVisitMode,
   setRegisterVisitMode,
   newVisit,
@@ -28,22 +25,7 @@ const VehicleCard = ({
   setCreated
 }) => {
   const [editMode, setEditMode] = useState(false);
-  const {
-    data
-    // setData
-    // loading
-    // error
-  } = useHttp(`${BASE_URL}/visits?vehicleId=${vehicle.vehicleId}`, 'GET', []);
-
-  // if (loading) {
-  //   return <Loading />;
-  // }
-  // // if (error === '404') {
-  // //   history.push('*');
-  // // } else if (error) {
-  // //   history.push('/serviceUnavailable');
-  // // }
-  // console.log(data, 'visitList vcd');
+  const { data } = useHttp(`${BASE_URL}/visits?vehicleId=${vehicle.vehicleId}`, 'GET', []);
 
   const visitListToShow = (
     <div className="visit-list">
@@ -53,6 +35,7 @@ const VehicleCard = ({
     </div>
   );
 
+  // Case for register customer or register vehicle
   if (registerVehicleMode || registerCustomerMode) {
     return (
       <VehicleCardDetailed
@@ -64,13 +47,12 @@ const VehicleCard = ({
         registerCustomerMode={registerCustomerMode}
         setRegisterCustomerMode={setRegisterCustomerMode}
         newCustomerId={newCustomerId}
-        setVehicleList={setVehicleList}
-        vehicleList={vehicleList}
         setNewVehicle={setNewVehicle}
       />
     );
   }
 
+  // Case for register visit only with existing customer and vehicle
   return (
     !registerVehicleMode && (
       <>
@@ -119,20 +101,8 @@ const VehicleCard = ({
             </Accordion.Collapse>
             <Accordion.Collapse eventKey="1">
               <Card.Body>
-                <>Register Visit Form in Car List</>
-                {/* {(registerVehicleMode || registerCustomerMode) && (
-                  <VisitCard
-                    className="visit-card"
-                    visit={{ ...newVisit, ...vehicle }}
-                    allCurrencies={allCurrencies}
-                    registerVisitMode={registerVisitMode}
-                    setRegisterVisitMode={setRegisterVisitMode}
-                  />
-                )} */}
                 {registerVisitMode && (
                   <VisitCardDetailed
-                    // key={visit.visitId}
-                    // visitId={visit.visitId}
                     newVisit={{ ...newVisit, ...vehicle }}
                     carSegment={vehicle.carSegment}
                     editMode={editMode}
@@ -142,8 +112,6 @@ const VehicleCard = ({
                     setRegisterVisitMode={setRegisterVisitMode}
                     setRegisterVehicleMode={setRegisterVehicleMode}
                     setCreated={setCreated}
-                    // setVisitList={setData}
-                    // visitList={data}
                   />
                 )}
               </Card.Body>
@@ -190,8 +158,6 @@ VehicleCard.defaultProps = {
   setRegisterVehicleMode: () => {},
   newCustomerId: null,
   setRegisterCustomerMode: () => {},
-  setVehicleList: () => {},
-  vehicleList: [],
   setRegisterVisitMode: () => {},
   registerVisitMode: false,
   setNewVehicle: () => {},
@@ -222,8 +188,6 @@ VehicleCard.propTypes = {
   newCustomerId: PropTypes.number,
   setRegisterCustomerMode: PropTypes.func,
   allCurrencies: PropTypes.array.isRequired,
-  setVehicleList: PropTypes.func,
-  vehicleList: PropTypes.array,
   setRegisterVisitMode: PropTypes.func,
   registerVisitMode: PropTypes.bool,
   newVisit: PropTypes.shape({

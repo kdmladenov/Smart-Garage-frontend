@@ -20,8 +20,6 @@ const VisitCardDetailed = ({
   registerVisitMode,
   setRegisterVisitMode,
   newVisit,
-  // setVisitList,
-  // visitList,
   newVehicle,
   setRegisterVehicleMode,
   setCreated
@@ -30,14 +28,6 @@ const VisitCardDetailed = ({
   const [loading, setLoading] = useState('false');
   const [visit, setVisit] = useState(emptyVisit);
   const [visitCopy, setVisitCopy] = useState(emptyVisit);
-
-  console.log(loading, 'loading vcd');
-  console.log(registerVisitMode, 'registerVisitMode vcd');
-  console.log(carSegment, 'carSegment vcd');
-  console.log(newVisit, 'newVisit vcd');
-  console.log(visit, 'visit vcd');
-  console.log(newVehicle, 'newVehicle vcd');
-  // console.log(JSON.stringify(visit), 'visit vcd');
 
   useEffect(() => {
     setLoading(true);
@@ -78,15 +68,9 @@ const VisitCardDetailed = ({
     visitStatus: ''
   });
 
-  const {
-    data: services
-    // setLocalData: setServices
-  } = useHttp(`${BASE_URL}/services?carSegment=${carSegment}`, 'GET', []);
+  const { data: services } = useHttp(`${BASE_URL}/services?carSegment=${carSegment}`, 'GET', []);
 
-  const {
-    data: parts
-    // setLocalData: setParts
-  } = useHttp(`${BASE_URL}/parts?carSegment=${carSegment}`, 'GET', []);
+  const { data: parts } = useHttp(`${BASE_URL}/parts?carSegment=${carSegment}`, 'GET', []);
 
   const [service, setService] = useState({ serviceId: 0, name: 'Select Service', serviceQty: 0 });
   const [part, setPart] = useState({ partId: 0, name: 'Select Part', partQty: 0 });
@@ -97,7 +81,6 @@ const VisitCardDetailed = ({
     return <Loading />;
   }
 
-  // console.log(service, 'service');
   const updateVisit = (prop, value) => setVisit({ ...visit, [prop]: value });
 
   const handleInput = (prop, value) => {
@@ -122,6 +105,7 @@ const VisitCardDetailed = ({
     const newService = { ...services.find((s) => s.serviceId === +serviceId), serviceQty: qty };
     setVisit({ ...visit, performedServices: [newService, ...visit.performedServices] });
   };
+
   const addPart = (partId, qty) => {
     const newPart = { ...parts.find((p) => p.partId === +partId), partQty: qty };
     setVisit({ ...visit, usedParts: [newPart, ...visit.usedParts] });
@@ -159,8 +143,6 @@ const VisitCardDetailed = ({
       Array.isArray(visit.usedParts)
     : Object.values(inputErrors).every((v) => v === '');
 
-  console.log(visit, 'before submit');
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setError('');
@@ -177,10 +159,8 @@ const VisitCardDetailed = ({
         .then((res) => res.json())
         .then((res) => {
           if (res.message) {
-            console.log(res.message);
             setError(res.message);
           } else {
-            // setVisitList([...visitList, visit]);
             setRegisterVisitMode(false);
             setRegisterVehicleMode(false);
             setCreated(true);
@@ -200,7 +180,6 @@ const VisitCardDetailed = ({
         .then((res) => res.json())
         .then((res) => {
           if (res.message) {
-            console.log(res.message);
             setError(res.message);
           } else {
             setVisitCopy({
@@ -337,7 +316,6 @@ const VisitCardDetailed = ({
                   </Form.Control>
                 </Form.Group>
                 <Form.Group
-                // controlId="formBasicServiceQty"
                 >
                   <Form.Control
                     style={{ width: '50px' }}
@@ -540,8 +518,6 @@ VisitCardDetailed.propTypes = {
     visitEnd: PropTypes.string,
     visitStart: PropTypes.string,
     addressId: PropTypes.number,
-    // setVisitList: () => {},
-    // visitList: [],
     setRegisterVehicleMode: () => {}
   }),
   visitId: PropTypes.number,
@@ -551,8 +527,6 @@ VisitCardDetailed.propTypes = {
   carSegment: PropTypes.string.isRequired,
   setRegisterVisitMode: PropTypes.func,
   registerVisitMode: PropTypes.bool,
-  // setVisitList: PropTypes.func,
-  // visitList: PropTypes.array,
   setRegisterVehicleMode: PropTypes.func,
   newVehicle: PropTypes.shape({
     carSegment: PropTypes.string,

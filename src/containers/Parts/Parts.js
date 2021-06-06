@@ -10,7 +10,6 @@ import CreatePartCard from '../../components/Parts/CreatePartCard';
 import Loading from '../../components/UI/Loading';
 
 const Parts = ({ createPartMode, setCreatePartMode, partsQuery }) => {
-  console.log(partsQuery);
   const {
     data,
     // setLocalData,

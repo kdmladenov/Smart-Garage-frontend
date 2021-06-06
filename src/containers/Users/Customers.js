@@ -20,12 +20,6 @@ const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencie
     return <Loading />;
   }
 
-  // if (error === '404') {
-  //   history.push('*');
-  // } else if (error) {
-  //   history.push('/serviceUnavailable');
-  // }
-
   const customersListToShow = (
     <div className="customer-list">
       {data.map((customer) => {
@@ -44,34 +38,10 @@ const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencie
     </div>
   );
 
-  // const emptyCustomer = {
-  //   firstName: '',
-  //   lastName: '',
-  //   companyName: '',
-  //   phone: '',
-  //   email: '',
-  //   reenteredEmail: '',
-  //   country: '',
-  //   city: '',
-  //   postalCode: '',
-  //   streetAddress: ''
-  // };
   return (
     <main>
       <div className="container-inner">
         <div className="customers-container-header">
-          {/* <Form className="sorting">
-            <div>Sorting Options</div>
-            <Sort resource="/customers" />
-          </Form> */}
-          {/* {user.role === 'employee' && (
-            <Button
-              className="create-customer-btn btn-success"
-              onClick={() => history.push('/users/create')}
-            >
-              Create customer
-            </Button>
-          )} */}
         </div>
         {registerCustomerMode && (
           <CustomerCard

@@ -40,6 +40,7 @@ const CustomerCardDetailed = ({
     setInputErrors({ ...inputErrors, [prop]: validateInput[prop](value, match) });
     updateUser(prop, value);
   };
+
   const isValid = registerCustomerMode
     ? Object.values(inputErrors).every((v) => v === '') && Object.values(user).every((v) => v)
     : Object.values(inputErrors).every((v) => v === '');
@@ -47,6 +48,8 @@ const CustomerCardDetailed = ({
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setError('');
+
+    // Case for register customer
     if (registerCustomerMode && isValid) {
       fetch(`${BASE_URL}/users`, {
         method: 'POST',
@@ -66,6 +69,8 @@ const CustomerCardDetailed = ({
           }
         });
     }
+
+    // Case for edit customer
     if (editMode && isValid) {
       fetch(`${BASE_URL}/users/${customer.userId}`, {
         method: 'PUT',
@@ -126,6 +131,7 @@ const CustomerCardDetailed = ({
                 </MDBBtn>
               </>
             )}
+
             {!editMode && !registerCustomerMode && (
               <MDBBtn
                 type="button"

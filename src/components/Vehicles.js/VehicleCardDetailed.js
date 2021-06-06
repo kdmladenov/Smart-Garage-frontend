@@ -18,8 +18,6 @@ const VehicleCardDetailed = ({
   registerCustomerMode,
   setRegisterCustomerMode,
   newCustomerId,
-  // setVehicleList,
-  // vehicleList,
   setNewVehicle
 }) => {
   const [error, setError] = useState('');
@@ -34,7 +32,6 @@ const VehicleCardDetailed = ({
     manufacturer: '',
     carSegment: ''
   });
-
   const [vehicleCopy, setVehicleCopy] = useState({ ...vehicleData });
   const [manufacturers, setManufacturers] = useState([]);
   const [modelsData, setModelsData] = useState([]);
@@ -75,24 +72,13 @@ const VehicleCardDetailed = ({
     filterCarSegment(modelsData.filter((m) => m.modelName === vehicle.modelName));
   }, [vehicle.modelName]);
 
-  // const modelsByMake = (make) => {
-  //   console.log(make);
-  //   return modelsData.reduce((acc, m) => {
-  //     if (m.manufacturer === make) {
-  //       acc.push(m.modelName);
-  //     }
-  //     return acc;
-  //   }, []);
-  // };
-
-  // console.log(modelsByMake(vehicle.manufacturer));
-
   const updateVehicle = (prop, value) => setVehicle({ ...vehicle, [prop]: value });
 
   const handleInput = (prop, value) => {
     setInputErrors({ ...inputErrors, [prop]: validateInput[prop](value) });
     updateVehicle(prop, value);
   };
+
   const isValid =
     registerVehicleMode || registerCustomerMode
       ? Object.values(inputErrors).every((v) => v === '') &&
@@ -103,6 +89,7 @@ const VehicleCardDetailed = ({
     e.preventDefault();
     setError('');
 
+    // Case for register
     if ((registerVehicleMode || registerCustomerMode) && isValid) {
       fetch(`${BASE_URL}/vehicles`, {
         method: 'POST',
@@ -117,17 +104,12 @@ const VehicleCardDetailed = ({
           if (res.message) {
             setError(res.message);
           } else {
-            // setVehicleCopy({ ...vehicleCopy, ...vehicle });
-            // setVehicleList([
-            //   ...vehicleList,
-            //   { ...res }
-            // { ...vehicle, userId: newCustomerId || vehicle.userId || res.userId }
-            // ]);
             setNewVehicle(res);
           }
         });
     }
 
+    // Case for edit
     if (editMode && isValid) {
       fetch(`${BASE_URL}/vehicles/${vehicle.vehicleId}`, {
         method: 'PUT',

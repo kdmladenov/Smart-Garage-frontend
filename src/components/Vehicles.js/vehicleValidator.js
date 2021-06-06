@@ -1,14 +1,6 @@
 import { vehicleInput } from '../../common/constants';
 import engineType from '../../common/engine-type.enum';
 import transmission from '../../common/transmission.enum';
-// vin: '',
-// licensePlate: '',
-// engineType: '',
-// transmission: '',
-// manufacturedYear: '',
-// modelName: '',
-// manufacturer: '',
-// carSegment: ''
 
 const validate = {
   vin: value => vehicleInput.VIN_REGEX.test(value),

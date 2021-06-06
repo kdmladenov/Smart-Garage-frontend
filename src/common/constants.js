@@ -12,9 +12,9 @@ export const userInput = {
   MAX_LAST_NAME_LENGTH: 20,
   MIN_COMPANY_NAME_LENGTH: 2,
   MAX_COMPANY_NAME_LENGTH: 40,
-  MIN_CITY_LENGTH: 4,
+  MIN_CITY_LENGTH: 3,
   MAX_CITY_LENGTH: 50,
-  MIN_COUNTRY_LENGTH: 4,
+  MIN_COUNTRY_LENGTH: 3,
   MAX_COUNTRY_LENGTH: 50,
   MIN_POSTAL_CODE_VALUE: 100,
   MAX_POSTAL_CODE_VALUE: 9999,
@@ -35,7 +35,14 @@ export const vehicleInput = {
 };
 
 export const modals = {
-  VERTICALLY_CENTERED: 14
+  VERTICALLY_CENTERED: {
+    num: 14,
+    name: 'modal14'
+  },
+  SCROLLING_LONG_CONTENT: {
+    num: 13,
+    name: 'modal13'
+  }
 };
 
 export const serviceInput = {

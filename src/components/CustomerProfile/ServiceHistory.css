@@ -130,6 +130,22 @@ span.vertical-timeline-element-icon {
   }
 }
 
+.report-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.customer-vehicle-info{
+  border: 1px solid;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: 24rem;
+}
+
+.modal-body i.fa.fa-edit {
+  display: none;
+}
+
 @media only screen and (min-width: 1170px) {
   .vertical-timeline.vertical-timeline--two-columns {
     width: 95%;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import { MDBBtn, MDBIcon, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import { BASE_URL, CURRENCY_API_KEY, CURRENCY_URL, emptyVisit } from '../../common/constants';
-import { getToken } from '../../providers/AuthContext';
+import { getToken, getUser } from '../../providers/AuthContext';
 import Loading from '../UI/Loading';
 import useHttp from '../../hooks/useHttp';
 import TableRow from './TableRow';
@@ -230,13 +230,8 @@ const VisitCardDetailed = ({
               </MDBBtn>
             </>
           )}
-          {!editMode && !registerVisitMode && (
-            <MDBBtn
-              type="button"
-              onClick={() => {
-                setEditMode(true);
-              }}
-            >
+          {getUser().role === 'employee' && !editMode && !registerVisitMode && (
+            <MDBBtn type="button" onClick={() => setEditMode(true)}>
               <MDBIcon icon="edit" />
             </MDBBtn>
           )}
@@ -521,8 +516,8 @@ VisitCardDetailed.propTypes = {
     setRegisterVehicleMode: () => {}
   }),
   visitId: PropTypes.number,
-  editMode: PropTypes.bool.isRequired,
-  setEditMode: PropTypes.func.isRequired,
+  editMode: PropTypes.bool,
+  setEditMode: PropTypes.func,
   allCurrencies: PropTypes.array.isRequired,
   carSegment: PropTypes.string.isRequired,
   setRegisterVisitMode: PropTypes.func,

@@ -46,11 +46,19 @@ const VehiclesSideNav = ({ setVehiclesQuery }) => {
   }, []);
 
   useEffect(() => {
-    filterModels(modelsData.filter((m) => m.manufacturer === searchParams.manufacturer));
+    if (searchParams.manufacturer) {
+      filterModels(modelsData.filter((m) => m.manufacturer === searchParams.manufacturer));
+    } else {
+      filterModels(modelsData);
+    }
   }, [searchParams.manufacturer]);
 
   useEffect(() => {
-    filterCarSegments(modelsData.filter((m) => m.modelName === searchParams.modelName));
+    if (searchParams.modelName) {
+      filterCarSegments(modelsData.filter((m) => m.modelName === searchParams.modelName));
+    } else {
+      filterCarSegments(Object.keys(carSegmentsEnum).map(key => ({ id: key, carSegment: carSegmentsEnum[key] })));
+    }
   }, [searchParams.modelName]);
 
   return (

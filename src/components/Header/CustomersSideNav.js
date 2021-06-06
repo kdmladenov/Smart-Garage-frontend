@@ -67,10 +67,6 @@ const CustomersSideNav = ({ setRegisterCustomerMode, registerCustomerMode, setCu
     }
   }, [searchParams.modelName]);
 
-  useEffect(() => {
-    console.log(searchParams);
-  }, [searchParams]);
-
   return (
     <div className="side-nav-content customers">
       <Form.Group>

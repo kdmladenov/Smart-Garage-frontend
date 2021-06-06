@@ -30,7 +30,9 @@ const VisitCardDetailed = ({
   const [visitCopy, setVisitCopy] = useState(emptyVisit);
 
   useEffect(() => {
+    let isMounted = true;
     setLoading(true);
+
     if (visitId) {
       fetch(`${BASE_URL}/visits/${visitId}`, {
         method: 'GET',
@@ -40,16 +42,29 @@ const VisitCardDetailed = ({
       })
         .then((res) => res.json())
         .then((res) => {
-          setVisit(res);
-          setVisitCopy({
-            ...res,
-            usedParts: res.usedParts.map((p) => ({ ...p })),
-            performedServices: res.performedServices.map((s) => ({ ...s }))
-          });
+          if (isMounted) {
+            setVisit(res);
+            setVisitCopy({
+              ...res,
+              usedParts: res.usedParts.map((p) => ({ ...p })),
+              performedServices: res.performedServices.map((s) => ({ ...s }))
+            });
+          }
         })
-        .catch((e) => setError(e.message))
-        .finally(() => setLoading(false));
+        .catch((e) => {
+          if (isMounted) {
+            setError(e.message);
+          }
+        })
+        .finally(() => {
+          if (isMounted) {
+            setLoading(false);
+          }
+        });
     }
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {

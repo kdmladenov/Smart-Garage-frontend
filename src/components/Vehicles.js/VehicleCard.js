@@ -27,8 +27,8 @@ const VehicleCard = ({
 }) => {
   const [editMode, setEditMode] = useState(false);
   const {
-    data
-    // setLocalData,
+    data,
+    setData
     // loading
     // error
   } = useHttp(`${BASE_URL}/visits?vehicleId=${vehicle.vehicleId}`, 'GET', []);
@@ -41,10 +41,19 @@ const VehicleCard = ({
   // // } else if (error) {
   // //   history.push('/serviceUnavailable');
   // // }
+  console.log(data, 'visitList vcd');
+
   const visitListToShow = (
     <div className="visit-list">
       {data.map((visit) => {
-        return <VisitCard className="visit-card" key={visit.visitId} visit={visit} allCurrencies={allCurrencies} />;
+        return <VisitCard
+        className="visit-card"
+        key={visit.visitId}
+        visit={visit}
+        allCurrencies={allCurrencies}
+        setVisitList={setData}
+        visitList={data}
+        />;
       })}
     </div>
   );

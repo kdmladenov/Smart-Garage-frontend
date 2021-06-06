@@ -5,9 +5,11 @@ import Card from 'react-bootstrap/Card';
 import CustomToggle from '../UI/Accordion/CustomToggle';
 import VisitCardDetailed from './VisitCardDetailed';
 
-const VisitCard = ({ visit, allCurrencies }) => {
+const VisitCard = ({ visit, allCurrencies, setVisitList, visitList }) => {
   // console.log('visits1', visit);
   const [editMode, setEditMode] = useState(false);
+
+  // console.log(visitList && [...visitList, visit], 'visitList vcd');
 
   return (
     <>
@@ -35,6 +37,8 @@ const VisitCard = ({ visit, allCurrencies }) => {
                 editMode={editMode}
                 setEditMode={setEditMode}
                 allCurrencies={allCurrencies}
+                setVisitList={setVisitList}
+                visitList={visitList}
               />
             </Card.Body>
           </Accordion.Collapse>
@@ -49,7 +53,9 @@ VisitCard.defaultProps = {
   firstName: '',
   lastName: '',
   companyName: '',
-  visitEnd: ''
+  visitEnd: '',
+  setVisitList: () => {},
+  visitList: []
 };
 
 VisitCard.propTypes = {
@@ -82,7 +88,9 @@ VisitCard.propTypes = {
     visitEnd: PropTypes.string,
     visitStart: PropTypes.string.isRequired
   }).isRequired,
-  allCurrencies: PropTypes.array.isRequired
+  allCurrencies: PropTypes.array.isRequired,
+  setVisitList: PropTypes.func,
+  visitList: PropTypes.array
 };
 
 export default VisitCard;

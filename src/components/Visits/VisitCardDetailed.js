@@ -19,7 +19,9 @@ const VisitCardDetailed = ({
   allCurrencies,
   registerVisitMode,
   setRegisterVisitMode,
-  visits
+  visits,
+  setVisitList,
+  visitList
 }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState('false');
@@ -29,7 +31,8 @@ const VisitCardDetailed = ({
   // console.log(loading, 'loading vcd');
   // console.log(registerVisitMode, 'registerVisitMode vcd');
   // console.log(visits, 'visits vcd');
-  console.log(JSON.stringify(visit), 'visit vcd');
+  // console.log(JSON.stringify(visit), 'visit vcd');
+  // console.log(visitList && [...visitList, visit], 'visitList vcd');
 
   useEffect(() => {
     setLoading(true);
@@ -173,6 +176,7 @@ const VisitCardDetailed = ({
               usedParts: visit.usedParts.map((p) => ({ ...p })),
               performedServices: visit.performedServices.map((s) => ({ ...s }))
             });
+            // setVisitList([...visitList, { ...visit }]);
           }
         });
     };
@@ -523,7 +527,9 @@ VisitCardDetailed.propTypes = {
     vin: PropTypes.string,
     visitEnd: PropTypes.string,
     visitStart: PropTypes.string,
-    addressId: PropTypes.number
+    addressId: PropTypes.number,
+    setVisitList: () => {},
+    visitList: []
   }),
   visitId: PropTypes.number,
   editMode: PropTypes.bool.isRequired,
@@ -531,7 +537,9 @@ VisitCardDetailed.propTypes = {
   allCurrencies: PropTypes.array.isRequired,
   carSegment: PropTypes.string.isRequired,
   setRegisterVisitMode: PropTypes.func,
-  registerVisitMode: PropTypes.bool
+  registerVisitMode: PropTypes.bool,
+  setVisitList: PropTypes.func,
+  visitList: PropTypes.array
 };
 
 export default VisitCardDetailed;

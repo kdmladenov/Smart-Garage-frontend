@@ -5,21 +5,23 @@ import Card from 'react-bootstrap/Card';
 import CustomToggle from '../UI/Accordion/CustomToggle';
 import CustomerCardDetailed from './CustomerCardDetailed';
 import VehicleCard from '../Vehicles.js/VehicleCard';
+import VisitCardDetailed from '../Visits/VisitCardDetailed';
 // import { useLocation } from 'react-router';
 import useHttp from '../../hooks/useHttp';
-import { BASE_URL } from '../../common/constants';
+import { BASE_URL, emptyVisit, emptyVehicle } from '../../common/constants';
 // import Loading from '../UI/Loading';
 import './Customers.css';
 import DeleteButtonWithPopover from '../UI/DeleteButtonWithPopover/DeleteButtonWithPopover';
 import { getToken } from '../../providers/AuthContext';
-import { MDBBtn } from 'mdbreact';
+import VehicleCardDetailed from '../Vehicles.js/VehicleCardDetailed';
 
-const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode, allCurrencies }) => {
+const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode, allCurrencies, setCreated }) => {
   const [editMode, setEditMode] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const [registerVehicleMode, setRegisterVehicleMode] = useState(false);
-  const [newCustomerId, setNewCustomerId] = useState(customer.userId);
   const [registerVisitMode, setRegisterVisitMode] = useState(false);
+  const [newCustomerId, setNewCustomerId] = useState(customer.userId);
+  const [newVehicle, setNewVehicle] = useState({});
   // const [error, setError] = useState('');
   // const { search: query } = useLocation();
   const {
@@ -28,7 +30,15 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
     // loading
     // error
   } = useHttp(`${BASE_URL}/vehicles?userId=${customer.userId}`, 'GET', []);
+  console.log(newVehicle, 'newVehicle cc');
 
+  // useEffect(() => {
+  //   // setLoading(true);
+  //   if (registerVehicleMode) {
+  //     setNewVehicle(data[data.length - 1]);
+  //   }
+  //   // setLoading(false);
+  // }, [registerVisitMode, data]);
   // if (loading) {
   //   return <Loading />;
   // }
@@ -56,47 +66,47 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
     // .catch((e) => setError(e.message));
   };
 
-  const emptyVehicle = {
-    userId: customer.userId || newCustomerId,
-    vin: '',
-    licensePlate: '',
-    engineType: '',
-    transmission: '',
-    manufacturedYear: '',
-    modelName: '',
-    manufacturer: '',
-    carSegment: ''
-  };
+  // const emptyVehicle = {
+  //   userId: customer.userId || newCustomerId,
+  //   vin: '',
+  //   licensePlate: '',
+  //   engineType: '',
+  //   transmission: '',
+  //   manufacturedYear: '',
+  //   modelName: '',
+  //   manufacturer: '',
+  //   carSegment: ''
+  // };
 
-  const emptyVisit = {
-    carSegment: '',
-    city: '',
-    companyName: '',
-    country: '',
-    email: '',
-    engineType: '',
-    firstName: '',
-    lastName: '',
-    licensePlate: '',
-    manufacturedYear: 0,
-    manufacturerId: 0,
-    manufacturer: '',
-    modelId: 0,
-    modelName: '',
-    notes: '',
-    performedServices: [],
-    phone: '',
-    visitStatus: '',
-    streetAddress: '',
-    transmission: '',
-    usedParts: [],
-    userId: customer.userId,
-    vehicleId: 0,
-    vin: '',
-    visitEnd: '',
-    visitStart: '',
-    addressId: 0
-  };
+  // const emptyVisit = {
+  //   carSegment: '',
+  //   city: '',
+  //   companyName: '',
+  //   country: '',
+  //   email: '',
+  //   engineType: '',
+  //   firstName: '',
+  //   lastName: '',
+  //   licensePlate: '',
+  //   manufacturedYear: 0,
+  //   manufacturerId: 0,
+  //   manufacturer: '',
+  //   modelId: 0,
+  //   modelName: '',
+  //   notes: '',
+  //   performedServices: [],
+  //   phone: '',
+  //   visitStatus: '',
+  //   streetAddress: '',
+  //   transmission: '',
+  //   usedParts: [],
+  //   userId: customer.userId,
+  //   vehicleId: 0,
+  //   vin: '',
+  //   visitEnd: '',
+  //   visitStart: '',
+  //   addressId: 0
+  // };
   // `{${customer.userId}` || `${newCustomerId}}`
   // useEffect(() => {
   //   emptyVehicle.userId = customer.userId || newCustomerId;
@@ -114,7 +124,8 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
             allCurrencies={allCurrencies}
             registerVisitMode={registerVisitMode}
             setRegisterVisitMode={setRegisterVisitMode}
-            visits={{ ...emptyVisit, ...vehicle, ...customer }}
+            newVisit={{ ...emptyVisit, ...vehicle, ...customer }}
+            setCreated={setCreated}
           />
         );
       })}
@@ -123,42 +134,121 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
 
   if (registerCustomerMode) {
     return (
-      <Card>
-        <Card.Header className="card-header">
-          <div className="register-header card-header-text">Register New Customer</div>
-        </Card.Header>
-        <Card.Body>
-          <CustomerCardDetailed
-            // key={customer.userId}
-            customer={customer}
-            editMode={editMode}
-            setEditMode={setEditMode}
-            registerCustomerMode={registerCustomerMode}
-            setRegisterCustomerMode={setRegisterCustomerMode}
-            newCustomerId={newCustomerId}
-            setNewCustomerId={setNewCustomerId}
-          />
-        </Card.Body>
-        <Card.Header className="card-header">
-          <div className="register-header card-header-text">Register New Vehicle</div>
-        </Card.Header>
-        <Card.Body>
-          <VehicleCard
-            // key={vehicle.vehicleId}
-            vehicle={emptyVehicle}
-            registerVehicleMode={registerVehicleMode}
-            setRegisterVehicleMode={setRegisterVehicleMode}
-            registerCustomerMode={registerCustomerMode}
-            setRegisterCustomerMode={setRegisterCustomerMode}
-            newCustomerId={newCustomerId || customer.userId}
-            setVehicleList={setData}
-            vehicleList={data}
-          />
-        </Card.Body>
-      </Card>
+      // <Card>
+      //   <Card.Header className="card-header">
+      //     <div className="register-header card-header-text">Register New Customer</div>
+      //   </Card.Header>
+      //   <Card.Body>
+      //     <CustomerCardDetailed
+      //       // key={customer.userId}
+      //       customer={customer}
+      //       editMode={editMode}
+      //       setEditMode={setEditMode}
+      //       registerCustomerMode={registerCustomerMode}
+      //       setRegisterCustomerMode={setRegisterCustomerMode}
+      //       newCustomerId={newCustomerId}
+      //       setNewCustomerId={setNewCustomerId}
+      //     />
+      //   </Card.Body>
+      //   <Card.Header className="card-header">
+      //     <div className="register-header card-header-text">Register New Vehicle</div>
+      //   </Card.Header>
+      //   <Card.Body>
+      //     <VehicleCard
+      //       // key={vehicle.vehicleId}
+      //       vehicle={{ ...emptyVehicle, userId: customer.userId || newCustomerId }}
+      //       registerVehicleMode={registerVehicleMode}
+      //       setRegisterVehicleMode={setRegisterVehicleMode}
+      //       registerCustomerMode={registerCustomerMode}
+      //       setRegisterCustomerMode={setRegisterCustomerMode}
+      //       newCustomerId={newCustomerId || customer.userId}
+      //       setVehicleList={setData}
+      //       vehicleList={data}
+      //     />
+      //   </Card.Body>
+      // </Card>
+      <>
+        <Accordion>
+          <Card key={customer.userId}>
+            <Card.Header className="card-header">
+              <div className="card-header-text customer-name">Customer</div>
+              <div className="card-header-buttons"></div>
+            </Card.Header>
+            <Card.Body>
+              <CustomerCardDetailed
+                customer={customer}
+                editMode={editMode}
+                setEditMode={setEditMode}
+                registerCustomerMode={registerCustomerMode}
+                setRegisterCustomerMode={setRegisterCustomerMode}
+                setNewCustomerId={setNewCustomerId}
+              />
+            </Card.Body>
+            <Card.Header className="card-header">
+              <div className="card-header-text customer-name">Vehicle</div>
+              <div className="card-header-buttons">
+                <CustomToggle
+                  variant="primary"
+                  eventKey="2"
+                  createMode={registerVehicleMode}
+                  setCreateMode={setRegisterVehicleMode}
+                >
+                  Create Vehicle
+                </CustomToggle>
+              </div>
+            </Card.Header>
+            <Accordion.Collapse eventKey="2">
+              <Card.Body>
+                <VehicleCardDetailed
+                  vehicle={{ ...emptyVehicle, userId: newCustomerId }}
+                  editMode={editMode}
+                  setEditMode={setEditMode}
+                  registerVehicleMode={registerVehicleMode}
+                  setRegisterVehicleMode={setRegisterVehicleMode}
+                  registerCustomerMode={registerCustomerMode}
+                  setRegisterCustomerMode={setRegisterCustomerMode}
+                  newCustomerId={newCustomerId}
+                  setNewVehicle={setNewVehicle}
+                />
+              </Card.Body>
+            </Accordion.Collapse>
+            <Card.Header className="card-header">
+              <div className="card-header-text customer-name">Visit</div>
+              <div className="card-header-buttons">
+                <CustomToggle
+                  variant="primary"
+                  eventKey="3"
+                  createMode={registerVisitMode}
+                  setCreateMode={setRegisterVisitMode}
+                >
+                  Create Visit
+                </CustomToggle>
+              </div>
+            </Card.Header>
+            <Accordion.Collapse eventKey="3">
+              <Card.Body>
+                <VisitCardDetailed
+                  newVisit={{ ...emptyVisit, ...customer, ...newVehicle }}
+                  carSegment={newVehicle.carSegment}
+                  newVehicle={newVehicle}
+                  editMode={editMode}
+                  setEditMode={setEditMode}
+                  allCurrencies={allCurrencies}
+                  registerVisitMode={registerVisitMode}
+                  setRegisterVisitMode={setRegisterVisitMode}
+                  setRegisterVehicleMode={setRegisterVehicleMode}
+                  setCreated={setCreated}
+                />
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        </Accordion>
+      </>
     );
-  };
-
+  }
+  console.log(
+    registerVehicleMode, 'vehicle'
+  );
   return (
     !isDeleted && (
       <>
@@ -167,9 +257,14 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
             <Card.Header className="card-header">
               <div className="card-header-text customer-name">{customer.fullName}</div>
               <div className="card-header-buttons">
-                <MDBBtn type="button" onClick={() => setRegisterVehicleMode(!registerVehicleMode)}>
+                <CustomToggle
+                  variant="primary"
+                  eventKey="3"
+                  createMode={registerVehicleMode}
+                  setCreateMode={setRegisterVehicleMode}
+                >
                   Add Car
-                </MDBBtn>
+                </CustomToggle>
                 <CustomToggle variant="primary" eventKey="1" customFunc={setEditMode}>
                   Details
                 </CustomToggle>
@@ -196,7 +291,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
                 {data.length ? <ul>{vehiclesListToShow}</ul> : <h2> No vehicles found on this customer </h2>}
               </Card.Body>
             </Accordion.Collapse>
-            {registerVehicleMode && (
+            {/* {registerVehicleMode && (
               <Card.Body>
                 <VehicleCard
                   // key={vehicle.vehicleId}
@@ -205,8 +300,67 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
                   setRegisterVehicleMode={setRegisterVehicleMode}
                   setVehicleList={setData}
                   vehicleList={data}
-                />
-              </Card.Body>
+                  />
+                  </Card.Body>
+                )} */}
+            {registerVehicleMode && (
+              <Accordion.Collapse eventKey="3">
+                <Card.Body>
+                  <VehicleCard
+                    vehicle={{ ...emptyVehicle, userId: customer.userId || newCustomerId }}
+                    newVisit={{ ...emptyVisit, ...customer, ...newVehicle }}
+                    newCustomerId={newCustomerId || customer.userId}
+                    setVehicleList={setData}
+                    vehicleList={data}
+                    allCurrencies={allCurrencies}
+                    registerVehicleMode={registerVehicleMode}
+                    // setRegisterVehicleMode={setRegisterVehicleMode}
+                    // registerCustomerMode={registerCustomerMode}
+                    setRegisterCustomerMode={setRegisterCustomerMode}
+                    registerVisitMode={registerVisitMode}
+                    setRegisterVisitMode={setRegisterVisitMode}
+                    setNewVehicle={setNewVehicle}
+                  />
+                  <Accordion>
+                    <Card key={customer.userId}>
+                      <Card.Header className="card-header">
+                        <div className="register-header card-header-text">Register New Visit</div>
+                        <CustomToggle
+                          variant="primary"
+                          eventKey="1"
+                          createMode={registerVisitMode}
+                          setCreateMode={setRegisterVisitMode}
+                          disabled={!newVehicle.carSegment}
+                        >
+                          Add Visit
+                        </CustomToggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="1">
+                        <Card.Body>
+                          {registerVisitMode && (
+                            <VisitCardDetailed
+                              // key={visit.visitId}
+                              // visitId={visit.visitId}
+                              newVisit={{ ...emptyVisit, ...customer, ...newVehicle }}
+                              carSegment={newVehicle.carSegment}
+                              newVehicle={newVehicle}
+                              editMode={editMode}
+                              setEditMode={setEditMode}
+                              allCurrencies={allCurrencies}
+                              registerVisitMode={registerVisitMode}
+                              setRegisterVisitMode={setRegisterVisitMode}
+                              setRegisterVehicleMode={setRegisterVehicleMode}
+                              setVisitList={setData}
+                              visitList={data}
+                              setCreated={setCreated}
+                            />
+                          )}
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+                  </Accordion>
+                </Card.Body>
+              </Accordion.Collapse>
             )}
           </Card>
         </Accordion>
@@ -268,7 +422,8 @@ CustomerCard.propTypes = {
   }).isRequired,
   registerCustomerMode: PropTypes.bool.isRequired,
   setRegisterCustomerMode: PropTypes.func.isRequired,
-  allCurrencies: PropTypes.array.isRequired
+  allCurrencies: PropTypes.array.isRequired,
+  setCreated: PropTypes.func.isRequired
 };
 
 export default CustomerCard;

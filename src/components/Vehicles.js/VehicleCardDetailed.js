@@ -18,8 +18,9 @@ const VehicleCardDetailed = ({
   registerCustomerMode,
   setRegisterCustomerMode,
   newCustomerId,
-  setVehicleList,
-  vehicleList
+  // setVehicleList,
+  // vehicleList,
+  setNewVehicle
 }) => {
   const [error, setError] = useState('');
   const [vehicle, setVehicle] = useState({ ...vehicleData });
@@ -116,8 +117,13 @@ const VehicleCardDetailed = ({
           if (res.message) {
             setError(res.message);
           } else {
-            setVehicleCopy({ ...vehicleCopy, ...vehicle });
-            setVehicleList([...vehicleList, { ...vehicle, userId: newCustomerId || vehicle.userId }]);
+            // setVehicleCopy({ ...vehicleCopy, ...vehicle });
+            // setVehicleList([
+            //   ...vehicleList,
+            //   { ...res }
+            // { ...vehicle, userId: newCustomerId || vehicle.userId || res.userId }
+            // ]);
+            setNewVehicle(res);
           }
         });
     }
@@ -361,8 +367,7 @@ VehicleCardDetailed.defaultProps = {
   registerVehicleMode: false,
   setRegisterVehicleMode: () => {},
   newCustomerId: null,
-  setVehicleList: () => {},
-  vehicleList: []
+  setNewVehicle: () => {}
 };
 
 VehicleCardDetailed.propTypes = {
@@ -390,8 +395,7 @@ VehicleCardDetailed.propTypes = {
   registerCustomerMode: PropTypes.bool,
   setRegisterCustomerMode: PropTypes.func,
   newCustomerId: PropTypes.number,
-  setVehicleList: PropTypes.func,
-  vehicleList: PropTypes.array
+  setNewVehicle: PropTypes.func
 };
 
 export default VehicleCardDetailed;

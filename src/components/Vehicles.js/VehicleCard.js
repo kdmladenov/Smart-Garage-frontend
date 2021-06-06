@@ -23,12 +23,14 @@ const VehicleCard = ({
   vehicleList,
   registerVisitMode,
   setRegisterVisitMode,
-  visits
+  newVisit,
+  setNewVehicle,
+  setCreated
 }) => {
   const [editMode, setEditMode] = useState(false);
   const {
-    data,
-    setData
+    data
+    // setData
     // loading
     // error
   } = useHttp(`${BASE_URL}/visits?vehicleId=${vehicle.vehicleId}`, 'GET', []);
@@ -41,17 +43,12 @@ const VehicleCard = ({
   // // } else if (error) {
   // //   history.push('/serviceUnavailable');
   // // }
-  console.log(data, 'visitList vcd');
+  // console.log(data, 'visitList vcd');
 
   const visitListToShow = (
     <div className="visit-list">
       {data.map((visit) => {
-        return <VisitCard
-        className="visit-card"
-        key={visit.visitId}
-        visit={visit}
-        allCurrencies={allCurrencies}
-        />;
+        return <VisitCard className="visit-card" key={visit.visitId} visit={visit} allCurrencies={allCurrencies} />;
       })}
     </div>
   );
@@ -69,6 +66,7 @@ const VehicleCard = ({
         newCustomerId={newCustomerId}
         setVehicleList={setVehicleList}
         vehicleList={vehicleList}
+        setNewVehicle={setNewVehicle}
       />
     );
   }
@@ -125,7 +123,7 @@ const VehicleCard = ({
                 {/* {(registerVehicleMode || registerCustomerMode) && (
                   <VisitCard
                     className="visit-card"
-                    visit={{ ...visits, ...vehicle }}
+                    visit={{ ...newVisit, ...vehicle }}
                     allCurrencies={allCurrencies}
                     registerVisitMode={registerVisitMode}
                     setRegisterVisitMode={setRegisterVisitMode}
@@ -135,15 +133,17 @@ const VehicleCard = ({
                   <VisitCardDetailed
                     // key={visit.visitId}
                     // visitId={visit.visitId}
-                    visits={{ ...visits, ...vehicle }}
+                    newVisit={{ ...newVisit, ...vehicle }}
                     carSegment={vehicle.carSegment}
                     editMode={editMode}
                     setEditMode={setEditMode}
                     allCurrencies={allCurrencies}
                     registerVisitMode={registerVisitMode}
                     setRegisterVisitMode={setRegisterVisitMode}
-                    setVisitList={setData}
-                    visitList={data}
+                    setRegisterVehicleMode={setRegisterVehicleMode}
+                    setCreated={setCreated}
+                    // setVisitList={setData}
+                    // visitList={data}
                   />
                 )}
               </Card.Body>
@@ -193,7 +193,9 @@ VehicleCard.defaultProps = {
   setVehicleList: () => {},
   vehicleList: [],
   setRegisterVisitMode: () => {},
-  registerVisitMode: false
+  registerVisitMode: false,
+  setNewVehicle: () => {},
+  setCreated: () => {}
 };
 
 VehicleCard.propTypes = {
@@ -224,7 +226,7 @@ VehicleCard.propTypes = {
   vehicleList: PropTypes.array,
   setRegisterVisitMode: PropTypes.func,
   registerVisitMode: PropTypes.bool,
-  visits: PropTypes.shape({
+  newVisit: PropTypes.shape({
     carSegment: PropTypes.string,
     city: PropTypes.string,
     companyName: PropTypes.string,
@@ -252,7 +254,9 @@ VehicleCard.propTypes = {
     visitEnd: PropTypes.string,
     visitStart: PropTypes.string,
     addressId: PropTypes.number
-  })
+  }),
+  setNewVehicle: PropTypes.func,
+  setCreated: PropTypes.func
 };
 
 export default VehicleCard;

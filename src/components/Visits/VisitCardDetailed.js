@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import { MDBBtn, MDBIcon, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
-import { BASE_URL, CURRENCY_API_KEY, CURRENCY_URL } from '../../common/constants';
+import { BASE_URL, CURRENCY_API_KEY, CURRENCY_URL, emptyVisit } from '../../common/constants';
 import { getToken } from '../../providers/AuthContext';
 import Loading from '../UI/Loading';
 import useHttp from '../../hooks/useHttp';
@@ -19,18 +19,24 @@ const VisitCardDetailed = ({
   allCurrencies,
   registerVisitMode,
   setRegisterVisitMode,
-  visits,
-  setVisitList,
-  visitList
+  newVisit,
+  // setVisitList,
+  // visitList,
+  newVehicle,
+  setRegisterVehicleMode,
+  setCreated
 }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState('false');
-  const [visit, setVisit] = useState({});
-  const [visitCopy, setVisitCopy] = useState({});
+  const [visit, setVisit] = useState(emptyVisit);
+  const [visitCopy, setVisitCopy] = useState(emptyVisit);
 
-  // console.log(loading, 'loading vcd');
-  // console.log(registerVisitMode, 'registerVisitMode vcd');
-  // console.log(visits, 'visits vcd');
+  console.log(loading, 'loading vcd');
+  console.log(registerVisitMode, 'registerVisitMode vcd');
+  console.log(carSegment, 'carSegment vcd');
+  console.log(newVisit, 'newVisit vcd');
+  console.log(visit, 'visit vcd');
+  console.log(newVehicle, 'newVehicle vcd');
   // console.log(JSON.stringify(visit), 'visit vcd');
 
   useEffect(() => {
@@ -58,16 +64,14 @@ const VisitCardDetailed = ({
 
   useEffect(() => {
     setLoading(true);
-    if (registerVisitMode) {
-      setVisit(visits);
-      setVisitCopy({
-        ...visits,
-        usedParts: visits.usedParts.map((p) => ({ ...p })),
-        performedServices: visits.performedServices.map((s) => ({ ...s }))
-      });
-    };
+    if (registerVisitMode && newVehicle) {
+      setVisit({ ...newVisit, vehicleId: newVehicle.vehicleId });
+    }
+    if (registerVisitMode && !newVehicle) {
+      setVisit({ ...newVisit });
+    }
     setLoading(false);
-  }, [registerVisitMode]);
+  }, [registerVisitMode, newVehicle]);
 
   const [inputErrors, setInputErrors] = useState({
     notes: '',
@@ -93,7 +97,7 @@ const VisitCardDetailed = ({
     return <Loading />;
   }
 
-  console.log(service, 'service');
+  // console.log(service, 'service');
   const updateVisit = (prop, value) => setVisit({ ...visit, [prop]: value });
 
   const handleInput = (prop, value) => {
@@ -146,15 +150,21 @@ const VisitCardDetailed = ({
 
     setVisit({ ...visit, usedParts: updatedParts });
   };
+
   const isValid = registerVisitMode
     ? Object.values(inputErrors).every((v) => v === '') &&
-      Object.values(visit).every((v) => v !== '')
+      visit.notes &&
+      visit.vehicleId &&
+      Array.isArray(visit.performedServices) &&
+      Array.isArray(visit.usedParts)
     : Object.values(inputErrors).every((v) => v === '');
+
+  console.log(visit, 'before submit');
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setError('');
-    console.log(visit);
+
     if (registerVisitMode && isValid) {
       fetch(`${BASE_URL}/visits`, {
         method: 'POST',
@@ -162,7 +172,7 @@ const VisitCardDetailed = ({
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`
         },
-        body: JSON.stringify(visit)
+        body: JSON.stringify({ ...visit, carSegment })
       })
         .then((res) => res.json())
         .then((res) => {
@@ -170,15 +180,13 @@ const VisitCardDetailed = ({
             console.log(res.message);
             setError(res.message);
           } else {
-            setVisitCopy({
-              ...visit,
-              usedParts: visit.usedParts.map((p) => ({ ...p })),
-              performedServices: visit.performedServices.map((s) => ({ ...s }))
-            });
-            setVisitList([...visitList, visit]);
+            // setVisitList([...visitList, visit]);
+            setRegisterVisitMode(false);
+            setRegisterVehicleMode(false);
+            setCreated(true);
           }
         });
-    };
+    }
 
     if (editMode && isValid) {
       fetch(`${BASE_URL}/visits/${visit.visitId}`, {
@@ -366,9 +374,7 @@ const VisitCardDetailed = ({
               </tr>
             </MDBTableHead>
             <MDBTableBody>
-              {visit &&
-                visit.performedServices &&
-                visit.performedServices.map((s) => (
+              {visit.performedServices.map((s) => (
                   <TableRow
                     key={s.serviceId}
                     id={s.serviceId}
@@ -380,7 +386,7 @@ const VisitCardDetailed = ({
                     updateQty={updatePerformedServiceQty}
                     currency={currency}
                   />
-                ))}
+              ))}
             </MDBTableBody>
           </MDBTable>
         </div>
@@ -420,8 +426,11 @@ const VisitCardDetailed = ({
                   />
                 </Form.Group>
                 <MDBBtn
-                  onClick={() => addPart(part.partId, part.partQty)}
-                  disabled={part && part.name === 'Select Part'}
+                  onClick={() => {
+                    addPart(part.partId, part.partQty);
+                    setPart({ partId: 0, name: 'Select Part', partQty: 0 });
+                  }}
+                  disabled={part && (part.name === 'Select Part' || !(part.partQty > 0))}
                 >
                   <MDBIcon icon="plus-square" />
                 </MDBBtn>
@@ -442,9 +451,7 @@ const VisitCardDetailed = ({
               </tr>
             </MDBTableHead>
             <MDBTableBody>
-              {visit &&
-                visit.usedParts &&
-                visit.usedParts.map((p) => (
+              {visit.usedParts.map((p) => (
                   <TableRow
                     key={p.partId}
                     id={+p.partId}
@@ -456,7 +463,7 @@ const VisitCardDetailed = ({
                     updateQty={updateUsedPartsQty}
                     currency={currency}
                   />
-                ))}
+              ))}
             </MDBTableBody>
           </MDBTable>
         </div>
@@ -500,11 +507,12 @@ VisitCardDetailed.defaultProps = {
   setEditMode: () => {},
   allCurrencies: [],
   setRegisterVisitMode: () => {},
-  registerVisitMode: false
+  registerVisitMode: false,
+  setCreated: false
 };
 
 VisitCardDetailed.propTypes = {
-  visits: PropTypes.shape({
+  newVisit: PropTypes.shape({
     carSegment: PropTypes.string,
     city: PropTypes.string,
     companyName: PropTypes.string,
@@ -532,8 +540,9 @@ VisitCardDetailed.propTypes = {
     visitEnd: PropTypes.string,
     visitStart: PropTypes.string,
     addressId: PropTypes.number,
-    setVisitList: () => {},
-    visitList: []
+    // setVisitList: () => {},
+    // visitList: [],
+    setRegisterVehicleMode: () => {}
   }),
   visitId: PropTypes.number,
   editMode: PropTypes.bool.isRequired,
@@ -542,8 +551,21 @@ VisitCardDetailed.propTypes = {
   carSegment: PropTypes.string.isRequired,
   setRegisterVisitMode: PropTypes.func,
   registerVisitMode: PropTypes.bool,
-  setVisitList: PropTypes.func,
-  visitList: PropTypes.array
+  // setVisitList: PropTypes.func,
+  // visitList: PropTypes.array,
+  setRegisterVehicleMode: PropTypes.func,
+  newVehicle: PropTypes.shape({
+    carSegment: PropTypes.string,
+    manufacturer: PropTypes.string,
+    vehicleId: PropTypes.number,
+    modelId: PropTypes.number,
+    engineType: PropTypes.string,
+    manufacturedYear: PropTypes.number,
+    userId: PropTypes.number,
+    licensePlate: PropTypes.string,
+    vin: PropTypes.string
+  }),
+  setCreated: PropTypes.func
 };
 
 export default VisitCardDetailed;

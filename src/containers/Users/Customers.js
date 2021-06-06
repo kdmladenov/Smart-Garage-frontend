@@ -2,17 +2,19 @@
 // import Paging from '../../components/Paging/Paging';
 import useHttp from '../../hooks/useHttp';
 import PropTypes from 'prop-types';
-import { BASE_URL } from '../../common/constants';
+import { BASE_URL, emptyCustomer } from '../../common/constants';
 import CustomerCard from '../../components/Customers/CustomerCard';
 import Loading from '../../components/UI/Loading';
+import { useState } from 'react';
 
 const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencies, customersQuery }) => {
+  const [created, setCreated] = useState(false)
   const {
     data,
     // setLocalData,
     loading
     // error
-  } = useHttp(`${BASE_URL}/users${customersQuery}`, 'GET', [], [customersQuery]);
+  } = useHttp(`${BASE_URL}/users${customersQuery}`, 'GET', [], [customersQuery, created]);
 
   if (loading) {
     return <Loading />;
@@ -35,24 +37,25 @@ const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencie
             registerCustomerMode={registerCustomerMode}
             setRegisterCustomerMode={setRegisterCustomerMode}
             allCurrencies={allCurrencies}
+            setCreated={setCreated}
           />
         );
       })}
     </div>
   );
 
-  const emptyCustomer = {
-    firstName: '',
-    lastName: '',
-    companyName: '',
-    phone: '',
-    email: '',
-    reenteredEmail: '',
-    country: '',
-    city: '',
-    postalCode: '',
-    streetAddress: ''
-  };
+  // const emptyCustomer = {
+  //   firstName: '',
+  //   lastName: '',
+  //   companyName: '',
+  //   phone: '',
+  //   email: '',
+  //   reenteredEmail: '',
+  //   country: '',
+  //   city: '',
+  //   postalCode: '',
+  //   streetAddress: ''
+  // };
   return (
     <main>
       <div className="container-inner">
@@ -77,6 +80,7 @@ const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencie
             registerCustomerMode={registerCustomerMode}
             setRegisterCustomerMode={setRegisterCustomerMode}
             allCurrencies={allCurrencies}
+            setCreated={setCreated}
           />
         )}
         {!registerCustomerMode && (data.length ? <ul>{customersListToShow}</ul> : <h2> No customers are found... </h2>)}

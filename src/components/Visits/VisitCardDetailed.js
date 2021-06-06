@@ -26,10 +26,10 @@ const VisitCardDetailed = ({
   const [visit, setVisit] = useState({});
   const [visitCopy, setVisitCopy] = useState({});
 
-  console.log(loading, 'loading vcd');
-  console.log(registerVisitMode, 'registerVisitMode vcd');
-  console.log(visits, 'visits vcd');
-  console.log(visit, 'visit vcd');
+  // console.log(loading, 'loading vcd');
+  // console.log(registerVisitMode, 'registerVisitMode vcd');
+  // console.log(visits, 'visits vcd');
+  console.log(JSON.stringify(visit), 'visit vcd');
 
   useEffect(() => {
     setLoading(true);
@@ -91,6 +91,7 @@ const VisitCardDetailed = ({
     return <Loading />;
   }
 
+  console.log(service, 'service');
   const updateVisit = (prop, value) => setVisit({ ...visit, [prop]: value });
 
   const handleInput = (prop, value) => {
@@ -143,33 +144,63 @@ const VisitCardDetailed = ({
 
     setVisit({ ...visit, usedParts: updatedParts });
   };
+  const isValid = registerVisitMode
+    ? Object.values(inputErrors).every((v) => v === '') &&
+      Object.values(visit).every((v) => v !== '')
+    : Object.values(inputErrors).every((v) => v === '');
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setError('');
+    console.log(visit);
+    if (registerVisitMode && isValid) {
+      fetch(`${BASE_URL}/visits`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(visit)
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.message) {
+            console.log(res.message);
+            setError(res.message);
+          } else {
+            setVisitCopy({
+              ...visit,
+              usedParts: visit.usedParts.map((p) => ({ ...p })),
+              performedServices: visit.performedServices.map((s) => ({ ...s }))
+            });
+          }
+        });
+    };
 
-    fetch(`${BASE_URL}/visits/${visit.visitId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
-      },
-      body: JSON.stringify(visit)
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.message) {
-          console.log(res.message);
-          setError(res.message);
-        } else {
-          setVisitCopy({
-            ...visit,
-            usedParts: visit.usedParts.map((p) => ({ ...p })),
-            performedServices: visit.performedServices.map((s) => ({ ...s }))
-          });
-          setEditMode(false);
-        }
-      });
+    if (editMode && isValid) {
+      fetch(`${BASE_URL}/visits/${visit.visitId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(visit)
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.message) {
+            console.log(res.message);
+            setError(res.message);
+          } else {
+            setVisitCopy({
+              ...visit,
+              usedParts: visit.usedParts.map((p) => ({ ...p })),
+              performedServices: visit.performedServices.map((s) => ({ ...s }))
+            });
+            setEditMode(false);
+          }
+        });
+    }
   };
 
   return (
@@ -183,7 +214,7 @@ const VisitCardDetailed = ({
           )}
           {(editMode || registerVisitMode) && (
             <>
-              <MDBBtn type="submit" onClick={handleFormSubmit}>
+              <MDBBtn type="submit" onClick={handleFormSubmit} disabled={!isValid}>
                 <MDBIcon icon="check" />
               </MDBBtn>
               <MDBBtn
@@ -304,7 +335,10 @@ const VisitCardDetailed = ({
                     onChange={(e) => setService({ ...service, serviceQty: e.target.value })}
                   />
                 </Form.Group>
-                <MDBBtn onClick={() => addService(service.serviceId, service.serviceQty)}>
+                <MDBBtn
+                  onClick={() => addService(service.serviceId, service.serviceQty)}
+                  disabled={service && (service.name === 'Select Service')}
+                >
                   <MDBIcon icon="plus-square" />
                 </MDBBtn>
               </span>
@@ -324,19 +358,21 @@ const VisitCardDetailed = ({
               </tr>
             </MDBTableHead>
             <MDBTableBody>
-              {visit.performedServices.map((s) => (
-                <TableRow
-                  key={s.serviceId}
-                  id={s.serviceId}
-                  name={s.name}
-                  quantity={s.serviceQty}
-                  price={s.price}
-                  carSegment={carSegment}
-                  editMode={editMode || registerVisitMode}
-                  updateQty={updatePerformedServiceQty}
-                  currency={currency}
-                />
-              ))}
+              {visit &&
+                visit.performedServices &&
+                visit.performedServices.map((s) => (
+                  <TableRow
+                    key={s.serviceId}
+                    id={s.serviceId}
+                    name={s.name}
+                    quantity={+s.serviceQty}
+                    price={s.price}
+                    carSegment={carSegment}
+                    editMode={editMode || registerVisitMode}
+                    updateQty={updatePerformedServiceQty}
+                    currency={currency}
+                  />
+                ))}
             </MDBTableBody>
           </MDBTable>
         </div>
@@ -375,7 +411,10 @@ const VisitCardDetailed = ({
                     onChange={(e) => setPart({ ...part, partQty: e.target.value })}
                   />
                 </Form.Group>
-                <MDBBtn onClick={() => addPart(part.partId, part.partQty)}>
+                <MDBBtn
+                  onClick={() => addPart(part.partId, part.partQty)}
+                  disabled={part && (part.name === 'Select Part')}
+                >
                   <MDBIcon icon="plus-square" />
                 </MDBBtn>
               </span>
@@ -395,19 +434,21 @@ const VisitCardDetailed = ({
               </tr>
             </MDBTableHead>
             <MDBTableBody>
-              {visit.usedParts.map((p) => (
-                <TableRow
-                  key={p.partId}
-                  id={p.partId}
-                  name={p.name}
-                  quantity={p.partQty}
-                  price={p.price}
-                  carSegment={carSegment}
-                  editMode={editMode || registerVisitMode}
-                  updateQty={updateUsedPartsQty}
-                  currency={currency}
-                />
-              ))}
+              {visit &&
+                visit.usedParts &&
+                visit.usedParts.map((p) => (
+                  <TableRow
+                    key={p.partId}
+                    id={+p.partId}
+                    name={p.name}
+                    quantity={+p.partQty}
+                    price={+p.price}
+                    carSegment={carSegment}
+                    editMode={editMode || registerVisitMode}
+                    updateQty={updateUsedPartsQty}
+                    currency={currency}
+                  />
+                ))}
             </MDBTableBody>
           </MDBTable>
         </div>
@@ -476,7 +517,7 @@ VisitCardDetailed.propTypes = {
     visitStatus: PropTypes.string,
     streetAddress: PropTypes.string,
     transmission: PropTypes.string,
-    usedParts: PropTypes.number,
+    usedParts: PropTypes.array,
     userId: PropTypes.number,
     vehicleId: PropTypes.number,
     vin: PropTypes.string,
@@ -484,7 +525,7 @@ VisitCardDetailed.propTypes = {
     visitStart: PropTypes.string,
     addressId: PropTypes.number
   }),
-  visitId: PropTypes.number.isRequired,
+  visitId: PropTypes.number,
   editMode: PropTypes.bool.isRequired,
   setEditMode: PropTypes.func.isRequired,
   allCurrencies: PropTypes.array.isRequired,

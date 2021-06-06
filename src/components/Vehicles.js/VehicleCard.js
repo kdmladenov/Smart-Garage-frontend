@@ -65,7 +65,7 @@ const VehicleCard = ({
       />
     );
   }
-  console.log(registerVisitMode, 'registerVisitMode');
+
   return (
     !registerVehicleMode && (
       <>
@@ -236,7 +236,7 @@ VehicleCard.propTypes = {
     visitStatus: PropTypes.string,
     streetAddress: PropTypes.string,
     transmission: PropTypes.string,
-    usedParts: PropTypes.number,
+    usedParts: PropTypes.array,
     userId: PropTypes.number,
     vehicleId: PropTypes.number,
     vin: PropTypes.string,

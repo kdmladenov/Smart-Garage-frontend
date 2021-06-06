@@ -5,6 +5,7 @@ import { Form } from 'react-bootstrap';
 import { BASE_URL } from '../../common/constants';
 import { getToken } from '../../providers/AuthContext';
 import carSegmentsEnum from '../../common/car-segment.enum';
+import sortOptions from '../../common/sort-options.enum';
 
 const CustomersSideNav = ({ setRegisterCustomerMode, registerCustomerMode, setCustomersQuery }) => {
   const [searchParams, setSearchParams] = useState({
@@ -15,8 +16,10 @@ const CustomersSideNav = ({ setRegisterCustomerMode, registerCustomerMode, setCu
     modelName: '',
     carSegment: '',
     visitRangeLow: '',
-    visitRangeHigh: new Date().toLocaleDateString('fr-CA')
+    visitRangeHigh: new Date().toLocaleDateString('fr-CA'),
+    sort: { by: '', order: '' }
   });
+
   const [manufacturers, setManufacturers] = useState([]);
   const [modelsData, setModelsData] = useState([]);
   const [models, filterModels] = useState([]);
@@ -64,12 +67,32 @@ const CustomersSideNav = ({ setRegisterCustomerMode, registerCustomerMode, setCu
     }
   }, [searchParams.modelName]);
 
+  useEffect(() => {
+    console.log(searchParams);
+  }, [searchParams]);
+
   return (
-    <div className="side-nav-content">
+    <div className="side-nav-content customers">
       <Form.Group>
         <MDBBtn type="button" className="btn btn-lg btn-block" onClick={() => setRegisterCustomerMode(!registerCustomerMode)}>
           {!registerCustomerMode ? 'New Customer' : 'Close Register Form'}
         </MDBBtn>
+      </Form.Group>
+      <Form.Group className="search-field">
+        <Form.Label>
+          Sorting Options
+        </Form.Label>
+        <Form.Control
+          as="select"
+          name="sort"
+          value={searchParams.sortOptions}
+          onChange={(e) => setSearchParams({ ...searchParams, [e.target.name]: sortOptions[e.target.value] })}
+        >
+          <option value="1">Name | ASC</option>
+          <option value="2">Name | DESC</option>
+          <option value="3">Visit Date | ASC</option>
+          <option value="4">Visit Date | DESC</option>
+        </Form.Control>
       </Form.Group>
       <Form.Group className="search-field">
         <Form.Label>
@@ -105,7 +128,7 @@ const CustomersSideNav = ({ setRegisterCustomerMode, registerCustomerMode, setCu
           type="tel"
           name="phone"
           placeholder="Enter Owner Phone"
-          value={searchParams.name}
+          value={searchParams.phone}
           onChange={(e) => setSearchParams({ ...searchParams, [e.target.name]: e.target.value })}
           autoComplete="off"
         />
@@ -196,7 +219,13 @@ const CustomersSideNav = ({ setRegisterCustomerMode, registerCustomerMode, setCu
               `?name=${searchParams.name}` +
               `&email=${searchParams.email}` +
               `&phone=${searchParams.phone}` +
-              `&model=${searchParams.model}`
+              `&modelName=${searchParams.modelName}` +
+              `&manufacturer=${searchParams.manufacturer}` +
+              `&carSegment=${searchParams.carSegment}` +
+              `&visitRangeLow=${searchParams.visitRangeLow}` +
+              `&visitRangeHigh=${searchParams.visitRangeHigh}` +
+              `&sort=${searchParams.sort.by}` +
+              `&order=${searchParams.sort.order}`
             );
           }}
         >

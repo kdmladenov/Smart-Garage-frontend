@@ -51,8 +51,6 @@ const VehicleCard = ({
         key={visit.visitId}
         visit={visit}
         allCurrencies={allCurrencies}
-        setVisitList={setData}
-        visitList={data}
         />;
       })}
     </div>
@@ -144,6 +142,8 @@ const VehicleCard = ({
                     allCurrencies={allCurrencies}
                     registerVisitMode={registerVisitMode}
                     setRegisterVisitMode={setRegisterVisitMode}
+                    setVisitList={setData}
+                    visitList={data}
                   />
                 )}
               </Card.Body>

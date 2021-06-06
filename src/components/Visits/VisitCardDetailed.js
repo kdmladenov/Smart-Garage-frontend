@@ -32,7 +32,6 @@ const VisitCardDetailed = ({
   // console.log(registerVisitMode, 'registerVisitMode vcd');
   // console.log(visits, 'visits vcd');
   // console.log(JSON.stringify(visit), 'visit vcd');
-  // console.log(visitList && [...visitList, visit], 'visitList vcd');
 
   useEffect(() => {
     setLoading(true);
@@ -176,7 +175,7 @@ const VisitCardDetailed = ({
               usedParts: visit.usedParts.map((p) => ({ ...p })),
               performedServices: visit.performedServices.map((s) => ({ ...s }))
             });
-            // setVisitList([...visitList, { ...visit }]);
+            setVisitList([...visitList, visit]);
           }
         });
     };

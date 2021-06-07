@@ -7,6 +7,7 @@ import { getToken } from '../../providers/AuthContext';
 import { MDBBtn, MDBIcon } from 'mdbreact';
 import transmission from '../../common/transmission.enum';
 import engineType from '../../common/engine-type.enum';
+import carSegmentsEnum from '../../common/car-segment.enum';
 import './VehicleCardDetailed.css';
 
 const VehicleCardDetailed = ({
@@ -36,7 +37,7 @@ const VehicleCardDetailed = ({
   const [manufacturers, setManufacturers] = useState([]);
   const [modelsData, setModelsData] = useState([]);
   const [models, filterModels] = useState([]);
-  const [carSegment, filterCarSegment] = useState([]);
+  const [carSegments, filterCarSegments] = useState([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -61,7 +62,7 @@ const VehicleCardDetailed = ({
           setManufacturers([...makes]);
           filterModels(res.filter((m) => m.manufacturer === vehicle.manufacturer));
 
-          filterCarSegment(res.filter((m) => m.modelName === vehicle.modelName));
+          filterCarSegments(res.filter((m) => m.modelName === vehicle.modelName));
         }
       })
       .catch((e) => {
@@ -79,7 +80,11 @@ const VehicleCardDetailed = ({
   }, [vehicle.manufacturer]);
 
   useEffect(() => {
-    filterCarSegment(modelsData.filter((m) => m.modelName === vehicle.modelName));
+    if (modelsData.some(m => m.modelName === vehicle.modelName)) {
+      filterCarSegments(modelsData.filter((m) => m.modelName === vehicle.modelName));
+    } else {
+      filterCarSegments(Object.keys(carSegmentsEnum).map(key => ({ carSegmentId: key, carSegment: carSegmentsEnum[key] })));
+    }
   }, [vehicle.modelName]);
 
   const updateVehicle = (prop, value) => setVehicle({ ...vehicle, [prop]: value });
@@ -198,7 +203,7 @@ const VehicleCardDetailed = ({
                 placeholder="Enter VIN"
                 value={vehicle.vin}
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
-                disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
+                disabled={!(registerVehicleMode || registerCustomerMode)}
               />
               <Form.Label>{`VIN${inputErrors.vin}`}</Form.Label>
             </Form.Group>
@@ -211,7 +216,7 @@ const VehicleCardDetailed = ({
                 placeholder="License Plate"
                 value={vehicle.licensePlate}
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
-                disabled={!editMode && !registerVehicleMode && !registerCustomerMode}
+                disabled={!registerVehicleMode && !registerCustomerMode}
               />
               <Form.Label>{`License Plate${inputErrors.licensePlate}`}</Form.Label>
             </Form.Group>
@@ -257,42 +262,33 @@ const VehicleCardDetailed = ({
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
             <Form.Group className={inputErrors.manufacturer ? 'error' : ''}>
               <Form.Control
-                as="select"
+                type="text"
+                list="manufacturers"
                 name="manufacturer"
                 value={vehicle.manufacturer}
-                onChange={(e) => {
-                  handleInput(e.target.name, e.target.value);
-                }}
-                disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
-              >
-                <option value="">Select Manufacturer</option>
-                {manufacturers.map((manuf) => (
-                  <option key={manuf} value={manuf}>
-                    {manuf}
-                  </option>
-                ))}
-              </Form.Control>
+                onChange={(e) => handleInput(e.target.name, e.target.value)}
+                disabled={!(registerVehicleMode || registerCustomerMode)}
+              />
+              <datalist id="manufacturers">
+                {manufacturers.map(manuf => <option key={manuf}>{manuf}</option>)}
+              </datalist>
               <Form.Label>{`Manufacturer${inputErrors.manufacturer}`}</Form.Label>
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
             <Form.Group className={inputErrors.modelName ? 'error' : ''}>
               <Form.Control
-                as="select"
+                type="text"
+                list="models"
                 name="modelName"
                 value={vehicle.modelName}
-                onChange={(e) => {
-                  handleInput(e.target.name, e.target.value);
-                }}
-                disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
-              >
-                <option value="">Select Model</option>
-                {models.map((model) => (
-                  <option key={model.modelId} value={model.modelName}>
-                    {model.modelName}
-                  </option>
-                ))}
-              </Form.Control>
+                onChange={(e) => handleInput(e.target.name, e.target.value)}
+
+                disabled={!(registerVehicleMode || registerCustomerMode)}
+              />
+              <datalist id="models">
+                {models.map(model => <option key={model.modelId}>{model.modelName}</option>)}
+              </datalist>
               <Form.Label>{`Model ${inputErrors.modelName}`}</Form.Label>
             </Form.Group>
           </div>
@@ -303,11 +299,11 @@ const VehicleCardDetailed = ({
                 name="carSegment"
                 value={vehicle.carSegment}
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
-                disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
+                disabled={!(registerVehicleMode || registerCustomerMode)}
               >
                 <option value="">Select Car Segment</option>
-                {carSegment.map((m) => (
-                  <option key={m.modelId} value={m.carSegment}>
+                {carSegments.map((m) => (
+                  <option key={m.carSegmentId} value={m.carSegment}>
                     {m.carSegment}
                   </option>
                 ))}
@@ -318,7 +314,7 @@ const VehicleCardDetailed = ({
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
             <Form.Group className={inputErrors.manufacturedYear ? 'error' : ''}>
               <Form.Control
-                type="year"
+                type="number"
                 name="manufacturedYear"
                 placeholder="Year of Manufacturing"
                 value={vehicle.manufacturedYear}

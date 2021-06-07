@@ -125,6 +125,6 @@ export const emptyCustomer = {
   reenteredEmail: '',
   country: '',
   city: '',
-  postalCode: '',
+  postalCode: null,
   streetAddress: ''
 };

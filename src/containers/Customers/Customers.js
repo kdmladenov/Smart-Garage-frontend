@@ -1,20 +1,18 @@
 // import Sort from '../../components/Sort/Sort';
-// import Paging from '../../components/Paging/Paging';
 import useHttp from '../../hooks/useHttp';
 import PropTypes from 'prop-types';
-import { BASE_URL, emptyCustomer } from '../../common/constants';
+import { BASE_URL, defaultPageQuery, emptyCustomer } from '../../common/constants';
 import CustomerCard from '../../components/Customers/CustomerCard';
 import Loading from '../../components/UI/Loading';
 import { useState } from 'react';
+import Paging from '../../components/Paging/Paging';
 
 const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencies, customersQuery }) => {
+  const [pagingQuery, setPagingQuery] = useState(defaultPageQuery);
+  const updatePagingQuery = (prop, value) => setPagingQuery({ ...pagingQuery, [prop]: value });
+
   const [created, setCreated] = useState(false);
-  const {
-    data,
-    // setLocalData,
-    loading
-    // error
-  } = useHttp(`${BASE_URL}/users${customersQuery}`, 'GET', [], [customersQuery, created]);
+  const { data, loading } = useHttp(`${BASE_URL}/users${customersQuery}&page=${pagingQuery.page}&pageSize=${pagingQuery.pageSize}`, 'GET', [], [customersQuery, created, pagingQuery]);
 
   if (loading) {
     return <Loading />;
@@ -54,9 +52,13 @@ const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencie
           />
         )}
         {!registerCustomerMode && (data.length ? <ul>{customersListToShow}</ul> : <h2> No customers are found... </h2>)}
-        {/* <div id="paging-customers">
-          <Paging resource="/customers" />
-        </div> */}
+        <div id="paging-customers">
+        <Paging
+            updatePagingQuery={updatePagingQuery}
+            resource={'users'}
+            pagingQuery={pagingQuery}
+          />
+        </div>
       </div>
     </main>
   );

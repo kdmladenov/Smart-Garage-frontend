@@ -1,41 +1,76 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // import { useHistory } from 'react-router-dom';
-import DropDown from '../UI/DropDown';
+// import DropDown from '../UI/DropDown';
+// import useHttp from '../../hooks/useHttp';
+import { BASE_URL } from '../../common/constants';
+import { getToken } from '../../providers/AuthContext';
+import { Form } from 'react-bootstrap';
 // import DropDown from "../UI/DropDown";
 
-const rangePageSize = [...Array(11)].map((_, i) => {
-  return {
-    label: i + 10,
-    value: i + 10
-  };
-});
+// const rangePageSize = [...Array(11)].map((_, i) => {
+//   return {
+//     label: i + 10,
+//     value: i + 10
+//   };
+// });
 
-const Paging = ({ itemCount, setQuery }) => {
-  const [pageSize, setPageSize] = useState(rangePageSize[0]);
-
-  const rangePageNumber = [...Array(Math.ceil(itemCount / pageSize.value))].map(
-    (_, i) => i + 1
-  );
-
-  const [pageNumber, setPageNumber] = useState(rangePageNumber[0]);
-
-  // const history = useHistory();
+const Paging = ({ resource, updatePagingQuery, pagingQuery }) => {
+  const [rangePageNumber, setRangePageNumber] = useState([1]);
 
   useEffect(() => {
-    setQuery((`?page=${pageNumber}&pageSize=${pageSize.value}`));
-    // history.push(`/${resource}?page=${pageNumber}&pageSize=${pageSize.value}`);
-  }, [pageNumber, pageSize]);
+    fetch(`${BASE_URL}/${resource}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        console.log(pagingQuery);
+        setRangePageNumber([...Array(Math.ceil(res[0].totalDBItems / pagingQuery.pageSize))].map((_, i) => i + 1));
+      });
+  }, []);
 
+  // const activeStyle = {
+  //   backgroundColor: '#2bbbad',
+  //   color: '#fff',
+  //   borderRadius: '0.25rem'
+  // };
+
+  const addStyle = (page, number) => {
+    let style = {};
+
+    if (page === number) {
+      style = {
+        ...style,
+        backgroundColor: '#2bbbad',
+        color: '#fff',
+        borderRadius: '0.25rem'
+      };
+    }
+    if (page <= 3 && number > 5) {
+      style = { display: 'none ' };
+    }
+
+    if (page > 3 && ((page < number - 2) || (number < page - 2))) {
+      style = { display: 'none ' };
+    }
+    return style;
+  };
+
+  console.log(rangePageNumber);
   const PageButtonsList = rangePageNumber.map((number) => {
     return (
       <li key={number} className="page-item">
         <button
+          // style={pagingQuery.page === number ? activeStyle : { backgroundColor: 'transparent' }}
+          style={addStyle(pagingQuery.page, number)}
           type="button"
           className="page-link"
           onClick={() => {
-            // history.push(`/${resource}?page=${number}&pageSize=${pageSize.value}`);
-            setPageNumber(number);
+            updatePagingQuery('page', number);
           }}
         >
           {number}
@@ -43,20 +78,15 @@ const Paging = ({ itemCount, setQuery }) => {
       </li>
     );
   });
-  const PreviousButton = () => {
+
+  const FirstPageBtn = () => {
     return (
       <button
         type="button"
         className="page-link"
         onClick={() => {
-          // history.push(
-          //   pageNumber > 1
-          //     ? `/${resource}?page=${pageNumber - 1}&pageSize=${
-          //         rangePageSize[0].value
-          //       }`
-          //     : `/${resource}?page=1&pageSize=${pageSize.value}`
-          // );
-          setPageNumber(Math.max(pageNumber - 1, 1));
+          // updatePagingQuery('page', Math.max(pagingQuery.page - 1, 1));
+          updatePagingQuery('page', 1);
         }}
         aria-label="Previous"
       >
@@ -66,20 +96,14 @@ const Paging = ({ itemCount, setQuery }) => {
     );
   };
 
-  const NextButton = () => {
+  const LastPageBtn = () => {
     return (
       <button
         type="button"
         className="page-link"
         onClick={() => {
-          // history.push(
-          //   pageNumber < rangePageNumber.length
-          //     ? `/${resource}?page=${pageNumber + 1}&pageSize=${
-          //         rangePageSize[0].value
-          //       }`
-          //     : `/${resource}?page=${rangePageNumber.length}&pageSize=${pageSize.value}`
-          // );
-          setPageNumber(Math.min(pageNumber + 1, rangePageNumber.length));
+          // updatePagingQuery('page', Math.min(pagingQuery.page + 1, rangePageNumber.length));
+          updatePagingQuery('page', rangePageNumber.length);
         }}
         aria-label="Next"
       >
@@ -88,33 +112,36 @@ const Paging = ({ itemCount, setQuery }) => {
       </button>
     );
   };
+
   return (
     <div>
       <nav aria-label="Page navigation example">
         <ul className="pagination">
           <li className="page-item">
-            <PreviousButton />
+            <FirstPageBtn />
           </li>
           {PageButtonsList}
           <li className="page-item">
-            <NextButton />
+            <LastPageBtn />
           </li>
         </ul>
       </nav>
-      <DropDown
-        id="pagesize-dropdown"
-        selected={pageSize}
-        onSelectedChange={setPageSize}
-        options={rangePageSize}
-        dropDownToggleId="dropdown-basic-page-size-options"
-      />
+      <Form.Control
+        as="select"
+        value={pagingQuery.pageSize}
+        onChange={(e) => updatePagingQuery('pageSize', e.target.value) }
+      >
+        <option value={10}>10</option>
+        <option value={15}>15</option>
+        <option value={20}>20</option>
+      </Form.Control>
     </div>
   );
 };
 
 Paging.propTypes = {
-  // resource: PropTypes.string.isRequired,
-  itemCount: PropTypes.number.isRequired,
-  setQuery: PropTypes.func.isRequired
+  resource: PropTypes.string.isRequired,
+  updatePagingQuery: PropTypes.func.isRequired,
+  pagingQuery: PropTypes.object.isRequired
 };
 export default Paging;

@@ -1,21 +1,17 @@
-// import { Form } from 'react-bootstrap';
-// import Sort from '../../components/Sort/Sort';
-// import Paging from '../../components/Paging/Paging';
 import useHttp from '../../hooks/useHttp';
 import PropTypes from 'prop-types';
-import { BASE_URL } from '../../common/constants';
-// import { useState } from 'react';
+import { BASE_URL, defaultPageQuery } from '../../common/constants';
 import PartCard from '../../components/Parts/PartCard';
 import CreatePartCard from '../../components/Parts/CreatePartCard';
 import Loading from '../../components/UI/Loading';
+import { useState } from 'react';
+import Paging from '../../components/Paging/Paging';
 
 const Parts = ({ createPartMode, setCreatePartMode, partsQuery }) => {
-  const {
-    data,
-    // setLocalData,
-    loading
-    // error
-  } = useHttp(`${BASE_URL}/parts${partsQuery}`, 'GET', [], [partsQuery]);
+  const [pagingQuery, setPagingQuery] = useState(defaultPageQuery);
+  const updatePagingQuery = (prop, value) => setPagingQuery({ ...pagingQuery, [prop]: value });
+
+  const { data, loading } = useHttp(`${BASE_URL}/parts${partsQuery}&page=${pagingQuery.page}&pageSize=${pagingQuery.pageSize}`, 'GET', [], [partsQuery, pagingQuery]);
 
   if (loading) {
     return <Loading />;
@@ -39,17 +35,16 @@ const Parts = ({ createPartMode, setCreatePartMode, partsQuery }) => {
     <main>
       <div className="container-inner">
         <div className="parts-container-header">
-          {/* <Form className="sorting">
-            <div>Sorting Options</div>
-            <Sort resource="/parts" />
-          </Form> */}
-
         </div>
         {createPartMode && <CreatePartCard setCreatePartMode={setCreatePartMode} />}
         {data.length ? <ul>{partsListToShow}</ul> : <h2> No parts are found... </h2>}
-        {/* <div id="paging-parts">
-          <Paging resource="/parts" />
-        </div> */}
+        <div id="paging-parts">
+          <Paging
+            updatePagingQuery={updatePagingQuery}
+            resource={'parts'}
+            pagingQuery={pagingQuery}
+          />
+        </div>
       </div>
     </main>
   );

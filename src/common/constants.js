@@ -128,3 +128,5 @@ export const emptyCustomer = {
   postalCode: null,
   streetAddress: ''
 };
+
+export const defaultPageQuery = { page: 1, pageSize: 10 };

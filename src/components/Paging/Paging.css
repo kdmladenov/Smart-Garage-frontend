@@ -1,0 +1,5 @@
+.page-link:active {
+  background-color: #2bbbad;
+  color: #fff;
+  border-radius: 0.25rem;
+}

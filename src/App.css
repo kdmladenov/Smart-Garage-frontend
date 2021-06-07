@@ -1,0 +1,41 @@
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+main {
+  background-color: #ececec;
+  min-height: 100vh;
+  padding-top: 5.5rem;
+  /* background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.container-inner ul {
+  padding-inline-start: 30px;
+  padding-inline-end: 30px;
+}
+
+.container-inner {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media only screen and (min-width: 922px) {
+  main {
+    background-color: #ececec;
+    min-height: 100vh;
+    padding-top: 5.5rem;
+    padding-left: 15rem;
+  }
+}
+
+

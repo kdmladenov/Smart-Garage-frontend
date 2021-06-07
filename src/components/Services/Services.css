@@ -1,0 +1,109 @@
+.service-detailed .row.gutters {
+  padding-bottom: 2rem;
+}
+
+.service-detailed .form-label {
+  color: #009b85;
+  font-size: 13px;
+  text-align: center;
+}
+
+.service-detailed .form-control {
+  border: 1px solid #00695a;
+}
+
+.service-detailed .form-control:disabled {
+  border: none;
+  background-color: transparent;
+  border-radius: 0;
+  text-align: center;
+  border-bottom: 1px solid;
+}
+
+.service-detailed .form-group {
+  margin-left: 0;
+  margin-right: 0;
+  padding-top: 20px;
+  margin-bottom: -10px;
+}
+
+.service-detailed .form-control {
+  text-align: center;
+}
+
+.service-detailed .btn-default {
+  background: transparent !important;
+  padding: 0;
+  box-shadow: none;
+  margin-bottom: -10px;
+  font-size: 25px;
+  color: #009b85;
+}
+
+.service-detailed .buttons {
+  text-align: right;
+}
+
+.service-detailed .error label {
+  color: red;
+  text-shadow: none;
+}
+
+.service-detailed .form-group {
+  margin-bottom: 0px;
+}
+
+.service-detailed {
+  width: 100%;
+}
+
+.service-detailed .name .car-segment .form-control:disabled {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-header.service-detailed {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.services-list.card {
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+
+@media only screen and (min-width: 768px) {
+  .service-detailed .form-control:disabled {
+    border-bottom: none;
+  }
+
+  .service-detailed .btn-default {
+    padding-top: 20px;
+  }
+  
+  .service-detailed .row.gutters {
+    padding-bottom: initial;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .service-detailed .form-label {
+    visibility: hidden;
+  }
+
+  .service-detailed .form-label.visible {
+    visibility: hidden;
+  }
+
+  .service-detailed .name .form-control:disabled {
+    text-align: left;
+  }
+
+  .service-detailed .name .form-control {
+    text-align: left;
+  }
+}
+.service-detailed select {
+  text-align-last: center;
+}

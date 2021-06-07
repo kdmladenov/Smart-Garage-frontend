@@ -1,0 +1,13 @@
+.modal-dialog-centered.modal-dialog {
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 500px;
+  max-width: initial;
+  height: fit-content;
+}
+
+.modal.fade.top {
+  left: 0;
+  right: 0;
+  display: flex !important;
+}

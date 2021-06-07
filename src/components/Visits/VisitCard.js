@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import CustomToggle from '../UI/Accordion/CustomToggle';
 import VisitCardDetailed from './VisitCardDetailed';
-import './Visits.css';
 
-const VisitCard = ({ visit }) => {
+const VisitCard = ({ visit, allCurrencies }) => {
+  const [editMode, setEditMode] = useState(false);
+
   return (
     <>
       <Accordion>
@@ -14,13 +15,9 @@ const VisitCard = ({ visit }) => {
           <Card.Header className="card-header">
             <div className="card-header-text">
               <div className="card-header-text-item">{visit.notes}</div>
-              <div className="card-header-text-item">{visit.status}</div>
-              <div className="card-header-text-item">
-                {new Date(visit.visitStart).toISOString().slice(0, 10)}
-              </div>
-              <div className="card-header-text-item">
-                {new Date(visit.visitEnd).toISOString().slice(0, 10)}
-              </div>
+              <div className="card-header-text-item">{visit.visitStatus}</div>
+              <div className="card-header-text-item">{new Date(visit.visitStart).toISOString().slice(0, 10)}</div>
+              <div className="card-header-text-item">{new Date(visit.visitEnd).toISOString().slice(0, 10)}</div>
             </div>
             <div className="card-header-buttons">
               <CustomToggle variant="primary" eventKey="1">
@@ -30,7 +27,14 @@ const VisitCard = ({ visit }) => {
           </Card.Header>
           <Accordion.Collapse eventKey="1">
             <Card.Body>
-              <VisitCardDetailed key={visit.visitId} visit={visit} />
+              <VisitCardDetailed
+                key={visit.visitId}
+                visitId={visit.visitId}
+                carSegment={visit.carSegment}
+                editMode={editMode}
+                setEditMode={setEditMode}
+                allCurrencies={allCurrencies}
+              />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
@@ -51,7 +55,8 @@ VisitCard.propTypes = {
   visit: PropTypes.shape({
     addressId: PropTypes.number.isRequired,
     visitId: PropTypes.number.isRequired,
-    carSegment: PropTypes.number.isRequired,
+    carSegmentId: PropTypes.number.isRequired,
+    carSegment: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,
     companyName: PropTypes.string,
     country: PropTypes.string.isRequired,
@@ -62,12 +67,12 @@ VisitCard.propTypes = {
     licensePlate: PropTypes.string.isRequired,
     manufacturedYear: PropTypes.number.isRequired,
     manufacturerId: PropTypes.number.isRequired,
-    manufacturerName: PropTypes.string.isRequired,
+    manufacturer: PropTypes.string.isRequired,
     modelId: PropTypes.number.isRequired,
     modelName: PropTypes.string.isRequired,
     notes: PropTypes.string.isRequired,
     phone: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
+    visitStatus: PropTypes.string.isRequired,
     streetAddress: PropTypes.string,
     transmission: PropTypes.string.isRequired,
     userId: PropTypes.number.isRequired,
@@ -75,7 +80,8 @@ VisitCard.propTypes = {
     vin: PropTypes.string.isRequired,
     visitEnd: PropTypes.string,
     visitStart: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  allCurrencies: PropTypes.array.isRequired
 };
 
 export default VisitCard;

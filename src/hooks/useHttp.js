@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getToken } from '../providers/AuthContext';
 
-const useHttp = (url, method = 'GET', initialData = null) => {
+const useHttp = (url, method = 'GET', initialData = null, dependencies = [url]) => {
   const [data, setData] = useState(initialData);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -9,6 +9,7 @@ const useHttp = (url, method = 'GET', initialData = null) => {
   const token = getToken();
 
   useEffect(() => {
+    let isMounted = true;
     setLoading(true);
 
     fetch(url, {
@@ -24,15 +25,25 @@ const useHttp = (url, method = 'GET', initialData = null) => {
         return response.json();
       })
       .then((result) => {
-        setData(result);
+        if (isMounted) {
+          setLoading(false);
+          setData(result);
+        }
       })
-      .catch((e) => setError(e.message))
-      .finally(() => setLoading(false));
-  }, [url]);
+      .catch((e) => {
+        if (isMounted) setError(e.message);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, dependencies);
 
   return {
     data,
-    setLocalData: setData,
+    setData,
     loading,
     error
   };

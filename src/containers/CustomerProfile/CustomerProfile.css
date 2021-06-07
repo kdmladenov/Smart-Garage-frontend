@@ -1,0 +1,75 @@
+.profile .card {
+  padding-top: 1.25rem;
+  background: #42414094;
+  border-radius: 5px;
+  border: 0;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.profile .col-12 {
+  margin-bottom: 2vh;
+}
+
+.profile .form-control {
+  background-color: #ffffffa2;
+  color: #343a40;
+  height: calc(1.5em + 1.5rem + 2px);
+  border: 0.05rem solid #ffffff;
+}
+
+.profile .form-control:focus {
+  border-color: #24b943;
+  background-color: #fff;
+  border-color: #006416;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgb(231 255 148 / 25%);
+}
+
+.account-settings .user-profile {
+  padding-bottom: 1rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.about .form-group {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.change-password .form-group {
+  margin-left: initial;
+  margin-right: initial;
+}
+
+.profile .card-body {
+  min-height: 37rem;
+}
+
+.profile .btn-default {
+  background-color: #0a7f6e !important;
+  border-radius: 0.25rem;
+}
+
+.profile .btn-default:hover {
+  background-color: #00aa91 !important;
+}
+
+.btn-default.btn.Ripple-parent.active.btn.btn-lg.btn-block {
+  background-color: #52a999 !important;
+}
+
+@media (min-width: 992px) {
+  .profile .col-lg-8 {
+    flex: 0 0 69%;
+    max-width: 69%;
+  }
+  .profile .col-lg-4 {
+    flex: 0 0 31%;
+    max-width: 31%;
+  }
+  .profile .outer {
+    padding-top: 18vh;
+  }
+}

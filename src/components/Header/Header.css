@@ -1,3 +1,11 @@
+.side-nav {
+  visibility: hidden;
+}
+
+.side-nav.open {
+  visibility: visible;
+}
+
 .nav-link {
   padding-right: 0.5rem !important;
   padding-left: 0.5rem !important;
@@ -16,28 +24,34 @@ a.nav-link.active {
   border-radius: 0;
   box-shadow: initial;
   border-left: initial;
-  background: linear-gradient(180deg, #034b4e, transparent);
+  background: linear-gradient(180deg, #00806e, transparent);
 }
 
-.side-nav div {
+.side-nav .side-nav-content {
   padding-top: 5rem;
+  text-align: center;
+  color: #ffffff;
 }
 
 button.nav-link {
   border: none;
   color: #004c4f;
   border-left: 1px solid rgb(0, 0, 0);
+  background-color: transparent;
 }
-
 
 /* hamburger button */
 
 #hamburgerBtn {
   width: 30px;
   height: 24px;
-  position: absolute;
+  position: fixed;
   margin: 0.8rem;  
   margin-top: 1rem;
+  line-height: 32px;
+  margin-right: 1em;
+  vertical-align: middle;
+  z-index: 1050;
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
   -o-transform: rotate(0deg);
@@ -108,7 +122,62 @@ button.nav-link {
   left: 50%;
 }
 
+.username {
+  position: fixed;
+  z-index: 1045;
+  width: 9rem;
+  text-align: center;
+  line-height: 64px;
+  vertical-align: middle;
+  color: #004c4f;
+  padding-left: 4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
+.username.open {
+  color: #ffffff;
+}
+
+.side-nav div {
+  text-align: center;
+}
+
+.d-none {
+  display: none!important;
+}
+
+.side-nav div.search-field {
+  padding-top: initial;
+}
+
+.search {
+  border-radius: 0.25rem;
+  margin: initial !important;
+}
+
+.btn.btn-lg {
+  margin: 0 auto;
+  border-radius: 0.25rem;
+  padding-bottom: 0.8rem;
+  padding-top: 0.8rem;
+}
+
+.side-nav label {
+  margin-bottom: initial;
+  text-align: left;
+}
+
+.side-nav-content.customers .form-group {
+  margin-bottom: 0.5rem;
+}
+
+@media only screen and (min-width: 450px) {
+  .username {
+    width: initial;
+  }
+}
+  
 @media only screen and (min-width: 600px) {
   #hamburgerBtn {
     margin-top: 1.3rem;
@@ -119,5 +188,23 @@ button.nav-link {
   .nav-link {
     padding-right: 0.7rem !important;
     padding-left: 0.7rem !important;
+  }
+}
+
+@media only screen and (min-width: 922px) {
+  #hamburgerBtn {
+    visibility: hidden;
+  }
+  
+  .side-nav {
+    visibility: visible;
+  }
+
+  .username {
+    color: #ffffff;
+  }
+
+  .d-md-inline {
+    display: inline!important;
   }
 }

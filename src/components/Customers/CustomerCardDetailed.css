@@ -1,0 +1,47 @@
+.customer-detailed .form-label {
+  color: #009b85;
+  font-size: 13px;
+  text-align: center;
+}
+
+.customer-detailed .form-control {
+  border: 1px solid #00695a;
+}
+
+.customer-detailed .form-control:disabled {
+  border: none;
+  border-bottom: 1px solid;
+  background-color: transparent;
+  border-radius: 0;
+  text-align: center;
+}
+
+.customer-detailed .form-group {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.customer-detailed .form-control {
+  text-align: center;
+}
+
+.customer-detailed .btn-default {
+  background: transparent !important;
+  padding: 0;
+  box-shadow: none;
+  font-size: 25px;
+  color: #009b85;
+}
+
+.customer-detailed .buttons {
+  text-align: right;
+}
+
+.customer-detailed .error label {
+  color: red;
+  text-shadow: none;
+}
+
+.role {
+  text-align-last: center;
+}

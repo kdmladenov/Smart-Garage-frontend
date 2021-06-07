@@ -1,0 +1,116 @@
+.visit-details .form-label {
+  color: #009b85;
+  font-size: 13px;
+  text-align: center;
+}
+
+.visit-details .form-control {
+  border: 1px solid #00695a;
+}
+
+.visit-details .form-control:disabled {
+  border: none;
+  background-color: transparent;
+  border-radius: 0;
+  text-align: center;
+  border-bottom: initial;
+}
+
+.visit-details .form-group {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.visit-details .form-control {
+  text-align: center;
+}
+
+.visit-details .btn-default {
+  background: transparent !important;
+  padding: 0;
+  box-shadow: none;
+  font-size: 25px;
+  color: #009b85;
+}
+
+.visit-details .buttons {
+  text-align: right;
+}
+
+.visit-details .error label {
+  color: red;
+  text-shadow: none;
+}
+
+.visit-details select {
+  text-align-last: center;
+}
+
+.performed-services {
+  display: flex;
+  justify-content: space-between;
+  background-color: #e2e0dd;
+  height: 50px;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.select-service {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.select-service .form-group {
+  margin-bottom: 0;
+}
+
+.select-service-drop-down {
+  display: inline-block;
+  width: initial;
+}
+
+.notes:disabled, .status:disabled {
+  border-bottom: 1px solid #000000;
+}
+
+.select-service.form-group span {
+    display: flex;
+    align-items: center;
+}
+
+table .form-control {
+  height: initial;
+  padding: initial;
+}
+
+.tax {
+  background-color: #e2e0dd;
+}
+
+.total {
+  background-color: #c3c3c3;
+  font-weight: 900;
+}
+
+.id {
+  width: 70px;
+}
+
+.car-segment {
+  width: 140px
+}
+
+.name {
+  width: 330px
+}
+
+.qty {
+  width: 70px
+}
+
+.price {
+  width: 100px
+}
+.amount {
+  width: 100px
+}

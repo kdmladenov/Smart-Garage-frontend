@@ -1,0 +1,76 @@
+// import Sort from '../../components/Sort/Sort';
+// import Paging from '../../components/Paging/Paging';
+import useHttp from '../../hooks/useHttp';
+import PropTypes from 'prop-types';
+import { BASE_URL, emptyCustomer } from '../../common/constants';
+import CustomerCard from '../../components/Customers/CustomerCard';
+import Loading from '../../components/UI/Loading';
+import { useState } from 'react';
+
+const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencies, customersQuery }) => {
+  const [created, setCreated] = useState(false);
+  const {
+    data,
+    // setLocalData,
+    loading
+    // error
+  } = useHttp(`${BASE_URL}/users${customersQuery}`, 'GET', [], [customersQuery, created]);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  const customersListToShow = (
+    <div className="customer-list">
+      {data.map((customer) => {
+        return (
+          <CustomerCard
+            className="customer-card"
+            key={customer.userId}
+            customer={customer}
+            registerCustomerMode={registerCustomerMode}
+            setRegisterCustomerMode={setRegisterCustomerMode}
+            allCurrencies={allCurrencies}
+            setCreated={setCreated}
+          />
+        );
+      })}
+    </div>
+  );
+
+  return (
+    <main>
+      <div className="container-inner">
+        <div className="customers-container-header">
+        </div>
+        {registerCustomerMode && (
+          <CustomerCard
+            className="customer-card"
+            customer={emptyCustomer}
+            registerCustomerMode={registerCustomerMode}
+            setRegisterCustomerMode={setRegisterCustomerMode}
+            allCurrencies={allCurrencies}
+            setCreated={setCreated}
+          />
+        )}
+        {!registerCustomerMode && (data.length ? <ul>{customersListToShow}</ul> : <h2> No customers are found... </h2>)}
+        {/* <div id="paging-customers">
+          <Paging resource="/customers" />
+        </div> */}
+      </div>
+    </main>
+  );
+};
+
+Customers.defaultProps = {
+  registerCustomerMode: false
+};
+
+Customers.propTypes = {
+  registerCustomerMode: PropTypes.bool.isRequired,
+  setRegisterCustomerMode: PropTypes.func.isRequired,
+  allCurrencies: PropTypes.array.isRequired,
+  customersQuery: PropTypes.string
+};
+
+export default Customers;

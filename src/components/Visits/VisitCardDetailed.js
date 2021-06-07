@@ -411,6 +411,7 @@ const VisitCardDetailed = ({
               <span className="select-service">
                 <Form.Group className="select-service-drop-down">
                   <Form.Control
+                    className="service name"
                     as="select"
                     name="service"
                     value={service.serviceId}
@@ -456,9 +457,25 @@ const VisitCardDetailed = ({
           <div className="performed-services-create">
             {(editMode || registerVisitMode) && (
               <span className="select-service">
-                <div className="col-xl-8 col-lg-7 col-md-7 col-sm-12 col-12 name">
+                {error && (
+                  <Form.Group className="error">
+                    <p>{`${error}`}</p>
+                  </Form.Group>
+                )}
+                <Form.Group className={inputErrorsServices.price ? 'error' : ''}>
+                  <Form.Control
+                    style={{ width: '100px' }}
+                    type="text"
+                    name="price"
+                    placeholder="Enter Service Price"
+                    value={serviceCreated.price}
+                    onChange={(e) => handleInputPartsServices(e.target.name, e.target.value, 'services')}
+                  />
+                  <Form.Label className="visible">{`Price${inputErrorsServices.price} `}</Form.Label>
+                </Form.Group>
                   <Form.Group className={inputErrorsServices.name ? 'error' : ''}>
                     <Form.Control
+                      className="service name"
                       type="text"
                       name="name"
                       placeholder="Enter Service Name"
@@ -469,10 +486,9 @@ const VisitCardDetailed = ({
                     />
                     <Form.Label className="visible">{`Name${inputErrorsServices.name}`}</Form.Label>
                   </Form.Group>
-                </div>
-                <div className="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12">
                   <Form.Group>
                     <Form.Control
+                      style={{ width: '50px' }}
                       type="number"
                       name="serviceQty"
                       value={serviceCreated.serviceQty}
@@ -481,31 +497,9 @@ const VisitCardDetailed = ({
                     />
                     <Form.Label className="visible">`Qty`</Form.Label>
                   </Form.Group>
-                </div>
-                <div className="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12 price" >
-                  <Form.Group className={inputErrorsServices.price ? 'error' : ''}>
-                    <Form.Control
-                      type="text"
-                      name="price"
-                      placeholder="Enter Service Price"
-                      value={serviceCreated.price}
-                      onChange={(e) => handleInputPartsServices(e.target.name, e.target.value, 'services')}
-                    />
-                    <Form.Label className="visible">{`Price${inputErrorsServices.price} `}</Form.Label>
-                  </Form.Group>
-                </div>
-                <div className="col-xl-1 col-lg-1 col-md-1 col-sm-12 col-12 buttons">
-                  {error && (
-                    <Form.Group className="error">
-                      <p>{`${error}`}</p>
-                    </Form.Group>
-                  )}
-                  <>
-                    <MDBBtn type="submit" onClick={handleFormSubmitServices} disabled={!isValidService}>
-                      <MDBIcon icon="plus-square" />
-                    </MDBBtn>
-                  </>
-                </div>
+                  <MDBBtn type="submit" onClick={handleFormSubmitServices} disabled={!isValidService}>
+                    <MDBIcon icon="plus-square" />
+                  </MDBBtn>
               </span>
             )}
           </div>
@@ -554,6 +548,7 @@ const VisitCardDetailed = ({
               <span className="select-service">
                 <Form.Group>
                   <Form.Control
+                    className="part name"
                     as="select"
                     name="part"
                     value={part.partId}
@@ -599,9 +594,25 @@ const VisitCardDetailed = ({
           <div className="performed-services-create">
             {(editMode || registerVisitMode) && (
               <span className="select-service">
-                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 name">
+                  {error && (
+                    <Form.Group className="error">
+                      <p>{`${error}`}</p>
+                    </Form.Group>
+                  )}
+                  <Form.Group className={inputErrorsParts.price ? 'error' : ''}>
+                    <Form.Control
+                      style={{ width: '100px' }}
+                      type="text"
+                      name="price"
+                      placeholder="Enter Part Price"
+                      value={partCreated.price}
+                      onChange={(e) => handleInputPartsServices(e.target.name, e.target.value, 'parts')}
+                    />
+                    <Form.Label className="visible">{`Price${inputErrorsParts.price} `}</Form.Label>
+                  </Form.Group>
                   <Form.Group className={inputErrorsParts.name ? 'error' : ''}>
                     <Form.Control
+                      className="part name"
                       type="text"
                       name="name"
                       placeholder="Enter Part Name"
@@ -612,10 +623,9 @@ const VisitCardDetailed = ({
                     />
                     <Form.Label className="visible">{`Name${inputErrorsParts.name}`}</Form.Label>
                   </Form.Group>
-                </div>
-                <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
                   <Form.Group>
                     <Form.Control
+                      style={{ width: '50px' }}
                       type="number"
                       name="partQty"
                       value={partCreated.partQty}
@@ -624,31 +634,9 @@ const VisitCardDetailed = ({
                     />
                     <Form.Label className="visible">`Qty`</Form.Label>
                   </Form.Group>
-                </div>
-                <div className="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12">
-                  <Form.Group className={inputErrorsParts.price ? 'error' : ''}>
-                    <Form.Control
-                      type="text"
-                      name="price"
-                      placeholder="Enter Part Price"
-                      value={partCreated.price}
-                      onChange={(e) => handleInputPartsServices(e.target.name, e.target.value, 'parts')}
-                    />
-                    <Form.Label className="visible">{`Price${inputErrorsParts.price} `}</Form.Label>
-                  </Form.Group>
-                </div>
-                <div className="col-xl-2 col-lg-2 col-md-2 col-sm-12 col-12 buttons">
-                  {error && (
-                    <Form.Group className="error">
-                      <p>{`${error}`}</p>
-                    </Form.Group>
-                  )}
-                  <>
-                    <MDBBtn type="submit" onClick={handleFormSubmitParts} disabled={!isValidPart}>
-                      <MDBIcon icon="plus-square" />
-                    </MDBBtn>
-                  </>
-                </div>
+                  <MDBBtn type="submit" onClick={handleFormSubmitParts} disabled={!isValidPart}>
+                    <MDBIcon icon="plus-square" />
+                  </MDBBtn>
               </span>
             )}
           </div>

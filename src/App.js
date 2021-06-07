@@ -30,7 +30,6 @@ const App = () => {
   const [detailedVisitReport, setDetailedVisitReport] = useState('');
   const [modalIsOpen, toggleModalIsOpen] = useState({ modal14: false });
   const toggleModal = (modalNumber) => {
-    console.log(modalNumber);
     toggleModalIsOpen({ [modalNumber]: !modalIsOpen[modalNumber] });
   };
 
@@ -61,7 +60,6 @@ const App = () => {
       });
   };
 
-  // console.log(authValue);
   return (
     <BrowserRouter>
       <AuthContext.Provider value={{ ...authValue, setAuthValue }}>
@@ -127,6 +125,8 @@ const App = () => {
                 num={modals.SCROLLING_LONG_CONTENT.num}
                 setDetailedVisitReport={setDetailedVisitReport}
                 allCurrencies={allCurrencies}
+                detailedVisitReport={detailedVisitReport}
+                modalIsOpen={modalIsOpen}
               />
             )}
             isLoggedIn={authValue.isLoggedIn}

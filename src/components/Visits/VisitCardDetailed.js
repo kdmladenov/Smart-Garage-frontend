@@ -25,9 +25,15 @@ const VisitCardDetailed = ({
   setCreated
 }) => {
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState('false');
   const [visit, setVisit] = useState(emptyVisit);
+  const [loading, setLoading] = useState('false');
   const [visitCopy, setVisitCopy] = useState(emptyVisit);
+  const [totals, setTotals] = useState({
+    totalServices: 0,
+    totalParts: 0,
+    tax: 0,
+    total: 0
+  });
 
   useEffect(() => {
     let isMounted = true;
@@ -84,20 +90,12 @@ const VisitCardDetailed = ({
   });
 
   const { data: services } = useHttp(`${BASE_URL}/services?carSegment=${carSegment}`, 'GET', []);
-
   const { data: parts } = useHttp(`${BASE_URL}/parts?carSegment=${carSegment}`, 'GET', []);
-
   const [service, setService] = useState({ serviceId: 0, name: 'Select Service', serviceQty: 0 });
   const [part, setPart] = useState({ partId: 0, name: 'Select Part', partQty: 0 });
-
   const [currency, setCurrency] = useState({ id: 'BGN', rate: 1 });
 
-  if (loading) {
-    return <Loading />;
-  }
-
   const updateVisit = (prop, value) => setVisit({ ...visit, [prop]: value });
-
   const handleInput = (prop, value) => {
     setInputErrors({ ...inputErrors, [prop]: validateInput[prop](value) });
     updateVisit(prop, value);
@@ -107,8 +105,6 @@ const VisitCardDetailed = ({
     fetch(`${CURRENCY_URL}/api/v7/convert?compact=ultra&q=BGN_${curr}&apiKey=${CURRENCY_API_KEY}`)
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        console.log(res[`BGN_${curr}`]);
         setCurrency({ id: curr, rate: res[`BGN_${curr}`] });
       })
       .catch((e) => {
@@ -149,6 +145,18 @@ const VisitCardDetailed = ({
 
     setVisit({ ...visit, usedParts: updatedParts });
   };
+
+  const sumTotalServices = (arr) => arr.reduce((acc, item) => (acc += Math.round(item.serviceQty * item.price * currency.rate * 100) / 100), 0);
+  const sumTotalParts = (arr) => arr.reduce((acc, item) => (acc += Math.round(item.partQty * item.price * currency.rate * 100) / 100), 0);
+
+  useEffect(() => {
+    setTotals({
+      totalServices: sumTotalServices(visit.performedServices),
+      totalParts: sumTotalParts(visit.usedParts),
+      tax: Math.round((sumTotalServices(visit.performedServices) + sumTotalParts(visit.usedParts)) * 0.2 * 100) / 100,
+      total: Math.round((sumTotalServices(visit.performedServices) + sumTotalParts(visit.usedParts)) * 1.2 * 100) / 100
+    });
+  }, [currency, visit.performedServices, visit.usedParts]);
 
   const isValid = registerVisitMode
     ? Object.values(inputErrors).every((v) => v === '') &&
@@ -207,6 +215,10 @@ const VisitCardDetailed = ({
         });
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Form className="visit-details">
@@ -375,6 +387,14 @@ const VisitCardDetailed = ({
                     currency={currency}
                   />
               ))}
+              <tr>
+                <td className="id"></td>
+                <td className="car-segment"></td>
+                <td className="name"></td>
+                <td className="qty"></td>
+                <td className="price">Total Services</td>
+                <td className="amount">{totals.totalServices}</td>
+              </tr>
             </MDBTableBody>
           </MDBTable>
         </div>
@@ -430,12 +450,12 @@ const VisitCardDetailed = ({
           <MDBTable>
             <MDBTableHead>
               <tr>
-                <th>setParts ID</th>
-                <th>Car Segment</th>
-                <th>Name</th>
-                <th style={{ textAlign: 'center' }}>Qty</th>
-                <th>Unit Price</th>
-                <th>Amount</th>
+                <th className="id">setParts ID</th>
+                <th className="car-segment">Car Segment</th>
+                <th className="name">Name</th>
+                <th className="qty" style={{ textAlign: 'center' }}>Qty</th>
+                <th className="price">Unit Price</th>
+                <th className="amount">Amount</th>
               </tr>
             </MDBTableHead>
             <MDBTableBody>
@@ -452,6 +472,30 @@ const VisitCardDetailed = ({
                     currency={currency}
                   />
               ))}
+              <tr>
+                <td className="id"></td>
+                <td className="car-segment"></td>
+                <td className="name"></td>
+                <td className="qty"></td>
+                <td className="price">Total Parts</td>
+                <td className="amount">{totals.totalParts}</td>
+              </tr>
+              <tr>
+                <td className="id"></td>
+                <td className="car-segment"></td>
+                <td className="name"></td>
+                <td className="price"></td>
+                <td className="tax price">Total Tax</td>
+                <td className="tax amount">{totals.tax}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td className="car-segment"></td>
+                <td className="name"></td>
+                <td className="price"></td>
+                <td className="total price">TOTAL</td>
+                <td className="total amount">{totals.total}</td>
+              </tr>
             </MDBTableBody>
           </MDBTable>
         </div>

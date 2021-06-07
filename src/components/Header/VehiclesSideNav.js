@@ -166,7 +166,7 @@ const VehiclesSideNav = ({ setVehiclesQuery }) => {
                 });
                 filterModels(modelsData);
                 filterCarSegments(Object.keys(carSegmentsEnum).map(key => ({ id: key, carSegment: carSegmentsEnum[key] })));
-                setVehiclesQuery('');
+                setVehiclesQuery('?');
               }}
             >
               clear search

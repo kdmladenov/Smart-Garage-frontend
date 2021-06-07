@@ -232,7 +232,7 @@ const CustomersSideNav = ({ setRegisterCustomerMode, registerCustomerMode, setCu
         <MDBBtn
           className="btn btn-lg btn-block search"
           onClick={() => {
-            setCustomersQuery('');
+            setCustomersQuery('?');
             setSearchParams({
               email: '',
               name: '',

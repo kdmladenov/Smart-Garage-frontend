@@ -14,10 +14,10 @@ const TableRow = ({ id, name, quantity, price, carSegment, editMode, updateQty, 
 
   return (
     <tr>
-      <td>{id}</td>
-      <td>{carSegment}</td>
-      <td>{name}</td>
-      <td>
+      <td className="id">{id}</td>
+      <td className="car-segment">{carSegment}</td>
+      <td className="name">{name}</td>
+      <td className="qty">
         <Form.Group style={{ height: 'initial', margin: 'initial', padding: 'initial' }}>
           <Form.Control
             style={{ width: '80px' }}
@@ -34,8 +34,8 @@ const TableRow = ({ id, name, quantity, price, carSegment, editMode, updateQty, 
             />
           </Form.Group>
         </td>
-      <td>{unitPrice}</td>
-      <td>{amount}</td>
+      <td className="price">{unitPrice}</td>
+      <td className="amount">{amount}</td>
     </tr>
   );
 };

@@ -1,21 +1,18 @@
-// import { Form } from 'react-bootstrap';
-// import Sort from '../../components/Sort/Sort';
-// import Paging from '../../components/Paging/Paging';
 import useHttp from '../../hooks/useHttp';
 import PropTypes from 'prop-types';
-import { BASE_URL } from '../../common/constants';
-// import { useState } from 'react';
+import { BASE_URL, defaultPageQuery } from '../../common/constants';
 import ServiceCard from '../../components/Services/ServiceCard';
 import CreateServiceCard from '../../components/Services/CreateServiceCard';
 import Loading from '../../components/UI/Loading';
+import Paging from '../../components/Paging/Paging';
+import { useState } from 'react';
 
 const Services = ({ createServiceMode, setCreateServiceMode, servicesQuery }) => {
-  const {
-    data,
-    // setLocalData,
-    loading
-    // error
-  } = useHttp(`${BASE_URL}/services${servicesQuery}`, 'GET', [], [servicesQuery]);
+  const [pagingQuery, setPagingQuery] = useState(defaultPageQuery);
+  const updatePagingQuery = (prop, value) => setPagingQuery({ ...pagingQuery, [prop]: value });
+
+  const { data, loading } = useHttp(`${BASE_URL}/services${servicesQuery}&page=${pagingQuery.page}&pageSize=${pagingQuery.pageSize}`,
+    'GET', [], [servicesQuery, pagingQuery]);
 
   if (loading) {
     return <Loading />;
@@ -45,16 +42,16 @@ const Services = ({ createServiceMode, setCreateServiceMode, servicesQuery }) =>
     <main>
       <div className="container-inner">
         <div className="services-container-header">
-          {/* <Form className="sorting">
-            <div>Sorting Options</div>
-            <Sort resource="/services" />
-          </Form> */}
         </div>
         {createServiceMode && <CreateServiceCard setCreateServiceMode={setCreateServiceMode} />}
         {data.length ? <ul>{servicesListToShow}</ul> : <h2> No services are found... </h2>}
-        {/* <div id="paging-services">
-          <Paging resource="/services" />
-        </div> */}
+        <div id="paging-customers">
+          <Paging
+            updatePagingQuery={updatePagingQuery}
+            resource={'services'}
+            pagingQuery={pagingQuery}
+          />
+        </div>
       </div>
     </main>
   );

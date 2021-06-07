@@ -125,6 +125,8 @@ export const emptyCustomer = {
   reenteredEmail: '',
   country: '',
   city: '',
-  postalCode: '',
+  postalCode: null,
   streetAddress: ''
 };
+
+export const defaultPageQuery = { page: 1, pageSize: 10 };

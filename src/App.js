@@ -15,10 +15,10 @@ import Parts from './containers/Parts/Parts';
 import CustomerProfile from './containers/CustomerProfile/CustomerProfile';
 
 const App = () => {
-  const [customersQuery, setCustomersQuery] = useState('');
-  const [vehiclesQuery, setVehiclesQuery] = useState('');
-  const [servicesQuery, setServicesQuery] = useState('');
-  const [partsQuery, setPartsQuery] = useState('');
+  const [customersQuery, setCustomersQuery] = useState('?');
+  const [vehiclesQuery, setVehiclesQuery] = useState('?');
+  const [servicesQuery, setServicesQuery] = useState('?');
+  const [partsQuery, setPartsQuery] = useState('?');
   const [createPartMode, setCreatePartMode] = useState(false);
   const [createServiceMode, setCreateServiceMode] = useState(false);
   const [registerCustomerMode, setRegisterCustomerMode] = useState(false);
@@ -125,6 +125,8 @@ const App = () => {
                 num={modals.SCROLLING_LONG_CONTENT.num}
                 setDetailedVisitReport={setDetailedVisitReport}
                 allCurrencies={allCurrencies}
+                detailedVisitReport={detailedVisitReport}
+                modalIsOpen={modalIsOpen}
               />
             )}
             isLoggedIn={authValue.isLoggedIn}

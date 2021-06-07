@@ -277,6 +277,7 @@ CustomerCard.defaultProps = {
 CustomerCard.propTypes = {
   customer: PropTypes.shape({
     userId: PropTypes.number,
+    totalDBItems: PropTypes.number.isRequired,
     fullName: PropTypes.string,
     firstName: PropTypes.string,
     lastName: PropTypes.string,

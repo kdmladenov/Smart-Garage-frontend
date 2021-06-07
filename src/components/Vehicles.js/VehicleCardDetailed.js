@@ -55,14 +55,14 @@ const VehicleCardDetailed = ({
       })
       .then((res) => {
         if (isMounted) {
-          setModelsData(res);
+          setModelsData([...res]);
 
           const makes = new Set();
           res.forEach((m) => makes.add(m.manufacturer));
           setManufacturers([...makes]);
-          filterModels(res.filter((m) => m.manufacturer === vehicle.manufacturer));
 
-          filterCarSegments(res.filter((m) => m.modelName === vehicle.modelName));
+          filterModels([...res]);
+          filterCarSegments(Object.keys(carSegmentsEnum).map(key => ({ carSegmentId: key, carSegment: carSegmentsEnum[key] })));
         }
       })
       .catch((e) => {
@@ -76,12 +76,17 @@ const VehicleCardDetailed = ({
   }, []);
 
   useEffect(() => {
-    filterModels(modelsData.filter((m) => m.manufacturer === vehicle.manufacturer));
+    filterModels(modelsData.filter(m => (modelsData.some(m => m.manufacturer === vehicle.manufacturer)) ? m.manufacturer === vehicle.manufacturer : m.manufacturer));
+    // if (manufacturers.some(m => m.manufacturer === vehicle.manufacturer)) {
+    //   filterModels(modelsData.filter(m => m.manufacturer === vehicle.manufacturer));
+    // } else {
+    //   filterModels([...modelsData]);
+    // }
   }, [vehicle.manufacturer]);
 
   useEffect(() => {
     if (modelsData.some(m => m.modelName === vehicle.modelName)) {
-      filterCarSegments(modelsData.filter((m) => m.modelName === vehicle.modelName));
+      filterCarSegments(modelsData.filter((m) => m.modelName === vehicle.modelName && m.manufacturer === vehicle.manufacturer));
     } else {
       filterCarSegments(Object.keys(carSegmentsEnum).map(key => ({ carSegmentId: key, carSegment: carSegmentsEnum[key] })));
     }
@@ -145,6 +150,10 @@ const VehicleCardDetailed = ({
         });
     }
   };
+
+  console.log(models, 'models');
+  console.log(vehicle, 'vehicle');
+  console.log(carSegments, 'carSegments');
 
   return (
     <div>
@@ -277,20 +286,19 @@ const VehicleCardDetailed = ({
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
-            <Form.Group className={inputErrors.modelName ? 'error' : ''}>
+          <Form.Group className={inputErrors.modelName ? 'error' : ''}>
               <Form.Control
                 type="text"
                 list="models"
                 name="modelName"
                 value={vehicle.modelName}
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
-
                 disabled={!(registerVehicleMode || registerCustomerMode)}
               />
               <datalist id="models">
-                {models.map(model => <option key={model.modelId}>{model.modelName}</option>)}
+                {models.map(m => <option key={m.modelId}>{m.modelName}</option>)}
               </datalist>
-              <Form.Label>{`Model ${inputErrors.modelName}`}</Form.Label>
+              <Form.Label>{`Model${inputErrors.modelName}`}</Form.Label>
             </Form.Group>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">

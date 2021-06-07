@@ -1,19 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-// import { useHistory } from 'react-router-dom';
-// import DropDown from '../UI/DropDown';
-// import useHttp from '../../hooks/useHttp';
 import { BASE_URL } from '../../common/constants';
 import { getToken } from '../../providers/AuthContext';
 import { Form } from 'react-bootstrap';
-// import DropDown from "../UI/DropDown";
-
-// const rangePageSize = [...Array(11)].map((_, i) => {
-//   return {
-//     label: i + 10,
-//     value: i + 10
-//   };
-// });
+import './Paging.css';
 
 const Paging = ({ resource, updatePagingQuery, pagingQuery }) => {
   const [rangePageNumber, setRangePageNumber] = useState([1]);
@@ -32,12 +22,6 @@ const Paging = ({ resource, updatePagingQuery, pagingQuery }) => {
         setRangePageNumber([...Array(Math.ceil(res[0].totalDBItems / pagingQuery.pageSize))].map((_, i) => i + 1));
       });
   }, []);
-
-  // const activeStyle = {
-  //   backgroundColor: '#2bbbad',
-  //   color: '#fff',
-  //   borderRadius: '0.25rem'
-  // };
 
   const addStyle = (page, number) => {
     let style = {};
@@ -114,8 +98,18 @@ const Paging = ({ resource, updatePagingQuery, pagingQuery }) => {
   };
 
   return (
-    <div>
-      <nav aria-label="Page navigation example">
+    <div className="paging">
+      <Form.Control
+        className="page-size-drop-down"
+        as="select"
+        value={pagingQuery.pageSize}
+        onChange={(e) => updatePagingQuery('pageSize', e.target.value) }
+      >
+        <option value={10}>10</option>
+        <option value={15}>15</option>
+        <option value={20}>20</option>
+      </Form.Control>
+      <nav aria-label="Page navigation example" className="page-buttons">
         <ul className="pagination">
           <li className="page-item">
             <FirstPageBtn />
@@ -126,15 +120,7 @@ const Paging = ({ resource, updatePagingQuery, pagingQuery }) => {
           </li>
         </ul>
       </nav>
-      <Form.Control
-        as="select"
-        value={pagingQuery.pageSize}
-        onChange={(e) => updatePagingQuery('pageSize', e.target.value) }
-      >
-        <option value={10}>10</option>
-        <option value={15}>15</option>
-        <option value={20}>20</option>
-      </Form.Control>
+
     </div>
   );
 };

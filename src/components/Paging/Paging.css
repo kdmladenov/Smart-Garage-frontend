@@ -1,5 +1,13 @@
-.page-link:active {
-  background-color: #2bbbad;
-  color: #fff;
-  border-radius: 0.25rem;
+.form-control.page-size-drop-down {
+  display: inline-block;
+  width: 70px;
+}
+
+.page-buttons {
+  display: inline-block;
+}
+
+.paging {
+  display: flex;
+  justify-content: center;
 }

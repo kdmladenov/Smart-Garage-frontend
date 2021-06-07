@@ -72,14 +72,14 @@ VisitCard.propTypes = {
     modelName: PropTypes.string.isRequired,
     notes: PropTypes.string.isRequired,
     phone: PropTypes.string.isRequired,
-    visitStatus: PropTypes.string.isRequired,
+    visitStatus: PropTypes.string,
     streetAddress: PropTypes.string,
     transmission: PropTypes.string.isRequired,
     userId: PropTypes.number.isRequired,
     vehicleId: PropTypes.number.isRequired,
     vin: PropTypes.string.isRequired,
     visitEnd: PropTypes.string,
-    visitStart: PropTypes.string.isRequired
+    visitStart: PropTypes.string
   }).isRequired,
   allCurrencies: PropTypes.array.isRequired
 };

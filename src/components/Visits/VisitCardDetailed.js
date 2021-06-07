@@ -8,8 +8,10 @@ import Loading from '../UI/Loading';
 import useHttp from '../../hooks/useHttp';
 import TableRow from './TableRow';
 import validateInput from './visitValidator';
+import validatePart from '../Parts/partValidator';
 import visitStatusEnum from '../../common/visit-status.enum';
 import './VisitsCardDetailed.css';
+import validateService from '../Services/serviceValidator';
 
 const VisitCardDetailed = ({
   visitId,
@@ -28,6 +30,12 @@ const VisitCardDetailed = ({
   const [loading, setLoading] = useState('false');
   const [visit, setVisit] = useState(emptyVisit);
   const [visitCopy, setVisitCopy] = useState(emptyVisit);
+  // const [createServiceMode, setCreateServiceMode] = useState(true);
+  // const [createPartsMode, setCreatePartsMode] = useState(false);
+  const [serviceCreated, setServiceCreated] = useState({ name: '', price: 0, carSegment: carSegment });
+  const [partCreated, setPartCreated] = useState({ name: '', price: 0, carSegment: carSegment });
+  const [inputErrorsServices, setInputErrorsServices] = useState({ name: '', price: '', carSegment: '' });
+  const [inputErrorsParts, setInputErrorsParts] = useState({ name: '', price: '', carSegment: '' });
 
   useEffect(() => {
     let isMounted = true;
@@ -107,8 +115,6 @@ const VisitCardDetailed = ({
     fetch(`${CURRENCY_URL}/api/v7/convert?compact=ultra&q=BGN_${curr}&apiKey=${CURRENCY_API_KEY}`)
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        console.log(res[`BGN_${curr}`]);
         setCurrency({ id: curr, rate: res[`BGN_${curr}`] });
       })
       .catch((e) => {
@@ -148,6 +154,86 @@ const VisitCardDetailed = ({
     });
 
     setVisit({ ...visit, usedParts: updatedParts });
+  };
+
+  const handleInputPartsServices = (prop, value, resource) => {
+    if (resource === 'services') {
+      setInputErrorsServices({
+        ...inputErrorsServices,
+        [prop]: validateService[prop](value)
+      });
+      updateService(prop, value);
+    }
+    if (resource === 'parts') {
+      setInputErrorsParts({
+        ...inputErrorsParts,
+        [prop]: validatePart[prop](value)
+      });
+      updatePart(prop, value);
+    }
+  };
+
+  const updateService = (prop, value) => setServiceCreated({ ...serviceCreated, [prop]: value });
+
+  const updatePart = (prop, value) => setPartCreated({ ...partCreated, [prop]: value });
+
+  const isValidService =
+  Object.values(inputErrorsServices).every((v) => !v) && Object.values(serviceCreated).every((v) => v);
+
+  const isValidPart = Object.values(inputErrorsParts).every((v) => !v) && Object.values(partCreated).every((v) => v);
+
+  const handleFormSubmitServices = (e) => {
+    e.preventDefault();
+    setError('');
+    if (isValidService) {
+      fetch(`${BASE_URL}/services`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(serviceCreated)
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.message) {
+            setError(res.message);
+          }
+          setVisit({
+            ...visit,
+            performedServices: [{ ...serviceCreated, serviceId: res.serviceId, carSegment }, ...visit.performedServices]
+          });
+          setServiceCreated({ name: '', price: 0, carSegment: carSegment });
+        // setCreateServiceMode(false);
+        });
+    }
+  };
+
+  const handleFormSubmitParts = (e) => {
+    e.preventDefault();
+    setError('');
+    if (isValidPart) {
+      fetch(`${BASE_URL}/parts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(partCreated)
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.message) {
+            setError(res.message);
+          }
+          setVisit({
+            ...visit,
+            usedParts: [{ ...partCreated, partId: res.partId, carSegment }, ...visit.usedParts]
+          });
+          setPartCreated({ name: '', price: 0, carSegment: carSegment });
+        // setCreateMode(false);
+        });
+    }
   };
 
   const isValid = registerVisitMode
@@ -302,6 +388,11 @@ const VisitCardDetailed = ({
         </div>
         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <div className="performed-services">
+            {/* {(editMode || registerVisitMode) && (
+              <MDBBtn onClick={() => setCreateServiceMode(!createServiceMode)}>
+                <MDBIcon icon={createServiceMode ? 'angle-up' : 'angle-down'} />
+              </MDBBtn>
+            )} */}
             <span>Performed Services</span>
             {(editMode || registerVisitMode) && (
               <span className="select-service">
@@ -325,8 +416,7 @@ const VisitCardDetailed = ({
                     ))}
                   </Form.Control>
                 </Form.Group>
-                <Form.Group
-                >
+                <Form.Group>
                   <Form.Control
                     style={{ width: '50px' }}
                     type="number"
@@ -350,6 +440,64 @@ const VisitCardDetailed = ({
           </div>
         </div>
         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <div className="performed-services-create">
+            {(editMode || registerVisitMode) && (
+              <span className="select-service">
+                <div className="col-xl-8 col-lg-7 col-md-7 col-sm-12 col-12 name">
+                  <Form.Group className={inputErrorsServices.name ? 'error' : ''}>
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      placeholder="Enter Service Name"
+                      value={serviceCreated.name || ''}
+                      onChange={(e) => {
+                        handleInputPartsServices(e.target.name, e.target.value, 'services');
+                      }}
+                    />
+                    <Form.Label className="visible">{`Name${inputErrorsServices.name}`}</Form.Label>
+                  </Form.Group>
+                </div>
+                <div className="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12">
+                  <Form.Group>
+                    <Form.Control
+                      type="number"
+                      name="serviceQty"
+                      value={serviceCreated.serviceQty}
+                      min="1"
+                      onChange={(e) => setServiceCreated({ ...serviceCreated, serviceQty: +e.target.value })}
+                    />
+                    <Form.Label className="visible">`Qty`</Form.Label>
+                  </Form.Group>
+                </div>
+                <div className="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12 price" >
+                  <Form.Group className={inputErrorsServices.price ? 'error' : ''}>
+                    <Form.Control
+                      type="text"
+                      name="price"
+                      placeholder="Enter Service Price"
+                      value={serviceCreated.price}
+                      onChange={(e) => handleInputPartsServices(e.target.name, e.target.value, 'services')}
+                    />
+                    <Form.Label className="visible">{`Price${inputErrorsServices.price} `}</Form.Label>
+                  </Form.Group>
+                </div>
+                <div className="col-xl-1 col-lg-1 col-md-1 col-sm-12 col-12 buttons">
+                  {error && (
+                    <Form.Group className="error">
+                      <p>{`${error}`}</p>
+                    </Form.Group>
+                  )}
+                  <>
+                    <MDBBtn type="submit" onClick={handleFormSubmitServices} disabled={!isValidService}>
+                      <MDBIcon icon="plus-square" />
+                    </MDBBtn>
+                  </>
+                </div>
+              </span>
+            )}
+          </div>
+        </div>
+        <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <MDBTable>
             <MDBTableHead>
               <tr>
@@ -363,17 +511,17 @@ const VisitCardDetailed = ({
             </MDBTableHead>
             <MDBTableBody>
               {visit.performedServices.map((s) => (
-                  <TableRow
-                    key={s.serviceId}
-                    id={s.serviceId}
-                    name={s.name}
-                    quantity={s.serviceQty || 1}
-                    price={s.price}
-                    carSegment={carSegment}
-                    editMode={editMode || registerVisitMode}
-                    updateQty={updatePerformedServiceQty}
-                    currency={currency}
-                  />
+                <TableRow
+                  key={s.serviceId}
+                  id={s.serviceId}
+                  name={s.name}
+                  quantity={s.serviceQty || 1}
+                  price={s.price}
+                  carSegment={carSegment}
+                  editMode={editMode || registerVisitMode}
+                  updateQty={updatePerformedServiceQty}
+                  currency={currency}
+                />
               ))}
             </MDBTableBody>
           </MDBTable>
@@ -427,6 +575,64 @@ const VisitCardDetailed = ({
           </div>
         </div>
         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <div className="performed-services-create">
+            {(editMode || registerVisitMode) && (
+              <span className="select-service">
+                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 name">
+                  <Form.Group className={inputErrorsParts.name ? 'error' : ''}>
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      placeholder="Enter Part Name"
+                      value={partCreated.name || ''}
+                      onChange={(e) => {
+                        handleInputPartsServices(e.target.name, e.target.value, 'parts');
+                      }}
+                    />
+                    <Form.Label className="visible">{`Name${inputErrorsParts.name}`}</Form.Label>
+                  </Form.Group>
+                </div>
+                <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                  <Form.Group>
+                    <Form.Control
+                      type="number"
+                      name="partQty"
+                      value={partCreated.partQty}
+                      min="1"
+                      onChange={(e) => setPartCreated({ ...partCreated, partQty: +e.target.value })}
+                    />
+                    <Form.Label className="visible">`Qty`</Form.Label>
+                  </Form.Group>
+                </div>
+                <div className="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-12">
+                  <Form.Group className={inputErrorsParts.price ? 'error' : ''}>
+                    <Form.Control
+                      type="text"
+                      name="price"
+                      placeholder="Enter Part Price"
+                      value={partCreated.price}
+                      onChange={(e) => handleInputPartsServices(e.target.name, e.target.value, 'parts')}
+                    />
+                    <Form.Label className="visible">{`Price${inputErrorsParts.price} `}</Form.Label>
+                  </Form.Group>
+                </div>
+                <div className="col-xl-2 col-lg-2 col-md-2 col-sm-12 col-12 buttons">
+                  {error && (
+                    <Form.Group className="error">
+                      <p>{`${error}`}</p>
+                    </Form.Group>
+                  )}
+                  <>
+                    <MDBBtn type="submit" onClick={handleFormSubmitParts} disabled={!isValidPart}>
+                      <MDBIcon icon="plus-square" />
+                    </MDBBtn>
+                  </>
+                </div>
+              </span>
+            )}
+          </div>
+        </div>
+        <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <MDBTable>
             <MDBTableHead>
               <tr>
@@ -440,17 +646,17 @@ const VisitCardDetailed = ({
             </MDBTableHead>
             <MDBTableBody>
               {visit.usedParts.map((p) => (
-                  <TableRow
-                    key={p.partId}
-                    id={+p.partId}
-                    name={p.name}
-                    quantity={+p.partQty}
-                    price={+p.price}
-                    carSegment={carSegment}
-                    editMode={editMode || registerVisitMode}
-                    updateQty={updateUsedPartsQty}
-                    currency={currency}
-                  />
+                <TableRow
+                  key={p.partId}
+                  id={+p.partId}
+                  name={p.name}
+                  quantity={+p.partQty}
+                  price={+p.price}
+                  carSegment={carSegment}
+                  editMode={editMode || registerVisitMode}
+                  updateQty={updateUsedPartsQty}
+                  currency={currency}
+                />
               ))}
             </MDBTableBody>
           </MDBTable>

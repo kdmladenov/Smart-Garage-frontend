@@ -161,6 +161,7 @@ const VehicleCardDetailed = ({
                   onClick={() => {
                     setEditMode(false);
                     setRegisterCustomerMode(false);
+                    setRegisterVehicleMode(false);
                     setVehicle(vehicleCopy);
                     setInputErrors({
                       vin: '',

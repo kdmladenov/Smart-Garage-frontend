@@ -30,7 +30,6 @@ const App = () => {
   const [detailedVisitReport, setDetailedVisitReport] = useState('');
   const [modalIsOpen, toggleModalIsOpen] = useState({ modal14: false });
   const toggleModal = (modalNumber) => {
-    console.log(modalNumber);
     toggleModalIsOpen({ [modalNumber]: !modalIsOpen[modalNumber] });
   };
 
@@ -61,7 +60,6 @@ const App = () => {
       });
   };
 
-  // console.log(authValue);
   return (
     <BrowserRouter>
       <AuthContext.Provider value={{ ...authValue, setAuthValue }}>

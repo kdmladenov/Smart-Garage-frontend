@@ -55,6 +55,16 @@
   padding: 0 10px;
 }
 
+.performed-services-create {
+  display: flex;
+  justify-content: space-between;
+  background-color: #e2e0dd;
+  height: 60px;
+  align-items: center;
+  padding: 0 5px;
+  padding-top: 10px;
+}
+
 .select-service {
   display: flex;
   flex-direction: row;

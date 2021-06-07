@@ -81,7 +81,7 @@ const CreatePartCard = ({ setCreatePartMode }) => {
                   value={parts.carSegment}
                   onChange={(e) => handleInput(e.target.name, e.target.value)}
                 >
-                  <option value="none">Select Car Segment</option>
+                  <option value=''>Select Car Segment</option>
                   {Object.keys(carSegment).map((k) => (
                     <option value={carSegment[k]} key={k}>
                       {carSegment[k]}

@@ -86,7 +86,7 @@ const VehicleCardDetailed = ({
 
   useEffect(() => {
     if (modelsData.some(m => m.modelName === vehicle.modelName)) {
-      filterCarSegments(modelsData.filter((m) => m.modelName === vehicle.modelName));
+      filterCarSegments(modelsData.filter((m) => m.modelName === vehicle.modelName && m.manufacturer === vehicle.manufacturer));
     } else {
       filterCarSegments(Object.keys(carSegmentsEnum).map(key => ({ carSegmentId: key, carSegment: carSegmentsEnum[key] })));
     }
@@ -151,7 +151,9 @@ const VehicleCardDetailed = ({
     }
   };
 
-  console.log(models);
+  console.log(models, 'models');
+  console.log(vehicle, 'vehicle');
+  console.log(carSegments, 'carSegments');
 
   return (
     <div>

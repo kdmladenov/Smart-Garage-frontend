@@ -76,7 +76,7 @@ const PartsSideNav = ({ setCreatePartMode, createPartMode, setPartsQuery }) => {
             setMaxValue(partPrice.MAX);
             setCarSegment('');
             setPartName('');
-            setPartsQuery('');
+            setPartsQuery('?');
           }}
         >
           clear search

@@ -1,16 +1,20 @@
 import useHttp from '../../hooks/useHttp';
-import { BASE_URL } from '../../common/constants';
-// import { useState } from 'react';
+import { BASE_URL, defaultPageQuery } from '../../common/constants';
 import Loading from '../../components/UI/Loading';
-// import { useState } from 'react';
 import VehicleCard from '../../components/Vehicles.js/VehicleCard';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import Paging from '../../components/Paging/Paging';
 
 const Vehicles = ({ allCurrencies, vehiclesQuery }) => {
+  const [pagingQuery, setPagingQuery] = useState(defaultPageQuery);
+  const updatePagingQuery = (prop, value) => setPagingQuery({ ...pagingQuery, [prop]: value });
+
   const [registerVisitMode, setRegisterVisitMode] = useState(false);
   const [created, setCreated] = useState(false);
-  const { data, loading } = useHttp(`${BASE_URL}/vehicles${vehiclesQuery}`, 'GET', [], [vehiclesQuery, created]);
+
+  const { data, loading } = useHttp(`${BASE_URL}/vehicles${vehiclesQuery}&page=${pagingQuery.page}&pageSize=${pagingQuery.pageSize}`,
+    'GET', [], [vehiclesQuery, created]);
 
   if (loading) {
     return <Loading />;
@@ -52,9 +56,13 @@ const Vehicles = ({ allCurrencies, vehiclesQuery }) => {
           : (
           <h2> No vehicles are found... </h2>
             )}
-        {/* <div id="paging-vehicles">
-          <Paging resource="/vehicles" />
-        </div> */}
+        <div id="paging-customers">
+          <Paging
+            updatePagingQuery={updatePagingQuery}
+            resource={'services'}
+            pagingQuery={pagingQuery}
+          />
+        </div>
       </div>
     </main>
   );

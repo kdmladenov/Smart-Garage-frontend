@@ -76,7 +76,7 @@ const ServicesSideNav = ({ setCreateServiceMode, createServiceMode, setServicesQ
             setMaxValue(servicePrice.MAX);
             setCarSegment('');
             setServiceName('');
-            setServicesQuery('');
+            setServicesQuery('?');
           }}
         >
           clear search

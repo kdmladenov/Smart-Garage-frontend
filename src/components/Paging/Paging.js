@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { BASE_URL } from '../../common/constants';
 import { getToken } from '../../providers/AuthContext';
 import { Form } from 'react-bootstrap';
+import './Paging.css';
 
 const Paging = ({ resource, updatePagingQuery, pagingQuery }) => {
   const [rangePageNumber, setRangePageNumber] = useState([1]);
@@ -91,8 +92,18 @@ const Paging = ({ resource, updatePagingQuery, pagingQuery }) => {
   };
 
   return (
-    <div>
-      <nav aria-label="Page navigation example">
+    <div className="paging">
+      <Form.Control
+        className="page-size-drop-down"
+        as="select"
+        value={pagingQuery.pageSize}
+        onChange={(e) => updatePagingQuery('pageSize', e.target.value) }
+      >
+        <option value={10}>10</option>
+        <option value={15}>15</option>
+        <option value={20}>20</option>
+      </Form.Control>
+      <nav aria-label="Page navigation example" className="page-buttons">
         <ul className="pagination">
           <li className="page-item">
             <FirstPageBtn />
@@ -103,15 +114,7 @@ const Paging = ({ resource, updatePagingQuery, pagingQuery }) => {
           </li>
         </ul>
       </nav>
-      <Form.Control
-        as="select"
-        value={pagingQuery.pageSize}
-        onChange={(e) => updatePagingQuery('pageSize', e.target.value) }
-      >
-        <option value={10}>10</option>
-        <option value={15}>15</option>
-        <option value={20}>20</option>
-      </Form.Control>
+
     </div>
   );
 };

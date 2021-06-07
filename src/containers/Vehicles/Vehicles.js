@@ -14,7 +14,7 @@ const Vehicles = ({ allCurrencies, vehiclesQuery }) => {
   const [created, setCreated] = useState(false);
 
   const { data, loading } = useHttp(`${BASE_URL}/vehicles${vehiclesQuery}&page=${pagingQuery.page}&pageSize=${pagingQuery.pageSize}`,
-    'GET', [], [vehiclesQuery, created]);
+    'GET', [], [vehiclesQuery, created, pagingQuery]);
 
   if (loading) {
     return <Loading />;
@@ -59,7 +59,7 @@ const Vehicles = ({ allCurrencies, vehiclesQuery }) => {
         <div id="paging-customers">
           <Paging
             updatePagingQuery={updatePagingQuery}
-            resource={'services'}
+            resource={'vehicles'}
             pagingQuery={pagingQuery}
           />
         </div>

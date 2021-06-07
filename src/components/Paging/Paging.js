@@ -1,19 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-// import { useHistory } from 'react-router-dom';
-// import DropDown from '../UI/DropDown';
-// import useHttp from '../../hooks/useHttp';
 import { BASE_URL } from '../../common/constants';
 import { getToken } from '../../providers/AuthContext';
 import { Form } from 'react-bootstrap';
-// import DropDown from "../UI/DropDown";
-
-// const rangePageSize = [...Array(11)].map((_, i) => {
-//   return {
-//     label: i + 10,
-//     value: i + 10
-//   };
-// });
 
 const Paging = ({ resource, updatePagingQuery, pagingQuery }) => {
   const [rangePageNumber, setRangePageNumber] = useState([1]);
@@ -26,18 +15,8 @@ const Paging = ({ resource, updatePagingQuery, pagingQuery }) => {
       }
     })
       .then(res => res.json())
-      .then(res => {
-        console.log(res);
-        console.log(pagingQuery);
-        setRangePageNumber([...Array(Math.ceil(res[0].totalDBItems / pagingQuery.pageSize))].map((_, i) => i + 1));
-      });
+      .then(res => setRangePageNumber([...Array(Math.ceil(res[0].totalDBItems / pagingQuery.pageSize))].map((_, i) => i + 1)));
   }, []);
-
-  // const activeStyle = {
-  //   backgroundColor: '#2bbbad',
-  //   color: '#fff',
-  //   borderRadius: '0.25rem'
-  // };
 
   const addStyle = (page, number) => {
     let style = {};
@@ -59,8 +38,6 @@ const Paging = ({ resource, updatePagingQuery, pagingQuery }) => {
     }
     return style;
   };
-
-  console.log(rangePageNumber);
   const PageButtonsList = rangePageNumber.map((number) => {
     return (
       <li key={number} className="page-item">

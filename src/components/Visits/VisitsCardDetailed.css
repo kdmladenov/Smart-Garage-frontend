@@ -122,10 +122,24 @@ table .form-control {
 .price {
   width: 100px
 }
+
+.subtotal.price {
+  width: 100px;
+  text-align: right;
+}
+
 .amount {
   width: 100px
 }
 
 .part.name.form-control .service.name.form-control {
   width: 28vw;
+}
+
+tr {
+  line-height: 12px;
+}
+
+th td {
+  padding: 0.5rem;
 }

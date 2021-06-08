@@ -505,7 +505,7 @@ const VisitCardDetailed = ({
           <MDBTable>
             <MDBTableHead>
               <tr>
-                <th>service ID</th>
+                <th>ID</th>
                 <th>Car Segment</th>
                 <th>Name</th>
                 <th style={{ textAlign: 'center' }}>Qty</th>
@@ -531,8 +531,7 @@ const VisitCardDetailed = ({
                 <td className="id"></td>
                 <td className="car-segment"></td>
                 <td className="name"></td>
-                <td className="qty"></td>
-                <td className="price">Total Services</td>
+                <td colSpan="2" className="subtotal price">Total Services</td>
                 <td className="amount">{totals.totalServices}</td>
               </tr>
             </MDBTableBody>
@@ -642,7 +641,7 @@ const VisitCardDetailed = ({
           <MDBTable>
             <MDBTableHead>
               <tr>
-                <th className="id">setParts ID</th>
+                <th className="id">ID</th>
                 <th className="car-segment">Car Segment</th>
                 <th className="name">Name</th>
                 <th className="qty" style={{ textAlign: 'center' }}>Qty</th>
@@ -668,8 +667,7 @@ const VisitCardDetailed = ({
                 <td className="id"></td>
                 <td className="car-segment"></td>
                 <td className="name"></td>
-                <td className="qty"></td>
-                <td className="price">Total Parts</td>
+                <td colSpan="2" className="subtotal price">Total Parts</td>
                 <td className="amount">{totals.totalParts}</td>
               </tr>
               <tr>

@@ -142,14 +142,14 @@ const Header = ({
                     </div>
                   </NavLink>
                 </MDBNavItem>
-                <MDBNavItem>
+                {/* <MDBNavItem>
                   <NavLink to="/invoices" className="nav-link" role="button" onClick={() => setContent('invoices')}>
                     <MDBIcon icon="file-invoice-dollar" className="d-inline-inline" style={navColor} />
                     <div className="d-none d-md-inline" style={navColor}>
                       Invoices
                     </div>
                   </NavLink>
-                </MDBNavItem>
+                </MDBNavItem> */}
               </>
             )}
             <MDBNavItem>

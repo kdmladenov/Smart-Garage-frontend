@@ -66,10 +66,11 @@ const App = () => {
     const input = document.getElementById('divToPrint');
     html2canvas(input)
       .then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
+        const imgData = canvas.toDataURL('image/png', 1.0);
         // eslint-disable-next-line new-cap
-        const pdf = new jsPDF();
-        pdf.addImage(imgData, 'JPEG', 0, 0);
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+        // pdf.addImage(imgData, 'JPEG', 0, 0);
         pdf.save('download.pdf');
       })
     ;

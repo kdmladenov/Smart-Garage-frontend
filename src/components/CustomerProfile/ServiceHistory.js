@@ -10,7 +10,12 @@ const ServiceHistory = ({ visits, toggleModal, num, setDetailedVisitReport, allC
 
   const showDetailedVisitReport = (visit) => {
     setDetailedVisitReport(
-      <div style={{ width: '800px' }}>
+      <div style={{
+        width: '210mm',
+        minHeight: '297mm',
+        marginLeft: 'auto',
+        marginRight: 'auto'
+      }}>
         <div className="report-header">
           <div className="customer-vehicle-info">
             <div>First Name: {visit.firstName}</div>
@@ -29,6 +34,7 @@ const ServiceHistory = ({ visits, toggleModal, num, setDetailedVisitReport, allC
             <div>Make: {visit.manufacturer}</div>
             <div>Production Year: {visit.city}</div>
             <div>Car-segment: {visit.carSegment}</div>
+            <div style={{ position: 'absolute', top: '13rem' }}>Start Date: {new Date(visit.visitStart).toLocaleDateString('ca-ES')}</div>
           </div>
         </div>
         <VisitCardDetailed visitId={visit.visitId} carSegment={visit.carSegment} allCurrencies={allCurrencies} />

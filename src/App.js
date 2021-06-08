@@ -13,6 +13,8 @@ import GuardedRoute from './providers/GuardedRoute';
 import Services from './containers/Services/Services';
 import Parts from './containers/Parts/Parts';
 import CustomerProfile from './containers/CustomerProfile/CustomerProfile';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const App = () => {
   const [customersQuery, setCustomersQuery] = useState('?');
@@ -58,6 +60,19 @@ const App = () => {
         toggleModal(modals.VERTICALLY_CENTERED.name);
         localStorage.removeItem('token');
       });
+  };
+
+  const generatePDF = () => {
+    const input = document.getElementById('divToPrint');
+    html2canvas(input)
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        // eslint-disable-next-line new-cap
+        const pdf = new jsPDF();
+        pdf.addImage(imgData, 'JPEG', 0, 0);
+        pdf.save('download.pdf');
+      })
+    ;
   };
 
   return (
@@ -145,7 +160,7 @@ const App = () => {
           modalHeader="Detailed Visit Report"
           modalBody={detailedVisitReport}
           buttonText="PDF"
-          // buttonOnClick={}
+          buttonOnClick={generatePDF}
           num={modals.SCROLLING_LONG_CONTENT.num}
           toggle={toggleModal}
           isOpen={modalIsOpen}

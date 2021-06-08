@@ -238,10 +238,10 @@ const VisitCardDetailed = ({
 
   useEffect(() => {
     setTotals({
-      totalServices: sumTotalServices(visit.performedServices),
-      totalParts: sumTotalParts(visit.usedParts),
-      tax: Math.round((sumTotalServices(visit.performedServices) + sumTotalParts(visit.usedParts)) * 0.2 * 100) / 100,
-      total: Math.round((sumTotalServices(visit.performedServices) + sumTotalParts(visit.usedParts)) * 1.2 * 100) / 100
+      totalServices: sumTotalServices(visit.performedServices).toFixed(2),
+      totalParts: sumTotalParts(visit.usedParts).toFixed(2),
+      tax: (Math.round((sumTotalServices(visit.performedServices) + sumTotalParts(visit.usedParts)) * 0.2 * 100) / 100).toFixed(2),
+      total: (Math.round((sumTotalServices(visit.performedServices) + sumTotalParts(visit.usedParts)) * 1.2 * 100) / 100).toFixed(2)
     });
   }, [currency, visit.performedServices, visit.usedParts]);
 
@@ -453,9 +453,9 @@ const VisitCardDetailed = ({
             )}
           </div>
         </div>
-        <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-          <div className="performed-services-create">
-            {(editMode || registerVisitMode) && (
+        {(editMode || registerVisitMode) && (
+          <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div className="performed-services-create">
               <span className="select-service">
                 {error && (
                   <Form.Group className="error">
@@ -501,9 +501,9 @@ const VisitCardDetailed = ({
                     <MDBIcon icon="plus-square" />
                   </MDBBtn>
               </span>
-            )}
+            </div>
           </div>
-        </div>
+        )}
         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <MDBTable>
             <MDBTableHead>
@@ -590,9 +590,9 @@ const VisitCardDetailed = ({
             )}
           </div>
         </div>
-        <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-          <div className="performed-services-create">
-            {(editMode || registerVisitMode) && (
+        {(editMode || registerVisitMode) && (
+          <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div className="performed-services-create">
               <span className="select-service">
                   {error && (
                     <Form.Group className="error">
@@ -638,9 +638,9 @@ const VisitCardDetailed = ({
                     <MDBIcon icon="plus-square" />
                   </MDBBtn>
               </span>
-            )}
+            </div>
           </div>
-        </div>
+        )}
         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <MDBTable>
             <MDBTableHead>

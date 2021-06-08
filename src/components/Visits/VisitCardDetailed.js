@@ -24,16 +24,15 @@ const VisitCardDetailed = ({
   newVisit,
   newVehicle,
   setRegisterVehicleMode,
+  setRegisterCustomerMode,
   setCreated
 }) => {
   const [error, setError] = useState('');
   const [visit, setVisit] = useState(emptyVisit);
   const [loading, setLoading] = useState('false');
   const [visitCopy, setVisitCopy] = useState(emptyVisit);
-  // const [createServiceMode, setCreateServiceMode] = useState(true);
-  // const [createPartsMode, setCreatePartsMode] = useState(false);
-  const [serviceCreated, setServiceCreated] = useState({ name: '', price: 0, carSegment: carSegment });
-  const [partCreated, setPartCreated] = useState({ name: '', price: 0, carSegment: carSegment });
+  const [serviceCreated, setServiceCreated] = useState({ name: '', price: 0, carSegment: carSegment, serviceQty: 1 });
+  const [partCreated, setPartCreated] = useState({ name: '', price: 0, carSegment: carSegment, partQty: 1 });
   const [inputErrorsServices, setInputErrorsServices] = useState({ name: '', price: '', carSegment: '' });
   const [inputErrorsParts, setInputErrorsParts] = useState({ name: '', price: '', carSegment: '' });
   const [totals, setTotals] = useState({
@@ -176,9 +175,11 @@ const VisitCardDetailed = ({
   const updatePart = (prop, value) => setPartCreated({ ...partCreated, [prop]: value });
 
   const isValidService =
-  Object.values(inputErrorsServices).every((v) => !v) && Object.values(serviceCreated).every((v) => v);
+  Object.values(inputErrorsServices).every((v) => !v) && Object.values({ ...serviceCreated, carSegment }).every((v) => v);
 
-  const isValidPart = Object.values(inputErrorsParts).every((v) => !v) && Object.values(partCreated).every((v) => v);
+  const isValidPart =
+    Object.values(inputErrorsParts).every((v) => !v) &&
+    Object.values({ ...partCreated, carSegment }).every((v) => v);
 
   const handleFormSubmitServices = (e) => {
     e.preventDefault();
@@ -190,7 +191,7 @@ const VisitCardDetailed = ({
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`
         },
-        body: JSON.stringify(serviceCreated)
+        body: JSON.stringify({ ...serviceCreated, carSegment })
       })
         .then((res) => res.json())
         .then((res) => {
@@ -202,7 +203,7 @@ const VisitCardDetailed = ({
             performedServices: [{ ...serviceCreated, serviceId: res.serviceId, carSegment }, ...visit.performedServices]
           });
           setServiceCreated({ name: '', price: 0, carSegment: carSegment });
-        // setCreateServiceMode(false);
+          // setCreateServiceMode(false);
         });
     }
   };
@@ -217,7 +218,7 @@ const VisitCardDetailed = ({
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`
         },
-        body: JSON.stringify(partCreated)
+        body: JSON.stringify({ ...partCreated, carSegment })
       })
         .then((res) => res.json())
         .then((res) => {
@@ -229,7 +230,7 @@ const VisitCardDetailed = ({
             usedParts: [{ ...partCreated, partId: res.partId, carSegment }, ...visit.usedParts]
           });
           setPartCreated({ name: '', price: 0, carSegment: carSegment });
-        // setCreateMode(false);
+          // setCreateMode(false);
         });
     }
   };
@@ -273,6 +274,7 @@ const VisitCardDetailed = ({
           } else {
             setRegisterVisitMode(false);
             setRegisterVehicleMode(false);
+            setRegisterCustomerMode(false);
             setCreated(true);
           }
         });
@@ -401,11 +403,6 @@ const VisitCardDetailed = ({
         </div>
         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <div className="performed-services">
-            {/* {(editMode || registerVisitMode) && (
-              <MDBBtn onClick={() => setCreateServiceMode(!createServiceMode)}>
-                <MDBIcon icon={createServiceMode ? 'angle-up' : 'angle-down'} />
-              </MDBBtn>
-            )} */}
             <span>Performed Services</span>
             {(editMode || registerVisitMode) && (
               <span className="select-service">
@@ -495,7 +492,7 @@ const VisitCardDetailed = ({
                       min="1"
                       onChange={(e) => setServiceCreated({ ...serviceCreated, serviceQty: +e.target.value })}
                     />
-                    <Form.Label className="visible">`Qty`</Form.Label>
+                    <Form.Label className="visible">Qty</Form.Label>
                   </Form.Group>
                   <MDBBtn type="submit" onClick={handleFormSubmitServices} disabled={!isValidService}>
                     <MDBIcon icon="plus-square" />
@@ -632,7 +629,7 @@ const VisitCardDetailed = ({
                       min="1"
                       onChange={(e) => setPartCreated({ ...partCreated, partQty: +e.target.value })}
                     />
-                    <Form.Label className="visible">`Qty`</Form.Label>
+                    <Form.Label className="visible">Qty</Form.Label>
                   </Form.Group>
                   <MDBBtn type="submit" onClick={handleFormSubmitParts} disabled={!isValidPart}>
                     <MDBIcon icon="plus-square" />
@@ -735,7 +732,9 @@ VisitCardDetailed.defaultProps = {
   allCurrencies: [],
   setRegisterVisitMode: () => {},
   registerVisitMode: false,
-  setCreated: () => {}
+  setCreated: () => {},
+  setRegisterVehicleMode: () => {},
+  setRegisterCustomerMode: () => {}
 };
 
 VisitCardDetailed.propTypes = {
@@ -766,8 +765,7 @@ VisitCardDetailed.propTypes = {
     vin: PropTypes.string,
     visitEnd: PropTypes.string,
     visitStart: PropTypes.string,
-    addressId: PropTypes.number,
-    setRegisterVehicleMode: () => {}
+    addressId: PropTypes.number
   }),
   visitId: PropTypes.number,
   editMode: PropTypes.bool,
@@ -788,7 +786,8 @@ VisitCardDetailed.propTypes = {
     licensePlate: PropTypes.string,
     vin: PropTypes.string
   }),
-  setCreated: PropTypes.func
+  setCreated: PropTypes.func,
+  setRegisterCustomerMode: PropTypes.func
 };
 
 export default VisitCardDetailed;

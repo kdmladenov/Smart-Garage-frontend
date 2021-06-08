@@ -20,6 +20,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
   const [registerVisitMode, setRegisterVisitMode] = useState(false);
   const [newCustomerId, setNewCustomerId] = useState(customer.userId);
   const [newVehicle, setNewVehicle] = useState({});
+  const [customerFullName, setCustomerFullName] = useState(customer.fullName);
 
   const { data, setData } = useHttp(`${BASE_URL}/vehicles?userId=${customer.userId}`, 'GET', []);
 
@@ -69,7 +70,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
         <Accordion>
           <Card key={customer.userId}>
             <Card.Header className="card-header">
-              <div className="card-header-text customer-name">Customer</div>
+              <div className="card-header-text customer-name">{customerFullName || 'Customer'}</div>
               <div className="card-header-buttons"></div>
             </Card.Header>
             <Card.Body>
@@ -80,16 +81,23 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
                 registerCustomerMode={registerCustomerMode}
                 setRegisterCustomerMode={setRegisterCustomerMode}
                 setNewCustomerId={setNewCustomerId}
+                setCustomerFullName={setCustomerFullName}
               />
             </Card.Body>
             <Card.Header className="card-header">
-              <div className="card-header-text customer-name">Vehicle</div>
+              <div className="card-header-text">
+                <div className="card-header-text">{newVehicle.manufacturer || 'Create New Vehicle'}</div>
+                <span></span>
+                <div className="card-header-text">{newVehicle.modelName || ''}</div>
+                <div className="card-header-text">{newVehicle.licensePlate || ''}</div>
+              </div>
               <div className="card-header-buttons">
                 <CustomToggle
                   variant="primary"
                   eventKey="2"
                   createMode={registerVehicleMode}
                   setCreateMode={setRegisterVehicleMode}
+                  disabled={!newCustomerId}
                 >
                   Create Vehicle
                 </CustomToggle>
@@ -111,13 +119,14 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
               </Card.Body>
             </Accordion.Collapse>
             <Card.Header className="card-header">
-              <div className="card-header-text customer-name">Visit</div>
+              <div className="card-header-text customer-name">Create New Visit</div>
               <div className="card-header-buttons">
                 <CustomToggle
                   variant="primary"
                   eventKey="3"
                   createMode={registerVisitMode}
                   setCreateMode={setRegisterVisitMode}
+                  disabled={!newVehicle.userId}
                 >
                   Create Visit
                 </CustomToggle>
@@ -135,6 +144,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
                   registerVisitMode={registerVisitMode}
                   setRegisterVisitMode={setRegisterVisitMode}
                   setRegisterVehicleMode={setRegisterVehicleMode}
+                  setRegisterCustomerMode={setRegisterCustomerMode}
                   setCreated={setCreated}
                 />
               </Card.Body>
@@ -152,7 +162,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
         <Accordion>
           <Card key={customer.userId}>
             <Card.Header className="card-header">
-              <div className="card-header-text customer-name">{customer.fullName}</div>
+              <div className="card-header-text customer-name">{customerFullName}</div>
               <div className="card-header-buttons">
                 <CustomToggle
                   variant="primary"
@@ -180,6 +190,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
                   setEditMode={setEditMode}
                   registerCustomerMode={registerCustomerMode}
                   setRegisterCustomerMode={setRegisterCustomerMode}
+                  setCustomerFullName={setCustomerFullName}
                 />
               </Card.Body>
             </Accordion.Collapse>

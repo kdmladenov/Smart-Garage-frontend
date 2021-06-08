@@ -105,7 +105,7 @@ span.vertical-timeline-element-icon {
     padding-bottom: 0.3rem;
     border-bottom: 1px solid #fff;
     min-width: 5rem;
-    text-shadow: 1px 1px 0px black;
+    /* text-shadow: 1px 1px 0px black; */
     box-shadow: 0 0.5px black
   }
 
@@ -114,7 +114,7 @@ span.vertical-timeline-element-icon {
     top: 1.5rem;
     left: -9rem;
     border-top: initial;
-    text-shadow: 1px 1px 0px black;
+    /* text-shadow: 1px 1px 0px black; */
   }
 
   .vertical-timeline-element--points .vertical-timeline-element-content {
@@ -144,6 +144,19 @@ span.vertical-timeline-element-icon {
 
 .modal-body i.fa.fa-edit {
   display: none;
+}
+
+
+@media only screen and (min-width: 600px) {
+  span.date-top {
+    color: #004c35;
+    font-weight: 400;
+  }
+
+  span.date-bottom {
+    color: #004c35;
+    font-weight: 400;
+  }
 }
 
 @media only screen and (min-width: 1170px) {

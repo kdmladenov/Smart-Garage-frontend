@@ -27,7 +27,7 @@ const ServicesSideNav = ({ setCreateServiceMode, createServiceMode, setServicesQ
           type="text"
           name="serviceName"
           value={serviceName}
-          placeholder="Enter Part Name"
+          placeholder="Enter Service Name"
           onChange={(e) => setServiceName(e.target.value)}
         />
       </Form.Group>

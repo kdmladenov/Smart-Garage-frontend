@@ -3,16 +3,14 @@ import engineType from '../../common/engine-type.enum';
 import transmission from '../../common/transmission.enum';
 
 const validate = {
-  vin: value => vehicleInput.VIN_REGEX.test(value),
-  licensePlate: value => vehicleInput.LICENSE_PLATE_REGEX.test(value),
-  engineType: value => Object.values(engineType).includes(value),
-  transmission: value => {
-    return Object.values(transmission).includes(value);
-  },
-  manufacturedYear: value => value > vehicleInput.MIN_MANUFACTURED_YEAR && value <= new Date().getFullYear(),
-  modelName: value => typeof value === 'string',
-  manufacturer: value => typeof value === 'string',
-  carSegment: value => typeof value === 'string'
+  vin: (value) => vehicleInput.VIN_REGEX.test(value),
+  licensePlate: (value) => vehicleInput.LICENSE_PLATE_REGEX.test(value) && value.length <= vehicleInput.MAX_LICENSE_PLATE_LENGTH,
+  engineType: (value) => Object.values(engineType).includes(value),
+  transmission: (value) => Object.values(transmission).includes(value),
+  manufacturedYear: (value) => value > vehicleInput.MIN_MANUFACTURED_YEAR && value <= new Date().getFullYear(),
+  modelName: (value) => typeof value === 'string',
+  manufacturer: (value) => typeof value === 'string',
+  carSegment: (value) => typeof value === 'string'
 };
 
 const validateInput = {

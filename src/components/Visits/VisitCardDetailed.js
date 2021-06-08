@@ -31,8 +31,8 @@ const VisitCardDetailed = ({
   const [visit, setVisit] = useState(emptyVisit);
   const [loading, setLoading] = useState('false');
   const [visitCopy, setVisitCopy] = useState(emptyVisit);
-  const [serviceCreated, setServiceCreated] = useState({ name: '', price: 0, carSegment: carSegment, serviceQty: 1 });
-  const [partCreated, setPartCreated] = useState({ name: '', price: 0, carSegment: carSegment, partQty: 1 });
+  const [serviceCreated, setServiceCreated] = useState({ name: '', price: 0, carSegment: carSegment, serviceQty: 0 });
+  const [partCreated, setPartCreated] = useState({ name: '', price: 0, carSegment: carSegment, partQty: 0 });
   const [inputErrorsServices, setInputErrorsServices] = useState({ name: '', price: '', carSegment: '' });
   const [inputErrorsParts, setInputErrorsParts] = useState({ name: '', price: '', carSegment: '' });
   const [totals, setTotals] = useState({
@@ -466,7 +466,7 @@ const VisitCardDetailed = ({
                     name="price"
                     placeholder="Enter Service Price"
                     value={serviceCreated.price}
-                    onChange={(e) => handleInputPartsServices(e.target.name, e.target.value, 'services')}
+                    onChange={(e) => handleInputPartsServices(e.target.name, +e.target.value, 'services')}
                   />
                   <Form.Label className="visible">{`Price${inputErrorsServices.price} `}</Form.Label>
                 </Form.Group>
@@ -602,7 +602,7 @@ const VisitCardDetailed = ({
                       name="price"
                       placeholder="Enter Part Price"
                       value={partCreated.price}
-                      onChange={(e) => handleInputPartsServices(e.target.name, e.target.value, 'parts')}
+                      onChange={(e) => handleInputPartsServices(e.target.name, +e.target.value, 'parts')}
                     />
                     <Form.Label className="visible">{`Price${inputErrorsParts.price} `}</Form.Label>
                   </Form.Group>

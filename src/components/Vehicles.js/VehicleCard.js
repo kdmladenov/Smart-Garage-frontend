@@ -63,6 +63,8 @@ const VehicleCard = ({
                 <div className="card-header-text-item">{vehicle.manufacturer}</div>
                 <div className="card-header-text-item">{vehicle.modelName}</div>
                 <div className="card-header-text-item">{vehicle.licensePlate}</div>
+                <div style={{ padding: '0 10px' }}>|</div>
+                <div className="card-header-text-item" >{vehicle.fullName}</div>
               </div>
               <div className="card-header-buttons">
                 <CustomToggle

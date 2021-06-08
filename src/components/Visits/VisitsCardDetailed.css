@@ -140,6 +140,6 @@ tr {
   line-height: 12px;
 }
 
-th td {
+table.table th, table.table td {
   padding: 0.5rem;
 }

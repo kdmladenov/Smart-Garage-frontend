@@ -151,10 +151,6 @@ const VehicleCardDetailed = ({
     }
   };
 
-  console.log(models, 'models');
-  console.log(vehicle, 'vehicle');
-  console.log(carSegments, 'carSegments');
-
   return (
     <div>
       <Form className="vehicle-detailed">

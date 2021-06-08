@@ -14,7 +14,8 @@ const CustomerCardDetailed = ({
   setEditMode,
   registerCustomerMode,
   setRegisterCustomerMode,
-  setNewCustomerId
+  setNewCustomerId,
+  setCustomerFullName
 }) => {
   const [error, setError] = useState('');
   const [user, setUser] = useState({ ...customer, reenteredEmail: customer.email });
@@ -65,6 +66,7 @@ const CustomerCardDetailed = ({
             setError(res.message);
           } else {
             setNewCustomerId(res.id);
+            setCustomerFullName(`${res.firstName} ${res.lastName}`);
             setUserCopy({ ...userCopy, ...user });
           }
         });
@@ -86,6 +88,7 @@ const CustomerCardDetailed = ({
             setError(res.message);
           } else {
             setEditMode(false);
+            setCustomerFullName(`${res.firstName} ${res.lastName}`);
             setUserCopy({ ...userCopy, ...user });
           }
         });
@@ -244,7 +247,7 @@ const CustomerCardDetailed = ({
                 onChange={(e) => handleInput(e.target.name, e.target.value)}
                 disabled={!editMode && !registerCustomerMode}
               >
-                <option value='' >Select User Role</option>
+                <option value=''>Select User Role</option>
                 {Object.keys(roleType).map((k) => (
                   <option value={roleType[k]} key={k}>
                     {roleType[k]}
@@ -339,7 +342,8 @@ CustomerCardDetailed.defaultProps = {
   editMode: false,
   setEditMode: () => {},
   registerCustomerMode: false,
-  setRegisterCustomerMode: () => {}
+  setRegisterCustomerMode: () => {},
+  setCustomerFullName: () => {}
 };
 
 CustomerCardDetailed.propTypes = {
@@ -371,7 +375,8 @@ CustomerCardDetailed.propTypes = {
   setEditMode: PropTypes.func,
   registerCustomerMode: PropTypes.bool,
   setRegisterCustomerMode: PropTypes.func,
-  setNewCustomerId: PropTypes.func
+  setNewCustomerId: PropTypes.func,
+  setCustomerFullName: PropTypes.func
 };
 
 export default CustomerCardDetailed;

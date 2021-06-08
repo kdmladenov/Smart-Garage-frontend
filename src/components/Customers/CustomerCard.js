@@ -86,10 +86,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
             </Card.Body>
             <Card.Header className="card-header">
               <div className="card-header-text">
-                <div className="card-header-text">{newVehicle.manufacturer || 'Create New Vehicle'}</div>
-                <span></span>
-                <div className="card-header-text">{newVehicle.modelName || ''}</div>
-                <div className="card-header-text">{newVehicle.licensePlate || ''}</div>
+                <div className="card-header-text">{`${newVehicle.manufacturer}  ${newVehicle.modelName}  ${newVehicle.licensePlate}` || 'Create New Vehicle'}</div>
               </div>
               <div className="card-header-buttons">
                 <CustomToggle

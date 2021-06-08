@@ -14,31 +14,32 @@ const ServiceHistory = ({ visits, toggleModal, num, setDetailedVisitReport, allC
         width: '210mm',
         minHeight: '297mm',
         marginLeft: 'auto',
-        marginRight: 'auto',
-        padding: '10mm'
+        marginRight: 'auto'
       }}>
-        <div className="report-header">
-          <div className="customer-vehicle-info">
-            <div>First Name: {visit.firstName}</div>
-            <div>Last Name: {visit.lastName}</div>
-            <div>Company Name: {visit.companyName}</div>
-            <div>Country: {visit.country}</div>
-            <div>City: {visit.city}</div>
-            <div>Address: {visit.streetAddress}</div>
-            <div>Phone: {visit.phone}</div>
-            <div>Email: {visit.email}</div>
+        <div style={{ padding: '10mm' }}>
+          <div className="report-header">
+            <div className="customer-vehicle-info">
+              <div>First Name: {visit.firstName}</div>
+              <div>Last Name: {visit.lastName}</div>
+              <div>Company Name: {visit.companyName}</div>
+              <div>Country: {visit.country}</div>
+              <div>City: {visit.city}</div>
+              <div>Address: {visit.streetAddress}</div>
+              <div>Phone: {visit.phone}</div>
+              <div>Email: {visit.email}</div>
+            </div>
+            <div className="customer-vehicle-info">
+              <div>License Plate: {visit.licensePlate}</div>
+              <div>VIN: {visit.vin}</div>
+              <div>Model: {visit.modelName}</div>
+              <div>Make: {visit.manufacturer}</div>
+              <div>Production Year: {visit.city}</div>
+              <div>Car-segment: {visit.carSegment}</div>
+              <div style={{ position: 'absolute', top: '15.5rem' }}>Start Date: {new Date(visit.visitStart).toLocaleDateString('ca-ES')}</div>
+            </div>
           </div>
-          <div className="customer-vehicle-info">
-            <div>License Plate: {visit.licensePlate}</div>
-            <div>VIN: {visit.vin}</div>
-            <div>Model: {visit.modelName}</div>
-            <div>Make: {visit.manufacturer}</div>
-            <div>Production Year: {visit.city}</div>
-            <div>Car-segment: {visit.carSegment}</div>
-            <div style={{ position: 'absolute', top: '15.5rem' }}>Start Date: {new Date(visit.visitStart).toLocaleDateString('ca-ES')}</div>
-          </div>
+          <VisitCardDetailed visitId={visit.visitId} carSegment={visit.carSegment} allCurrencies={allCurrencies} />
         </div>
-        <VisitCardDetailed visitId={visit.visitId} carSegment={visit.carSegment} allCurrencies={allCurrencies} />
       </div>
     );
     toggleModal(modalNumber);

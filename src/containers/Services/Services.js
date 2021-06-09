@@ -40,18 +40,16 @@ const Services = ({ createServiceMode, setCreateServiceMode, servicesQuery }) =>
 
   return (
     <main>
-      <div className="container-inner">
+      <div className="container-inner services">
         <div className="services-container-header">
         </div>
         {createServiceMode && <CreateServiceCard setCreateServiceMode={setCreateServiceMode} />}
         {data.length ? <ul>{servicesListToShow}</ul> : <h2> No services are found... </h2>}
-        <div id="paging-customers">
-          <Paging
-            updatePagingQuery={updatePagingQuery}
-            resource={'services'}
-            pagingQuery={pagingQuery}
-          />
-        </div>
+        <Paging
+          updatePagingQuery={updatePagingQuery}
+          resource={'services'}
+          pagingQuery={pagingQuery}
+        />
       </div>
     </main>
   );

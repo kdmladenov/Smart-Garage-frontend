@@ -33,18 +33,16 @@ const Parts = ({ createPartMode, setCreatePartMode, partsQuery }) => {
 
   return (
     <main>
-      <div className="container-inner">
+      <div className="container-inner parts">
         <div className="parts-container-header">
         </div>
         {createPartMode && <CreatePartCard setCreatePartMode={setCreatePartMode} />}
         {data.length ? <ul>{partsListToShow}</ul> : <h2> No parts are found... </h2>}
-        <div id="paging-parts">
-          <Paging
-            updatePagingQuery={updatePagingQuery}
-            resource={'parts'}
-            pagingQuery={pagingQuery}
-          />
-        </div>
+        <Paging
+          updatePagingQuery={updatePagingQuery}
+          resource={'parts'}
+          pagingQuery={pagingQuery}
+        />
       </div>
     </main>
   );

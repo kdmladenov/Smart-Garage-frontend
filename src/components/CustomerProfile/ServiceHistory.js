@@ -44,11 +44,12 @@ const ServiceHistory = ({ visits, toggleModal, num, setDetailedVisitReport, allC
     );
     toggleModal(modalNumber);
   };
-  // const detailedVisitReport = (visitId) => {
 
-  //   return (
-  //   );
-  // };
+  const customStyle = {
+    'not started': { color: '#0bec88', fontSize: '25px' },
+    'in progress': { color: '#f0e312', fontSize: '25px' },
+    ready: { color: '#25f690', fontSize: '25px' }
+  };
 
   const createTimelineElement = (e) => {
     return (
@@ -74,7 +75,7 @@ const ServiceHistory = ({ visits, toggleModal, num, setDetailedVisitReport, allC
               type="button"
               onClick={() => showDetailedVisitReport(e)}
             >details</MDBBtn>
-            <h5 className="vertical-timeline-element-status">{e.visitStatus}</h5>
+            <h5 className="vertical-timeline-element-status" style={customStyle[e.visitStatus]}>{e.visitStatus}</h5>
           </div>
         </div>
       </VerticalTimelineElement>

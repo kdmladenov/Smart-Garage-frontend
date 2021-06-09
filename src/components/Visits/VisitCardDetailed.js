@@ -41,7 +41,6 @@ const VisitCardDetailed = ({
     tax: 0,
     total: 0
   });
-  console.log(visit, 'visit');
   const [inputErrors, setInputErrors] = useState({
     notes: '',
     visitStatus: ''
@@ -278,7 +277,7 @@ const VisitCardDetailed = ({
           }
         });
     }
-    console.log(JSON.stringify(visit));
+
     if (editMode && isValid) {
       fetch(`${BASE_URL}/visits/${visit.visitId}`, {
         method: 'PUT',

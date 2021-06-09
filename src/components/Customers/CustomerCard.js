@@ -180,7 +180,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
             <Card.Header className="card-header">
               <div className="card-header-text customer-name">{customerFullName}</div>
               <div className="card-header-buttons">
-                <ButtonWithPopover handleClickButton={handleResetPasswordButton}>
+                <ButtonWithPopover handleClickButton={handleResetPasswordButton} message="Send Link">
                   <MDBIcon icon="key" />
                 </ButtonWithPopover>
                 <CustomToggle
@@ -197,7 +197,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
                 <CustomToggle variant="primary" eventKey="2" customFunc={setEditMode}>
                   Car List
                 </CustomToggle>
-                <ButtonWithPopover handleClickButton={handleDeleteButton}>
+                <ButtonWithPopover handleClickButton={handleDeleteButton} message='Delete'>
                   <MDBIcon icon="trash-alt" />
                 </ButtonWithPopover>
               </div>

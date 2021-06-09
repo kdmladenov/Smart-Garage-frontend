@@ -171,7 +171,7 @@ const PartCard = ({ part }) => {
                     >
                       <MDBIcon icon="edit" />
                     </MDBBtn>
-                    <ButtonWithPopover handleClickButton={handleDeleteButton}>
+                    <ButtonWithPopover handleClickButton={handleDeleteButton} message='Delete'>
                       <MDBIcon icon="trash-alt" />
                     </ButtonWithPopover>
                   </>

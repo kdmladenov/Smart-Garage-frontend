@@ -76,12 +76,10 @@ const VehicleCardDetailed = ({
   }, []);
 
   useEffect(() => {
-    filterModels(modelsData.filter(m => (modelsData.some(m => m.manufacturer === vehicle.manufacturer)) ? m.manufacturer === vehicle.manufacturer : m.manufacturer));
-    // if (manufacturers.some(m => m.manufacturer === vehicle.manufacturer)) {
-    //   filterModels(modelsData.filter(m => m.manufacturer === vehicle.manufacturer));
-    // } else {
-    //   filterModels([...modelsData]);
-    // }
+    filterModels(modelsData
+      .filter(m => (modelsData.some(m => m.manufacturer === vehicle.manufacturer))
+        ? m.manufacturer === vehicle.manufacturer
+        : m.manufacturer));
   }, [vehicle.manufacturer]);
 
   useEffect(() => {
@@ -150,10 +148,6 @@ const VehicleCardDetailed = ({
         });
     }
   };
-
-  console.log(models, 'models');
-  console.log(vehicle, 'vehicle');
-  console.log(carSegments, 'carSegments');
 
   return (
     <div>

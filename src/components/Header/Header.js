@@ -92,7 +92,7 @@ const Header = ({
           expand="md"
           fixed="top"
           scrolling
-          style={{ backgroundColor: `${content === 'account' ? '#42414094' : '#f7f7f7'}` }}
+          style={{ backgroundColor: `${content === 'account' ? '#787877' : '#f7f7f7'}` }}
         >
           <MDBNavbarNav right style={specialCaseNavbarStyles}>
             {getUser().role === 'employee' && (
@@ -142,14 +142,14 @@ const Header = ({
                     </div>
                   </NavLink>
                 </MDBNavItem>
-                <MDBNavItem>
+                {/* <MDBNavItem>
                   <NavLink to="/invoices" className="nav-link" role="button" onClick={() => setContent('invoices')}>
                     <MDBIcon icon="file-invoice-dollar" className="d-inline-inline" style={navColor} />
                     <div className="d-none d-md-inline" style={navColor}>
                       Invoices
                     </div>
                   </NavLink>
-                </MDBNavItem>
+                </MDBNavItem> */}
               </>
             )}
             <MDBNavItem>

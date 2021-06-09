@@ -52,14 +52,13 @@ const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencie
           />
         )}
         {!registerCustomerMode && (data.length ? <ul>{customersListToShow}</ul> : <h2> No customers are found... </h2>)}
-        <div id="paging-customers">
+        {!registerCustomerMode &&
         <Paging
             updatePagingQuery={updatePagingQuery}
             resource={'users'}
             pagingQuery={pagingQuery}
             query={customersQuery}
-          />
-        </div>
+          />}
       </div>
     </main>
   );

@@ -60,8 +60,8 @@
   background-color: #e2e0dd;
   height: 60px;
   align-items: center;
-  padding: 0 10px;
-  padding-top: 10px;
+  padding: 10px;
+  padding-bottom: 20px;
   justify-content: flex-end;
 }
 
@@ -122,10 +122,24 @@ table .form-control {
 .price {
   width: 100px
 }
+
+.subtotal.price {
+  width: 100px;
+  text-align: right;
+}
+
 .amount {
   width: 100px
 }
 
 .part.name.form-control .service.name.form-control {
   width: 28vw;
+}
+
+tr {
+  line-height: 12px;
+}
+
+table.table th, table.table td {
+  padding: 1rem;
 }

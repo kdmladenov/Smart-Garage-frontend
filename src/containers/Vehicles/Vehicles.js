@@ -56,14 +56,12 @@ const Vehicles = ({ allCurrencies, vehiclesQuery }) => {
           : (
           <h2> No vehicles are found... </h2>
             )}
-        <div id="paging-customers">
-          <Paging
-            updatePagingQuery={updatePagingQuery}
-            resource={'vehicles'}
-            pagingQuery={pagingQuery}
-            query={vehiclesQuery}
-          />
-        </div>
+        <Paging
+          updatePagingQuery={updatePagingQuery}
+          resource={'vehicles'}
+          pagingQuery={pagingQuery}
+          query={vehiclesQuery}
+        />
       </div>
     </main>
   );

@@ -31,7 +31,9 @@ export const userInput = {
 export const vehicleInput = {
   VIN_REGEX: /^(?<wmi>[A-HJ-NPR-Z\d]{3})(?<vds>[A-HJ-NPR-Z\d]{5})(?<check>[\dX])(?<vis>(?<year>[A-HJ-NPR-Z\d])(?<plant>[A-HJ-NPR-Z\d])(?<seq>[A-HJ-NPR-Z\d]{6}))$/,
   LICENSE_PLATE_REGEX: /^[A-Z0-9]{7,8}/,
-  MIN_MANUFACTURED_YEAR: 1900
+  MIN_MANUFACTURED_YEAR: 1900,
+  MAX_LICENSE_PLATE_LENGTH: 8
+
 };
 
 export const modals = {

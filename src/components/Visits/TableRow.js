@@ -8,8 +8,8 @@ const TableRow = ({ id, name, quantity, price, carSegment, editMode, updateQty, 
   const [unitPrice, setUnitPrice] = useState(price);
 
   useEffect(() => {
-    setAmount(Math.round(qty * price * currency.rate * 100) / 100);
-    setUnitPrice(Math.round(price * currency.rate * 100) / 100);
+    setAmount((Math.round(qty * price * currency.rate * 100) / 100).toFixed(2));
+    setUnitPrice((Math.round(price * currency.rate * 100) / 100).toFixed(2));
   }, [currency]);
 
   return (
@@ -27,7 +27,7 @@ const TableRow = ({ id, name, quantity, price, carSegment, editMode, updateQty, 
             min="0"
             onChange={(e) => {
               setQty(e.target.value);
-              setAmount(Math.round(e.target.value * price * currency.rate * 100) / 100);
+              setAmount((Math.round(e.target.value * price * currency.rate * 100) / 100).toFixed(2));
               updateQty(id, +e.target.value);
             }}
             disabled={!editMode}

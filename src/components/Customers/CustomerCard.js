@@ -180,7 +180,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
             <Card.Header className="card-header">
               <div className="card-header-text customer-name">{customerFullName}</div>
               <div className="card-header-buttons">
-                <ButtonWithPopover handleClickButton={handleResetPasswordButton} message="Send Link">
+                <ButtonWithPopover handleClickButton={handleResetPasswordButton} message="Send Reset Password Link">
                   <MDBIcon icon="key" />
                 </ButtonWithPopover>
                 <CustomToggle

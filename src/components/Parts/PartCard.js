@@ -7,7 +7,7 @@ import { Card, Form } from 'react-bootstrap';
 import { MDBBtn, MDBIcon } from 'mdbreact';
 import carSegment from '../../common/car-segment.enum';
 import validatePart from './partValidator';
-import DeleteButtonWithPopover from '../UI/DeleteButtonWithPopover/DeleteButtonWithPopover';
+import ButtonWithPopover from '../UI/ButtonWithPopover/ButtonWithPopover';
 
 const PartCard = ({ part }) => {
   const [editMode, setEditMode] = useState(false);
@@ -171,7 +171,9 @@ const PartCard = ({ part }) => {
                     >
                       <MDBIcon icon="edit" />
                     </MDBBtn>
-                      <DeleteButtonWithPopover handleDeleteButton={handleDeleteButton} />
+                    <ButtonWithPopover handleClickButton={handleDeleteButton}>
+                      <MDBIcon icon="trash-alt" />
+                    </ButtonWithPopover>
                   </>
                 )}
               </div>

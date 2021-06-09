@@ -241,7 +241,8 @@ const CustomersSideNav = ({ setRegisterCustomerMode, registerCustomerMode, setCu
               modelName: '',
               carSegment: '',
               visitRangeLow: '',
-              visitRangeHigh: new Date().toLocaleDateString('fr-CA')
+              visitRangeHigh: new Date().toLocaleDateString('fr-CA'),
+              sort: { by: '', order: '' }
             });
           }}
         >

@@ -9,10 +9,10 @@ import VisitCardDetailed from '../Visits/VisitCardDetailed';
 import useHttp from '../../hooks/useHttp';
 import { BASE_URL, emptyVisit, emptyVehicle } from '../../common/constants';
 import './Customers.css';
-import DeleteButtonWithPopover from '../UI/DeleteButtonWithPopover/DeleteButtonWithPopover';
+import ButtonWithPopover from '../UI/ButtonWithPopover/ButtonWithPopover';
 import { getToken } from '../../providers/AuthContext';
 import VehicleCardDetailed from '../Vehicles.js/VehicleCardDetailed';
-import { MDBBtn } from 'mdbreact';
+import { MDBIcon } from 'mdbreact';
 
 const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode, allCurrencies, setCreated }) => {
   const [editMode, setEditMode] = useState(false);
@@ -42,6 +42,20 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
       });
     // .catch((e) => setError(e.message));
   };
+
+  const handleResetPasswordButton = () => {
+    fetch(`${BASE_URL}/users/forgotten-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: customer.email })
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log('Password has been reset');
+      });
+  }
 
   // Create visit from existing vehicle
   const vehiclesListToShow = (
@@ -166,7 +180,9 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
             <Card.Header className="card-header">
               <div className="card-header-text customer-name">{customerFullName}</div>
               <div className="card-header-buttons">
-                <MDBBtn>reset password</MDBBtn>
+                <ButtonWithPopover handleClickButton={handleResetPasswordButton}>
+                  <MDBIcon icon="key" />
+                </ButtonWithPopover>
                 <CustomToggle
                   variant="primary"
                   eventKey="3"
@@ -181,7 +197,9 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
                 <CustomToggle variant="primary" eventKey="2" customFunc={setEditMode}>
                   Car List
                 </CustomToggle>
-                <DeleteButtonWithPopover handleDeleteButton={handleDeleteButton} />
+                <ButtonWithPopover handleClickButton={handleDeleteButton}>
+                  <MDBIcon icon="trash-alt" />
+                </ButtonWithPopover>
               </div>
             </Card.Header>
             <Accordion.Collapse eventKey="1">

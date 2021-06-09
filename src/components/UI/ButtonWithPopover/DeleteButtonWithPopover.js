@@ -1,12 +1,12 @@
-import { MDBBtn, MDBIcon, MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdbreact';
+import { MDBBtn, MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdbreact';
 import PropTypes from 'prop-types';
 
-const DeleteButtonWithPopover = ({ handleDeleteButton }) => {
+const ButtonWithPopover = ({ handleClickButton, children }) => {
   return (
     <>
       <MDBPopover placement="left" popover clickable id="delete-popover">
         <MDBBtn type="button">
-          <MDBIcon icon="trash-alt" />
+          {children}
         </MDBBtn>
         <div>
           <MDBPopoverHeader>Are you sure?</MDBPopoverHeader>
@@ -14,7 +14,7 @@ const DeleteButtonWithPopover = ({ handleDeleteButton }) => {
             <MDBBtn
               color="red"
               onClick={() => {
-                handleDeleteButton(true);
+                handleClickButton(true);
               }}
             >
               Delete
@@ -26,8 +26,9 @@ const DeleteButtonWithPopover = ({ handleDeleteButton }) => {
   );
 };
 
-DeleteButtonWithPopover.propTypes = {
-  handleDeleteButton: PropTypes.func.isRequired
+ButtonWithPopover.propTypes = {
+  handleClickButton: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired
 };
 
-export default DeleteButtonWithPopover;
+export default ButtonWithPopover;

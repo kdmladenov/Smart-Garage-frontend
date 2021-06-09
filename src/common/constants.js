@@ -94,7 +94,7 @@ export const emptyVisit = {
   notes: '',
   performedServices: [],
   phone: '',
-  visitStatus: '',
+  visitStatus: 'Not Started',
   streetAddress: '',
   transmission: '',
   usedParts: [],

@@ -17,7 +17,7 @@ const VisitCard = ({ visit, allCurrencies }) => {
               <div className="card-header-text-item">{visit.notes}</div>
               <div className="card-header-text-item">{visit.visitStatus}</div>
               <div className="card-header-text-item">{new Date(visit.visitStart).toISOString().slice(0, 10)}</div>
-              <div className="card-header-text-item">{new Date(visit.visitEnd).toISOString().slice(0, 10)}</div>
+              <div className="card-header-text-item">{visit.visitEnd ? new Date(visit.visitEnd).toISOString().slice(0, 10) : ''}</div>
             </div>
             <div className="card-header-buttons">
               <CustomToggle variant="primary" eventKey="1">
@@ -48,7 +48,8 @@ VisitCard.defaultProps = {
   firstName: '',
   lastName: '',
   companyName: '',
-  visitEnd: ''
+  visitEnd: '',
+  visitStatus: ''
 };
 
 VisitCard.propTypes = {

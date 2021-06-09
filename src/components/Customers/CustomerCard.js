@@ -12,6 +12,7 @@ import './Customers.css';
 import DeleteButtonWithPopover from '../UI/DeleteButtonWithPopover/DeleteButtonWithPopover';
 import { getToken } from '../../providers/AuthContext';
 import VehicleCardDetailed from '../Vehicles.js/VehicleCardDetailed';
+import { MDBBtn } from 'mdbreact';
 
 const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode, allCurrencies, setCreated }) => {
   const [editMode, setEditMode] = useState(false);
@@ -165,6 +166,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
             <Card.Header className="card-header">
               <div className="card-header-text customer-name">{customerFullName}</div>
               <div className="card-header-buttons">
+                <MDBBtn>reset password</MDBBtn>
                 <CustomToggle
                   variant="primary"
                   eventKey="3"

@@ -16,7 +16,9 @@ const Paging = ({ resource, updatePagingQuery, pagingQuery, query }) => {
       }
     })
       .then(res => res.json())
-      .then(res => setRangePageNumber([...Array(Math.ceil(res[0].totalDBItems / pagingQuery.pageSize))].map((_, i) => i + 1)));
+      .then(res => res.length > 0
+        ? setRangePageNumber([...Array(Math.ceil(res[0].totalDBItems / pagingQuery.pageSize))].map((_, i) => i + 1))
+        : setRangePageNumber([1]));
   }, []);
 
   const addStyle = (page, number) => {

@@ -159,35 +159,34 @@ const VehicleCardDetailed = ({
                 <p>{`${error}`}</p>
               </Form.Group>
             )}
-            {(editMode || registerVehicleMode || registerCustomerMode) && (
-              <>
-                <MDBBtn type="submit" onClick={handleFormSubmit} disabled={!isValid}>
-                  <MDBIcon icon="check" />
-                </MDBBtn>
-                <MDBBtn
-                  type="button"
-                  onClick={() => {
-                    setEditMode(false);
-                    setRegisterCustomerMode(false);
-                    setRegisterVehicleMode(false);
-                    setVehicle(vehicleCopy);
-                    setInputErrors({
-                      vin: '',
-                      licensePlate: '',
-                      engineType: '',
-                      transmission: '',
-                      manufacturedYear: '',
-                      modelName: '',
-                      manufacturer: '',
-                      carSegment: ''
-                    });
-                    setError('');
-                  }}
-                >
-                  <MDBIcon icon="times" />
-                </MDBBtn>
-              </>
-            )}
+            {(editMode || registerVehicleMode || registerCustomerMode) &&
+              <MDBBtn type="submit" onClick={handleFormSubmit} disabled={!isValid}>
+                <MDBIcon icon="check" />
+              </MDBBtn>}
+            {editMode &&
+              <MDBBtn
+                type="button"
+                onClick={() => {
+                  setEditMode(false);
+                  setRegisterCustomerMode(false);
+                  setRegisterVehicleMode(false);
+                  setVehicle(vehicleCopy);
+                  setInputErrors({
+                    vin: '',
+                    licensePlate: '',
+                    engineType: '',
+                    transmission: '',
+                    manufacturedYear: '',
+                    modelName: '',
+                    manufacturer: '',
+                    carSegment: ''
+                  });
+                  setError('');
+                }}
+              >
+                <MDBIcon icon="times" />
+              </MDBBtn>}
+
             {!editMode && !(registerVehicleMode || registerCustomerMode) && (
               <MDBBtn
                 type="button"
@@ -321,7 +320,7 @@ const VehicleCardDetailed = ({
                 name="manufacturedYear"
                 placeholder="Year of Manufacturing"
                 value={vehicle.manufacturedYear}
-                onChange={(e) => handleInput(e.target.name, e.target.value)}
+                onChange={(e) => handleInput(e.target.name, +e.target.value)}
                 disabled={!editMode && !(registerVehicleMode || registerCustomerMode)}
               />
               <Form.Label>{`Year of Manufacturing ${inputErrors.manufacturedYear}`}</Form.Label>

@@ -42,6 +42,22 @@ const VisitCardDetailed = ({
     total: 0
   });
 
+  const [inputErrors, setInputErrors] = useState({
+    notes: '',
+    visitStatus: ''
+  });
+
+  const { data: services } = useHttp(`${BASE_URL}/services?carSegment=${carSegment}`, 'GET', []);
+  const { data: parts } = useHttp(`${BASE_URL}/parts?carSegment=${carSegment}`, 'GET', []);
+  const [service, setService] = useState({ serviceId: 0, name: 'Select Service', serviceQty: 0 });
+  const [part, setPart] = useState({ partId: 0, name: 'Select Part', partQty: 0 });
+  const [currency, setCurrency] = useState({ id: 'BGN', rate: 1 });
+
+  const updateVisit = (prop, value) => setVisit({ ...visit, [prop]: value });
+  const handleInput = (prop, value) => {
+    setInputErrors({ ...inputErrors, [prop]: validateInput[prop](value) });
+    updateVisit(prop, value);
+  };
   useEffect(() => {
     let isMounted = true;
     setLoading(true);
@@ -90,23 +106,6 @@ const VisitCardDetailed = ({
     }
     setLoading(false);
   }, [registerVisitMode, newVehicle]);
-
-  const [inputErrors, setInputErrors] = useState({
-    notes: '',
-    visitStatus: ''
-  });
-
-  const { data: services } = useHttp(`${BASE_URL}/services?carSegment=${carSegment}`, 'GET', []);
-  const { data: parts } = useHttp(`${BASE_URL}/parts?carSegment=${carSegment}`, 'GET', []);
-  const [service, setService] = useState({ serviceId: 0, name: 'Select Service', serviceQty: 0 });
-  const [part, setPart] = useState({ partId: 0, name: 'Select Part', partQty: 0 });
-  const [currency, setCurrency] = useState({ id: 'BGN', rate: 1 });
-
-  const updateVisit = (prop, value) => setVisit({ ...visit, [prop]: value });
-  const handleInput = (prop, value) => {
-    setInputErrors({ ...inputErrors, [prop]: validateInput[prop](value) });
-    updateVisit(prop, value);
-  };
 
   const changeCurrency = (curr) => {
     fetch(`${CURRENCY_URL}/api/v7/convert?compact=ultra&q=BGN_${curr}&apiKey=${CURRENCY_API_KEY}`)
@@ -374,7 +373,6 @@ const VisitCardDetailed = ({
               onChange={(e) => handleInput(e.target.name, e.target.value)}
               disabled={!editMode && !registerVisitMode}
             >
-              <option value="">Select Status</option>
               {Object.values(visitStatusEnum).map((s) => (
                 <option key={s} value={s}>
                   {s}
@@ -419,7 +417,7 @@ const VisitCardDetailed = ({
                       })
                     }
                   >
-                    <option value={0}>Select Service</option>
+                    <option value={0}>{service.name}</option>
                     {services.map((s) => (
                       <option key={s.serviceId} value={s.serviceId}>
                         {s.name}

@@ -46,9 +46,9 @@ const ServiceHistory = ({ visits, toggleModal, num, setDetailedVisitReport, allC
   };
 
   const customStyle = {
-    'not started': { color: '#0bec88', fontSize: '25px' },
-    'in progress': { color: '#f0e312', fontSize: '25px' },
-    ready: { color: '#25f690', fontSize: '25px' }
+    'not started': { color: '#ff8888' },
+    'in progress': { color: '#f0e312' },
+    ready: { color: '#25f690' }
   };
 
   const createTimelineElement = (e) => {

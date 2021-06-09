@@ -48,6 +48,8 @@ span.date-bottom {
 .vertical-timeline-element-status {
   margin-bottom: 1rem;
   text-align: center;
+  font-size: 22px;
+  text-shadow: black 1px 1px;
 }
 
 .vertical-timeline-element-notes,

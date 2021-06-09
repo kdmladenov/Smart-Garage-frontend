@@ -142,7 +142,7 @@ const PartCard = ({ part }) => {
                 )}
                 {editMode && (
                   <>
-                    <MDBBtn type="submit" onClick={handleFormSubmit} disabled={!isValid}>
+                    <MDBBtn type="submit" onClick={handleFormSubmit} disabled={!isValid} style={{ backgroundColor: 'transparent' }}>
                       <MDBIcon icon="check" />
                     </MDBBtn>
                     <MDBBtn

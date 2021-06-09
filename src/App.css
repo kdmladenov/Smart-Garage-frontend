@@ -32,6 +32,14 @@ main {
   padding-bottom: 5rem;
 }
 
+button.btn-default.btn.Ripple-parent.disabled i.fa.fa-check {
+  color: #ff9494;
+}
+
+.btn-default.disabled {
+  background-color: #f0a9a9 !important;
+}
+
 @media only screen and (min-width: 922px) {
   main {
     background-color: #ececec;

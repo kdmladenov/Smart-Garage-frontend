@@ -9,16 +9,22 @@ const Paging = ({ resource, updatePagingQuery, pagingQuery, query }) => {
   const [rangePageNumber, setRangePageNumber] = useState([1]);
 
   useEffect(() => {
+    let isMounted = true;
     fetch(`${BASE_URL}/${resource}${query}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${getToken()}`
       }
     })
-      .then(res => res.json())
-      .then(res => res.length > 0
-        ? setRangePageNumber([...Array(Math.ceil(res[0].totalDBItems / pagingQuery.pageSize))].map((_, i) => i + 1))
-        : setRangePageNumber([1]));
+      .then((res) => res.json())
+      .then((res) =>
+        res.length > 0 && isMounted
+          ? setRangePageNumber([...Array(Math.ceil(res[0].totalDBItems / pagingQuery.pageSize))].map((_, i) => i + 1))
+          : setRangePageNumber([1])
+      );
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const addStyle = (page, number) => {

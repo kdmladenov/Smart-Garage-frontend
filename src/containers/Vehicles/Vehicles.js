@@ -61,6 +61,7 @@ const Vehicles = ({ allCurrencies, vehiclesQuery }) => {
             updatePagingQuery={updatePagingQuery}
             resource={'vehicles'}
             pagingQuery={pagingQuery}
+            query={vehiclesQuery}
           />
         </div>
       </div>

@@ -50,6 +50,7 @@ const Services = ({ createServiceMode, setCreateServiceMode, servicesQuery }) =>
             updatePagingQuery={updatePagingQuery}
             resource={'services'}
             pagingQuery={pagingQuery}
+            query={servicesQuery}
           />
         </div>
       </div>

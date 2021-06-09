@@ -43,6 +43,7 @@ const Parts = ({ createPartMode, setCreatePartMode, partsQuery }) => {
             updatePagingQuery={updatePagingQuery}
             resource={'parts'}
             pagingQuery={pagingQuery}
+            query={partsQuery}
           />
         </div>
       </div>

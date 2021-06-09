@@ -5,11 +5,11 @@ import { getToken } from '../../providers/AuthContext';
 import { Form } from 'react-bootstrap';
 import './Paging.css';
 
-const Paging = ({ resource, updatePagingQuery, pagingQuery }) => {
+const Paging = ({ resource, updatePagingQuery, pagingQuery, query }) => {
   const [rangePageNumber, setRangePageNumber] = useState([1]);
 
   useEffect(() => {
-    fetch(`${BASE_URL}/${resource}`, {
+    fetch(`${BASE_URL}/${resource}${query}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${getToken()}`
@@ -122,6 +122,7 @@ const Paging = ({ resource, updatePagingQuery, pagingQuery }) => {
 Paging.propTypes = {
   resource: PropTypes.string.isRequired,
   updatePagingQuery: PropTypes.func.isRequired,
-  pagingQuery: PropTypes.object.isRequired
+  pagingQuery: PropTypes.object.isRequired,
+  query: PropTypes.string.isRequired
 };
 export default Paging;

@@ -57,6 +57,7 @@ const Customers = ({ registerCustomerMode, setRegisterCustomerMode, allCurrencie
             updatePagingQuery={updatePagingQuery}
             resource={'users'}
             pagingQuery={pagingQuery}
+            query={customersQuery}
           />
         </div>
       </div>

@@ -8,7 +8,7 @@ import { MDBBtn, MDBIcon } from 'mdbreact';
 import carSegment from '../../common/car-segment.enum';
 import validateService from './serviceValidator';
 
-const CreateServiceCard = ({ setCreateServiceMode }) => {
+const CreateServiceCard = ({ setCreateServiceMode, data, setData }) => {
   const [error, setError] = useState('');
   const [services, setService] = useState({
     name: '',
@@ -50,8 +50,14 @@ const CreateServiceCard = ({ setCreateServiceMode }) => {
         .then((res) => {
           if (res.message) {
             setError(res.message);
+          } else {
+            setData([services, ...data]);
+            setService({
+              name: '',
+              price: '',
+              carSegment: ''
+            });
           }
-          setCreateServiceMode(false);
         });
     }
   };
@@ -139,7 +145,9 @@ CreateServiceCard.defaultProps = {
 };
 
 CreateServiceCard.propTypes = {
-  setCreateServiceMode: PropTypes.func
+  setCreateServiceMode: PropTypes.func,
+  data: PropTypes.array.isRequired,
+  setData: PropTypes.func.isRequired
 };
 
 export default CreateServiceCard;

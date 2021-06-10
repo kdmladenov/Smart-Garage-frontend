@@ -119,13 +119,21 @@ const VisitCardDetailed = ({
   };
 
   const addService = (serviceId, qty) => {
-    const newService = { ...services.find((s) => s.serviceId === +serviceId), serviceQty: qty };
-    setVisit({ ...visit, performedServices: [newService, ...visit.performedServices] });
+    if (visit.performedServices.some(s => s.serviceId === +serviceId)) {
+      setError('You have already selected this service, please increase the quantity.');
+    } else {
+      const newService = { ...services.find((s) => s.serviceId === +serviceId), serviceQty: qty };
+      setVisit({ ...visit, performedServices: [newService, ...visit.performedServices] });
+    }
   };
 
   const addPart = (partId, qty) => {
-    const newPart = { ...parts.find((p) => p.partId === +partId), partQty: qty };
-    setVisit({ ...visit, usedParts: [newPart, ...visit.usedParts] });
+    if (visit.usedParts.some(p => p.partId === +partId)) {
+      setError('You have already selected this part, please increase the quantity.');
+    } else {
+      const newPart = { ...parts.find((p) => p.partId === +partId), partQty: qty };
+      setVisit({ ...visit, usedParts: [newPart, ...visit.usedParts] });
+    }
   };
 
   const updatePerformedServiceQty = (serviceId, serviceQty) => {
@@ -195,12 +203,14 @@ const VisitCardDetailed = ({
         .then((res) => res.json())
         .then((res) => {
           if (res.message) {
-            setError(res.message);
+            setError('You have already selected this part, please increase the quantity.');
+          } else {
+            setVisit({
+              ...visit,
+              performedServices: [{ ...serviceCreated, serviceId: res.serviceId, carSegment }, ...visit.performedServices]
+            });
           }
-          setVisit({
-            ...visit,
-            performedServices: [{ ...serviceCreated, serviceId: res.serviceId, carSegment }, ...visit.performedServices]
-          });
+
           setServiceCreated({ name: '', price: 0, carSegment: carSegment });
           // setCreateServiceMode(false);
         });
@@ -222,12 +232,13 @@ const VisitCardDetailed = ({
         .then((res) => res.json())
         .then((res) => {
           if (res.message) {
-            setError(res.message);
+            setError('You have already selected this part, please increase the quantity.');
+          } else {
+            setVisit({
+              ...visit,
+              usedParts: [{ ...partCreated, partId: res.partId, carSegment }, ...visit.usedParts]
+            });
           }
-          setVisit({
-            ...visit,
-            usedParts: [{ ...partCreated, partId: res.partId, carSegment }, ...visit.usedParts]
-          });
           setPartCreated({ name: '', price: 0, carSegment: carSegment });
           // setCreateMode(false);
         });
@@ -464,11 +475,6 @@ const VisitCardDetailed = ({
           <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div className="performed-services-create">
               <span className="select-service">
-                {error && (
-                  <Form.Group className="error">
-                    <p>{`${error}`}</p>
-                  </Form.Group>
-                )}
                 <Form.Group className={inputErrorsServices.price ? 'error' : ''}>
                   <Form.Control
                     style={{ width: '100px' }}
@@ -600,11 +606,6 @@ const VisitCardDetailed = ({
           <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div className="performed-services-create">
               <span className="select-service">
-                  {error && (
-                    <Form.Group className="error">
-                      <p>{`${error}`}</p>
-                    </Form.Group>
-                  )}
                   <Form.Group className={inputErrorsParts.price ? 'error' : ''}>
                     <Form.Control
                       style={{ width: '100px' }}

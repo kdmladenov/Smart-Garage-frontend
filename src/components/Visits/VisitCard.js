@@ -7,6 +7,12 @@ import VisitCardDetailed from './VisitCardDetailed';
 
 const VisitCard = ({ visit, allCurrencies }) => {
   const [editMode, setEditMode] = useState(false);
+  const [visitCardHeader, setVisitCardHeader] = useState({
+    notes: visit.notes,
+    visitStatus: visit.visitStatus,
+    visitStart: visit.visitStart,
+    visitEnd: visit.visitEnd
+  });
 
   return (
     <>
@@ -14,10 +20,13 @@ const VisitCard = ({ visit, allCurrencies }) => {
         <Card key={visit.visitId}>
           <Card.Header className="card-header">
             <div className="card-header-text">
-              <div className="card-header-text-item">{visit.notes}</div>
-              <div className="card-header-text-item">{visit.visitStatus}</div>
-              <div className="card-header-text-item">{new Date(visit.visitStart).toISOString().slice(0, 10)}</div>
-              <div className="card-header-text-item">{visit.visitEnd ? new Date(visit.visitEnd).toISOString().slice(0, 10) : ''}</div>
+              <div>{visitCardHeader.notes}</div>
+              <div style={{ padding: '0 10px' }}>|</div>
+              <div>{visitCardHeader.visitStatus}</div>
+              <div style={{ padding: '0 10px' }}>|</div>
+              <div>{new Date(visitCardHeader.visitStart).toISOString().slice(0, 10)}</div>
+              {visit.visitEnd && <div style={{ padding: '0 10px' }}>/</div>}
+              <div>{visitCardHeader.visitEnd ? new Date(visitCardHeader.visitEnd).toISOString().slice(0, 10) : ''}</div>
             </div>
             <div className="card-header-buttons">
               <CustomToggle variant="primary" eventKey="1">
@@ -34,6 +43,7 @@ const VisitCard = ({ visit, allCurrencies }) => {
                 editMode={editMode}
                 setEditMode={setEditMode}
                 allCurrencies={allCurrencies}
+                setVisitCardHeader={setVisitCardHeader}
               />
             </Card.Body>
           </Accordion.Collapse>

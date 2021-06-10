@@ -11,7 +11,7 @@ const Services = ({ createServiceMode, setCreateServiceMode, servicesQuery }) =>
   const [pagingQuery, setPagingQuery] = useState(defaultPageQuery);
   const updatePagingQuery = (prop, value) => setPagingQuery({ ...pagingQuery, [prop]: value });
 
-  const { data, loading } = useHttp(`${BASE_URL}/services${servicesQuery}&page=${pagingQuery.page}&pageSize=${pagingQuery.pageSize}`,
+  const { data, setData, loading } = useHttp(`${BASE_URL}/services${servicesQuery}&page=${pagingQuery.page}&pageSize=${pagingQuery.pageSize}`,
     'GET', [], [servicesQuery, pagingQuery]);
 
   if (loading) {
@@ -43,7 +43,7 @@ const Services = ({ createServiceMode, setCreateServiceMode, servicesQuery }) =>
       <div className="container-inner services">
         <div className="services-container-header">
         </div>
-        {createServiceMode && <CreateServiceCard setCreateServiceMode={setCreateServiceMode} />}
+        {createServiceMode && <CreateServiceCard setCreateServiceMode={setCreateServiceMode} data={data} setData={setData} />}
         {data.length ? <ul>{servicesListToShow}</ul> : <h2> No services are found... </h2>}
         <Paging
           updatePagingQuery={updatePagingQuery}

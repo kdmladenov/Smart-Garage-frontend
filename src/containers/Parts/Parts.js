@@ -11,7 +11,7 @@ const Parts = ({ createPartMode, setCreatePartMode, partsQuery }) => {
   const [pagingQuery, setPagingQuery] = useState(defaultPageQuery);
   const updatePagingQuery = (prop, value) => setPagingQuery({ ...pagingQuery, [prop]: value });
 
-  const { data, loading } = useHttp(`${BASE_URL}/parts${partsQuery}&page=${pagingQuery.page}&pageSize=${pagingQuery.pageSize}`, 'GET', [], [partsQuery, pagingQuery]);
+  const { data, setData, loading } = useHttp(`${BASE_URL}/parts${partsQuery}&page=${pagingQuery.page}&pageSize=${pagingQuery.pageSize}`, 'GET', [], [partsQuery, pagingQuery]);
 
   if (loading) {
     return <Loading />;
@@ -36,7 +36,7 @@ const Parts = ({ createPartMode, setCreatePartMode, partsQuery }) => {
       <div className="container-inner parts">
         <div className="parts-container-header">
         </div>
-        {createPartMode && <CreatePartCard setCreatePartMode={setCreatePartMode} />}
+        {createPartMode && <CreatePartCard setCreatePartMode={setCreatePartMode} setData={setData} data={data} />}
         {data.length ? <ul>{partsListToShow}</ul> : <h2> No parts are found... </h2>}
         <Paging
           updatePagingQuery={updatePagingQuery}

@@ -8,7 +8,7 @@ import { MDBBtn, MDBIcon } from 'mdbreact';
 import carSegment from '../../common/car-segment.enum';
 import validatePart from './partValidator';
 
-const CreatePartCard = ({ setCreatePartMode }) => {
+const CreatePartCard = ({ setCreatePartMode, data, setData }) => {
   const [error, setError] = useState('');
   const [parts, setPart] = useState({
     name: '',
@@ -50,8 +50,14 @@ const CreatePartCard = ({ setCreatePartMode }) => {
         .then((res) => {
           if (res.message) {
             setError(res.message);
+          } else {
+            setData([parts, ...data]);
+            setPart({
+              name: '',
+              price: '',
+              carSegment: ''
+            });
           }
-          setCreatePartMode(false);
         });
     }
   };
@@ -140,7 +146,9 @@ CreatePartCard.defaultProps = {
 };
 
 CreatePartCard.propTypes = {
-  setCreatePartMode: PropTypes.func
+  setCreatePartMode: PropTypes.func,
+  data: PropTypes.array.isRequired,
+  setData: PropTypes.func.isRequired
 };
 
 export default CreatePartCard;

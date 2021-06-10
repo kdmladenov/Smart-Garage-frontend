@@ -42,7 +42,7 @@ The project can be run in two ways:
 
 We will be using **MySQL Workbench** for storing the data. If you don't have it installed, please do so. You can use the following link **[MySQL Workbench](https://www.mysql.com/products/workbench/)**.
 
-We have provided you with the database which you can import in your MySQL Workbench - please use `smart_garage.sql` for the import. 
+We have provided you with the database which you can import in your MySQL Workbench - please use `smart_garage.sql` for the import. The SQL dump file is placed in the root folder. 
 
 After you connect to the database `"smart_garage"` and examine the major tables, you can use the database for all tasks.
 

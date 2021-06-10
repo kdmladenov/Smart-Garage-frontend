@@ -55,14 +55,13 @@ You can use the following content for your **.env** file. Keep in mind that you 
 
 ```
 PORT=5555
-HOST=triton.rdb.superhosting.bg
+HOST=localhost
 DBPORT=3306
-USER=fwraptea_didi
-PASSWORD=Parola12345678
-DATABASE=fwraptea_didi
-LIMIT=2
+USER=root
+PASSWORD=root
+DATABASE=smart_garage
 PRIVATE_KEY=sekreten_chasten_klu4
-TOKEN_LIFETIME=3600
+TOKEN_LIFETIME=360000
 EMAIL_SERVICE=hotmail
 EMAIL_USER=smartgaragekd@outlook.com
 EMAIL_PASSWORD=BestSuperSekretenklu4

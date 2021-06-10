@@ -86,7 +86,7 @@ const ChangePassword = () => {
             <h3 className="mb-3">Change Password</h3>
           </div>
           <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <Form.Group controlId="FormGridCurrentPassword" className={inputErrors.currentPassword ? 'error' : ''}>
+            <Form.Group className={inputErrors.currentPassword ? 'error' : ''}>
               <Form.Label>
                 {`Current Password ${inputErrors.currentPassword}`}
               </Form.Label>
@@ -102,7 +102,7 @@ const ChangePassword = () => {
           </div>
 
           <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <Form.Group controlId="FormGridNewPassword" className={inputErrors.password ? 'error' : ''}>
+            <Form.Group className={inputErrors.password ? 'error' : ''}>
               <Form.Label>
                 {`New Password ${inputErrors.password}`}
               </Form.Label>
@@ -118,7 +118,7 @@ const ChangePassword = () => {
           </div>
 
           <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <Form.Group controlId="FormGridConfirmNewPassword" className={inputErrors.reenteredPassword ? 'error' : ''}>
+            <Form.Group className={inputErrors.reenteredPassword ? 'error' : ''}>
               <Form.Label>
                 {`Confirm New Password ${inputErrors.reenteredPassword}`}
               </Form.Label>

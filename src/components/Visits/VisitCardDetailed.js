@@ -25,7 +25,8 @@ const VisitCardDetailed = ({
   newVehicle,
   setRegisterVehicleMode,
   setRegisterCustomerMode,
-  setCreated
+  setCreated,
+  setVisitCardHeader
 }) => {
   const [error, setError] = useState('');
   const [visit, setVisit] = useState(emptyVisit);
@@ -274,6 +275,12 @@ const VisitCardDetailed = ({
             setRegisterVehicleMode(false);
             setRegisterCustomerMode(false);
             setCreated(true);
+            setVisitCardHeader({
+              notes: res.notes,
+              visitStatus: res.visitStatus,
+              visitStart: res.visitStart,
+              visitEnd: res.visitEnd
+            });
           }
         });
     }
@@ -296,6 +303,12 @@ const VisitCardDetailed = ({
               ...visit,
               usedParts: visit.usedParts.map((p) => ({ ...p })),
               performedServices: visit.performedServices.map((s) => ({ ...s }))
+            });
+            setVisitCardHeader({
+              notes: visit.notes,
+              visitStatus: visit.visitStatus,
+              visitStart: visit.visitStart,
+              visitEnd: visit.visitEnd
             });
             setEditMode(false);
           }
@@ -729,7 +742,8 @@ VisitCardDetailed.defaultProps = {
   registerVisitMode: false,
   setCreated: () => {},
   setRegisterVehicleMode: () => {},
-  setRegisterCustomerMode: () => {}
+  setRegisterCustomerMode: () => {},
+  setVisitCardHeader: () => {}
 };
 
 VisitCardDetailed.propTypes = {
@@ -782,7 +796,8 @@ VisitCardDetailed.propTypes = {
     vin: PropTypes.string
   }),
   setCreated: PropTypes.func,
-  setRegisterCustomerMode: PropTypes.func
+  setRegisterCustomerMode: PropTypes.func,
+  setVisitCardHeader: PropTypes.func
 };
 
 export default VisitCardDetailed;

@@ -47,7 +47,7 @@ const Header = ({
     position: 'fixed',
     zIndex: '1040'
   };
-  const username = getUser().email.substr(0, getUser().email.indexOf('@'));
+  const username = getUser()?.email?.substr(0, getUser().email.indexOf('@'));
 
   const navColor = { color: `${content === 'account' ? '#ffffff' : '#004c4f'}` };
 
@@ -60,7 +60,7 @@ const Header = ({
           <span></span>
           <span></span>
         </div>
-        <div className={`username ${sideNavVisible ? 'open' : ''}`}>{username.toUpperCase()}</div>
+        <div className={`username ${sideNavVisible ? 'open' : ''}`}>{username?.toUpperCase()}</div>
         {content !== 'account' &&
         <div className={`side-nav ${sideNavVisible ? 'open' : ''}`} style={sideNavStyle}>
           {content === 'customers' &&

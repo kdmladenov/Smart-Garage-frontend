@@ -244,15 +244,15 @@ const VisitCardDetailed = ({
         });
     }
   };
-  const sumTotalServices = (arr) => arr.reduce((acc, item) => (acc += Math.round(item.serviceQty * item.price * currency.rate * 100) / 100), 0);
-  const sumTotalParts = (arr) => arr.reduce((acc, item) => (acc += Math.round(item.partQty * item.price * currency.rate * 100) / 100), 0);
+  const sumTotalServices = (arr) => arr?.reduce((acc, item) => (acc += Math.round(item.serviceQty * item.price * currency.rate * 100) / 100), 0);
+  const sumTotalParts = (arr) => arr?.reduce((acc, item) => (acc += Math.round(item.partQty * item.price * currency.rate * 100) / 100), 0);
 
   useEffect(() => {
     setTotals({
-      totalServices: sumTotalServices(visit.performedServices).toFixed(2),
-      totalParts: sumTotalParts(visit.usedParts).toFixed(2),
-      tax: (Math.round((sumTotalServices(visit.performedServices) + sumTotalParts(visit.usedParts)) * 0.2 * 100) / 100).toFixed(2),
-      total: (Math.round((sumTotalServices(visit.performedServices) + sumTotalParts(visit.usedParts)) * 1.2 * 100) / 100).toFixed(2)
+      totalServices: sumTotalServices(visit.performedServices)?.toFixed(2),
+      totalParts: sumTotalParts(visit.usedParts)?.toFixed(2),
+      tax: (Math.round((sumTotalServices(visit.performedServices) + sumTotalParts(visit.usedParts)) * 0.2 * 100) / 100)?.toFixed(2),
+      total: (Math.round((sumTotalServices(visit.performedServices) + sumTotalParts(visit.usedParts)) * 1.2 * 100) / 100)?.toFixed(2)
     });
   }, [currency, visit.performedServices, visit.usedParts]);
 
@@ -530,7 +530,7 @@ const VisitCardDetailed = ({
               </tr>
             </MDBTableHead>
             <MDBTableBody>
-              {visit.performedServices.map((s) => (
+              {visit?.performedServices?.map((s) => (
                 <TableRow
                   key={s.serviceId}
                   id={s.serviceId}
@@ -661,7 +661,7 @@ const VisitCardDetailed = ({
               </tr>
             </MDBTableHead>
             <MDBTableBody>
-              {visit.usedParts.map((p) => (
+              {visit?.usedParts?.map((p) => (
                 <TableRow
                   key={p.partId}
                   id={+p.partId}

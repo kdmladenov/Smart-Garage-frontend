@@ -1,9 +1,6 @@
 import './Login.css';
 import { Button, Form } from 'react-bootstrap';
-import {
-  useContext,
-  useState
-} from 'react';
+import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import validateInput from './userValidator';
 import { BASE_URL } from '../../common/constants';
@@ -34,10 +31,15 @@ const Login = () => {
     updateUser(prop, value);
   };
 
-  const handleLoginFormSubmit = (e) => {
+  const handleLoginFormSubmit = (e, userCredentials = user) => {
     e.preventDefault();
-
-    if (inputErrors.email || inputErrors.password || !user.email || !user.password) {
+    setUser(userCredentials);
+    if (
+      (user.email && inputErrors.email) ||
+      (user.password && inputErrors.password) ||
+      !userCredentials.email ||
+      !userCredentials.password
+    ) {
       setError('Invalid username or password');
     } else {
       fetch(`${BASE_URL}/auth/login`, {
@@ -45,15 +47,15 @@ const Login = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(userCredentials)
       })
-        .then(res => {
+        .then((res) => {
           if (!res.ok) {
             throw new Error(res.status);
           }
           return res.json();
         })
-        .then(data => {
+        .then((data) => {
           const { token } = data;
           localStorage.setItem('token', token);
           const user = getUser();
@@ -68,7 +70,7 @@ const Login = () => {
             history.push('/customer-profile');
           }
         })
-        .catch(err => {
+        .catch((err) => {
           if (err.message === '401') {
             setError('Invalid username or password!');
           }
@@ -99,8 +101,8 @@ const Login = () => {
         },
         body: JSON.stringify({ email: user.email })
       })
-        .then(res => res.json())
-        .then(res => {
+        .then((res) => res.json())
+        .then((res) => {
           if (res.message.includes('is not found')) {
             setError(res.message);
           }
@@ -113,7 +115,10 @@ const Login = () => {
   };
 
   return (
-    <div style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/login.jpg)` }} className="form-wrapper-outer">
+    <div
+      style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/login.jpg)` }}
+      className="form-wrapper-outer"
+    >
       <div className="form-wrapper-inner">
         {formContent === 'login' && (
           <Form onSubmit={handleLoginFormSubmit} className="login">
@@ -124,9 +129,7 @@ const Login = () => {
               </Form.Group>
             )}
             <Form.Group controlId="formBasicEmail">
-              <Form.Label>
-                Email
-              </Form.Label>
+              <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
                 name="email"
@@ -137,9 +140,7 @@ const Login = () => {
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
-              <Form.Label>
-                Password
-              </Form.Label>
+              <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
                 name="password"
@@ -164,66 +165,70 @@ const Login = () => {
             </Form.Group>
 
             <Form.Group>
-              <Button
-                type="submit"
-                className="btn btn-dark btn-lg btn-block"
-              >
+              <Button type="submit" className="btn btn-dark btn-lg btn-block">
                 Login
+              </Button>
+            </Form.Group>
+            <Form.Group>
+              <Button
+                className="btn btn-dark btn-lg btn-block"
+                onClick={(e) => {
+                  handleLoginFormSubmit(e, {
+                    email: 'kmladenovd@gmail.com',
+                    password: 'Sekretenklu4'
+                  });
+                }}
+              >
+                Login with test account
               </Button>
             </Form.Group>
           </Form>
         )}
         {formContent === 'forgottenPassword' && (
           <Form onSubmit={handleForgottenPasswordFormSubmit} className="login">
-          <h3>Forgot Password</h3>
-            {error &&
+            <h3>Forgot Password</h3>
+            {error && (
               <Form.Group className="error">
                 <p>{`${error}`}</p>
               </Form.Group>
-            }
-            {message &&
+            )}
+            {message && (
               <Form.Group className="message">
                 <p>{`${message}`}</p>
               </Form.Group>
-            }
+            )}
             <Form.Group controlId="formBasicEmail">
-            <Form.Label>
-              Enter your email address
-            </Form.Label>
-            <Form.Control
-              type="email"
-              name="email"
-              placeholder="Enter Email"
-              value={user.email}
-              onChange={(e) => handleInput(e.target.name, e.target.value)}
-            />
-          </Form.Group>
+              <Form.Label>Enter your email address</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                placeholder="Enter Email"
+                value={user.email}
+                onChange={(e) => handleInput(e.target.name, e.target.value)}
+              />
+            </Form.Group>
 
-          <Form.Group>
-            <Button
-              type="submit"
-              className="btn btn-dark btn-lg btn-block"
-            >
-              Send email
-            </Button>
-          </Form.Group>
-          <Form.Group>
-            <Button
-              type="button"
-              className="btn btn-dark btn-lg btn-block"
-              onClick={() => {
-                setError('');
-                setFormContent('login');
-              }}
-            >
-              Cancel
-            </Button>
-          </Form.Group>
-        </Form>
+            <Form.Group>
+              <Button type="submit" className="btn btn-dark btn-lg btn-block">
+                Send email
+              </Button>
+            </Form.Group>
+            <Form.Group>
+              <Button
+                type="button"
+                className="btn btn-dark btn-lg btn-block"
+                onClick={() => {
+                  setError('');
+                  setFormContent('login');
+                }}
+              >
+                Cancel
+              </Button>
+            </Form.Group>
+          </Form>
         )}
       </div>
     </div>
-
   );
 };
 

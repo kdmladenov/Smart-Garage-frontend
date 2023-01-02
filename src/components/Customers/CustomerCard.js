@@ -55,7 +55,7 @@ const CustomerCard = ({ customer, registerCustomerMode, setRegisterCustomerMode,
       .then((res) => {
         console.log('Password has been reset');
       });
-  }
+  };
 
   // Create visit from existing vehicle
   const vehiclesListToShow = (

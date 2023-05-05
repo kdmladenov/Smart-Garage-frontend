@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import validateInput from './userValidator';
-import { BASE_URL } from '../../common/constants';
+import { BASE_URL, TEST_ACCOUNT_EMAIL, TEST_ACCOUNT_PASSWORD } from '../../common/constants';
 import AuthContext, { getUser } from '../../providers/AuthContext';
 
 const Login = () => {
@@ -174,8 +174,8 @@ const Login = () => {
                 className="btn btn-dark btn-lg btn-block"
                 onClick={(e) => {
                   handleLoginFormSubmit(e, {
-                    email: 'kmladenovd@gmail.com',
-                    password: 'Sekretenklu4'
+                    email: TEST_ACCOUNT_EMAIL,
+                    password: TEST_ACCOUNT_PASSWORD
                   });
                 }}
               >

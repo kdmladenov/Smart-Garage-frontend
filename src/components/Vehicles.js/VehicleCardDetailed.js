@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import validateInput from './vehicleValidator';
 import { BASE_URL } from '../../common/constants';
 import { getToken } from '../../providers/AuthContext';
-import { MDBBtn, MDBIcon } from 'mdbreact';
+import { MDBIcon } from 'mdbreact';
 import transmission from '../../common/transmission.enum';
 import engineType from '../../common/engine-type.enum';
 import carSegmentsEnum from '../../common/car-segment.enum';
@@ -160,11 +160,11 @@ const VehicleCardDetailed = ({
               </Form.Group>
             )}
             {(editMode || registerVehicleMode || registerCustomerMode) &&
-              <MDBBtn type="submit" onClick={handleFormSubmit} disabled={!isValid} style={{ backgroundColor: 'transparent' }}>
+              <Button type="submit" onClick={handleFormSubmit} disabled={!isValid} style={{ backgroundColor: 'transparent' }}>
                 <MDBIcon icon="check" />
-              </MDBBtn>}
+              </Button>}
             {editMode &&
-              <MDBBtn
+              <Button
                 type="button"
                 onClick={() => {
                   setEditMode(false);
@@ -185,17 +185,17 @@ const VehicleCardDetailed = ({
                 }}
               >
                 <MDBIcon icon="times" />
-              </MDBBtn>}
+              </Button>}
 
             {!editMode && !(registerVehicleMode || registerCustomerMode) && (
-              <MDBBtn
+              <Button
                 type="button"
                 onClick={() => {
                   setEditMode(true);
                 }}
               >
                 <MDBIcon icon="edit" />
-              </MDBBtn>
+              </Button>
             )}
           </div>
           <div className="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">

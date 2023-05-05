@@ -1,7 +1,6 @@
-import { MDBBtn } from 'mdbreact';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { servicePrice } from '../../common/constants';
 import MultiRangeSlider from '../UI/MultiRangeSlider/MultiRangeSlider';
 import carSegmentEnum from '../../common/car-segment.enum';
@@ -15,9 +14,9 @@ const ServicesSideNav = ({ setCreateServiceMode, createServiceMode, setServicesQ
   return (
     <div className="side-nav-content">
       <Form.Group>
-        <MDBBtn className="btn btn-lg btn-block" type="button" onClick={() => setCreateServiceMode(!createServiceMode)}>
+        <Button className="btn btn-lg btn-block" type="button" onClick={() => setCreateServiceMode(!createServiceMode)}>
           {!createServiceMode ? 'Create New Service' : 'Close Create Form'}
-        </MDBBtn>
+        </Button>
       </Form.Group>
       <Form.Group className="search-field">
         <Form.Label>
@@ -59,17 +58,17 @@ const ServicesSideNav = ({ setCreateServiceMode, createServiceMode, setServicesQ
         setMaxValue={setMaxValue}
       />
       <Form.Group className="search-field">
-        <MDBBtn
+        <Button
           className="btn btn-lg btn-block search"
           onClick={() => {
             setServicesQuery(`?priceLow=${minValue}&priceHigh=${maxValue}&serviceName=${serviceName}&carSegment=${carSegment}`);
           }}
         >
           search
-        </MDBBtn>
+        </Button>
       </Form.Group>
       <Form.Group className="search-field">
-        <MDBBtn
+        <Button
           className="btn btn-lg btn-block search"
           onClick={() => {
             setMinValue(servicePrice.MIN);
@@ -80,7 +79,7 @@ const ServicesSideNav = ({ setCreateServiceMode, createServiceMode, setServicesQ
           }}
         >
           clear search
-        </MDBBtn>
+        </Button>
       </Form.Group>
     </div>
   );

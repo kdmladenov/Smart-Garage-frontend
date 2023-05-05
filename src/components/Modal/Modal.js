@@ -1,6 +1,7 @@
-import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
+import { MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
 import PropTypes from 'prop-types';
 import './Modal.css';
+import { Button } from 'react-bootstrap';
 
 const Modal = ({ modalHeader, modalBody, buttonText, buttonOnClick, num, toggle, isOpen }) => {
   const modalNumber = `modal${num}`;
@@ -11,8 +12,8 @@ const Modal = ({ modalHeader, modalBody, buttonText, buttonOnClick, num, toggle,
       <MDBModalHeader toggle={() => toggle(modalNumber)}>{modalHeader}</MDBModalHeader>
       <MDBModalBody>{modalBody}</MDBModalBody>
       <MDBModalFooter>
-        <MDBBtn color="secondary" onClick={() => toggle(modalNumber)}>Close</MDBBtn>
-        <MDBBtn color="primary" onClick={buttonOnClick}>{buttonText}</MDBBtn>
+        <Button color="secondary" onClick={() => toggle(modalNumber)}>Close</Button>
+        <Button color="primary" onClick={buttonOnClick}>{buttonText}</Button>
       </MDBModalFooter>
     </MDBModal>
   </MDBContainer>

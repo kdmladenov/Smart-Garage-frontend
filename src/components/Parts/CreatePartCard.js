@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import './Parts.css';
 import { BASE_URL } from '../../common/constants';
 import { getToken } from '../../providers/AuthContext';
-import { Card, Form } from 'react-bootstrap';
-import { MDBBtn, MDBIcon } from 'mdbreact';
+import { Button, Card, Form } from 'react-bootstrap';
+import { MDBIcon } from 'mdbreact';
 import carSegment from '../../common/car-segment.enum';
 import validatePart from './partValidator';
 
@@ -116,10 +116,10 @@ const CreatePartCard = ({ setCreatePartMode, data, setData }) => {
                 </Form.Group>
               )}
               <>
-                <MDBBtn type="submit" onClick={handleFormSubmit} disabled={!isValid} style={{ backgroundColor: 'transparent' }}>
+                <Button type="submit" onClick={handleFormSubmit} disabled={!isValid} style={{ backgroundColor: 'transparent' }}>
                   <MDBIcon icon="check" />
-                </MDBBtn>
-                <MDBBtn
+                </Button>
+                <Button
                   type="button"
                   onClick={() => {
                     setCreatePartMode(false);
@@ -131,7 +131,7 @@ const CreatePartCard = ({ setCreatePartMode, data, setData }) => {
                   }}
                 >
                   <MDBIcon icon="times" />
-                </MDBBtn>
+                </Button>
               </>
             </div>
           </div>

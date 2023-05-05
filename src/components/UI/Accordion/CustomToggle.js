@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 // import { Button } from 'react-bootstrap';
 import './CustomToggle.css';
-import { MDBBtn } from 'mdbreact';
+import { Button } from 'react-bootstrap';
 
 const CustomToggle = ({ children, eventKey, variant, customFunc, createMode, setCreateMode, disabled }) => {
   const handleClick = useAccordionToggle(eventKey, () => {
@@ -12,9 +12,9 @@ const CustomToggle = ({ children, eventKey, variant, customFunc, createMode, set
   });
 
   return (
-    <MDBBtn type="button" variant={variant} onClick={handleClick} disabled={disabled}>
+    <Button type="button" variant={variant} onClick={handleClick} disabled={disabled}>
       {children}
-    </MDBBtn>
+    </Button>
   );
 };
 

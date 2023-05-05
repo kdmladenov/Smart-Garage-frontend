@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
-import { MDBBtn, MDBIcon, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
+import { Button, Form } from 'react-bootstrap';
+import { MDBIcon, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import { BASE_URL, CURRENCY_API_KEY, CURRENCY_URL, emptyVisit } from '../../common/constants';
 import { getToken, getUser } from '../../providers/AuthContext';
 import Loading from '../UI/Loading';
@@ -342,10 +342,10 @@ const VisitCardDetailed = ({
           )}
           {(editMode || registerVisitMode) && (
             <>
-              <MDBBtn type="submit" onClick={handleFormSubmit} disabled={!isValid} style={{ backgroundColor: 'transparent' }}>
+              <Button type="submit" onClick={handleFormSubmit} disabled={!isValid} style={{ backgroundColor: 'transparent' }}>
                 <MDBIcon icon="check" />
-              </MDBBtn>
-              <MDBBtn
+              </Button>
+              <Button
                 type="button"
                 onClick={() => {
                   setEditMode(false);
@@ -365,13 +365,13 @@ const VisitCardDetailed = ({
                 }}
               >
                 <MDBIcon icon="times" />
-              </MDBBtn>
+              </Button>
             </>
           )}
           {getUser().role === 'employee' && !editMode && !registerVisitMode && (
-            <MDBBtn type="button" onClick={() => setEditMode(true)}>
+            <Button type="button" onClick={() => setEditMode(true)}>
               <MDBIcon icon="edit" />
-            </MDBBtn>
+            </Button>
           )}
         </div>
         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -458,7 +458,7 @@ const VisitCardDetailed = ({
                     onChange={(e) => setService({ ...service, serviceQty: +e.target.value })}
                   />
                 </Form.Group>
-                <MDBBtn
+                <Button
                   onClick={() => {
                     addService(service.serviceId, service.serviceQty);
                     setService({ serviceId: 0, name: 'Select Service', serviceQty: 0 });
@@ -466,7 +466,7 @@ const VisitCardDetailed = ({
                   disabled={service && (service.name === 'Select Service' || !(service.serviceQty > 0))}
                 >
                   <MDBIcon icon="plus-square" />
-                </MDBBtn>
+                </Button>
               </span>
             )}
           </div>
@@ -510,9 +510,9 @@ const VisitCardDetailed = ({
                     />
                     <Form.Label className="visible">Qty</Form.Label>
                   </Form.Group>
-                  <MDBBtn type="submit" onClick={handleFormSubmitServices} disabled={!isValidService}>
+                  <Button type="submit" onClick={handleFormSubmitServices} disabled={!isValidService}>
                     <MDBIcon icon="plus-square" />
-                  </MDBBtn>
+                  </Button>
               </span>
             </div>
           </div>
@@ -589,7 +589,7 @@ const VisitCardDetailed = ({
                     onChange={(e) => setPart({ ...part, partQty: e.target.value })}
                   />
                 </Form.Group>
-                <MDBBtn
+                <Button
                   onClick={() => {
                     addPart(part.partId, part.partQty);
                     setPart({ partId: 0, name: 'Select Part', partQty: 0 });
@@ -597,7 +597,7 @@ const VisitCardDetailed = ({
                   disabled={part && (part.name === 'Select Part' || !(part.partQty > 0))}
                 >
                   <MDBIcon icon="plus-square" />
-                </MDBBtn>
+                </Button>
               </span>
             )}
           </div>
@@ -641,9 +641,9 @@ const VisitCardDetailed = ({
                     />
                     <Form.Label className="visible">Qty</Form.Label>
                   </Form.Group>
-                  <MDBBtn type="submit" onClick={handleFormSubmitParts} disabled={!isValidPart}>
+                  <Button type="submit" onClick={handleFormSubmitParts} disabled={!isValidPart}>
                     <MDBIcon icon="plus-square" />
-                  </MDBBtn>
+                  </Button>
               </span>
             </div>
           </div>

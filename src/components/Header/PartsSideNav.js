@@ -1,7 +1,6 @@
-import { MDBBtn } from 'mdbreact';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { partPrice } from '../../common/constants';
 import MultiRangeSlider from '../UI/MultiRangeSlider/MultiRangeSlider';
 import carSegmentEnum from '../../common/car-segment.enum';
@@ -15,9 +14,9 @@ const PartsSideNav = ({ setCreatePartMode, createPartMode, setPartsQuery }) => {
   return (
     <div className="side-nav-content">
       <Form.Group>
-        <MDBBtn className="btn btn-lg btn-block" type="button" onClick={() => setCreatePartMode(!createPartMode)}>
+        <Button className="btn btn-lg btn-block" type="button" onClick={() => setCreatePartMode(!createPartMode)}>
           {!createPartMode ? 'Create New Part' : 'Close Create Form'}
-        </MDBBtn>
+        </Button>
       </Form.Group>
       <Form.Group className="search-field">
         <Form.Label>
@@ -59,17 +58,17 @@ const PartsSideNav = ({ setCreatePartMode, createPartMode, setPartsQuery }) => {
         setMaxValue={setMaxValue}
       />
       <Form.Group className="search-field">
-        <MDBBtn
+        <Button
           className="btn btn-lg btn-block search"
           onClick={() => {
             setPartsQuery(`?priceLow=${minValue}&priceHigh=${maxValue}&partName=${partName}&carSegment=${carSegment}`);
           }}
         >
           search
-        </MDBBtn>
+        </Button>
       </Form.Group>
       <Form.Group className="search-field">
-        <MDBBtn
+        <Button
           className="btn btn-lg btn-block search"
           onClick={() => {
             setMinValue(partPrice.MIN);
@@ -80,7 +79,7 @@ const PartsSideNav = ({ setCreatePartMode, createPartMode, setPartsQuery }) => {
           }}
         >
           clear search
-        </MDBBtn>
+        </Button>
       </Form.Group>
     </div>
   );

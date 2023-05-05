@@ -1,6 +1,5 @@
-import { MDBBtn } from 'mdbreact';
 import { useState } from 'react';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import { BASE_URL } from '../../common/constants';
 import { getToken, getUser } from '../../providers/AuthContext';
@@ -135,13 +134,13 @@ const ChangePassword = () => {
 
           <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <Form.Group>
-              <MDBBtn
+              <Button
                 type="submit"
                 className="btn btn-lg btn-block"
                 disabled={(!input.currentPassword || !input.password || !input.reenteredPassword) || !Object.values(inputErrors).every(err => err === '')}
               >
                 Save Changes
-              </MDBBtn>
+              </Button>
             </Form.Group>
           </div>
         </div>

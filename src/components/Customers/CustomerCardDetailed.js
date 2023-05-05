@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import validateInput from '../Login/userValidator';
 import { BASE_URL } from '../../common/constants';
 import './CustomerCardDetailed.css';
-import { MDBBtn, MDBIcon } from 'mdbreact';
+import { MDBIcon } from 'mdbreact';
 import { getToken } from '../../providers/AuthContext';
 import roleType from '../../common/role-type.enum';
 
@@ -107,10 +107,10 @@ const CustomerCardDetailed = ({
             )}
             {(editMode || registerCustomerMode) && (
               <>
-                <MDBBtn type="submit" onClick={handleFormSubmit} disabled={!isValid} style={{ backgroundColor: 'transparent' }}>
+                <Button type="submit" onClick={handleFormSubmit} disabled={!isValid} style={{ backgroundColor: 'transparent' }}>
                   <MDBIcon icon="check" />
-                </MDBBtn>
-                <MDBBtn
+                </Button>
+                <Button
                   type="button"
                   onClick={() => {
                     setRegisterCustomerMode(false);
@@ -131,19 +131,19 @@ const CustomerCardDetailed = ({
                   }}
                 >
                   <MDBIcon icon="times" />
-                </MDBBtn>
+                </Button>
               </>
             )}
 
             {!editMode && !registerCustomerMode && (
-              <MDBBtn
+              <Button
                 type="button"
                 onClick={() => {
                   setEditMode(true);
                 }}
               >
                 <MDBIcon icon="edit" />
-              </MDBBtn>
+              </Button>
             )}
           </div>
           <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">

@@ -1,22 +1,23 @@
-import { MDBBtn, MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdbreact';
+import { MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdbreact';
 import PropTypes from 'prop-types';
+import { Button } from 'react-bootstrap';
 
 const ButtonWithPopover = ({ handleClickButton, children, message }) => {
   return (
     <>
       <MDBPopover placement="left" popover clickable id="delete-popover">
-        <MDBBtn type="button">{children}</MDBBtn>
+        <Button type="button">{children}</Button>
         <div>
           <MDBPopoverHeader>Are you sure?</MDBPopoverHeader>
           <MDBPopoverBody>
-            <MDBBtn
+            <Button
               color="red"
               onClick={() => {
                 handleClickButton(true);
               }}
             >
               {message}
-            </MDBBtn>
+            </Button>
           </MDBPopoverBody>
         </div>
       </MDBPopover>

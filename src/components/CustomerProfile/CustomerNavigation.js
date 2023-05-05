@@ -1,8 +1,7 @@
 // import { Button, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { MDBBtn } from 'mdbreact';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
 const CustomerNavigation = ({ setContent, setQuery, username, vehicles }) => {
   const [selected, setSelected] = useState('all');
@@ -20,13 +19,13 @@ const CustomerNavigation = ({ setContent, setQuery, username, vehicles }) => {
   const createNavBtn = (licensePlate, vehicleId) => {
     return (
       <Form.Group key={vehicleId}>
-        <MDBBtn
+        <Button
           active={selected === vehicleId}
           className="btn btn-lg btn-block"
           onClick={() => handleClick(vehicleId, licensePlate)}
         >
           {licensePlate}
-        </MDBBtn>
+        </Button>
       </Form.Group>
     );
   };
@@ -39,7 +38,7 @@ const CustomerNavigation = ({ setContent, setQuery, username, vehicles }) => {
         </div>
         <div className="about">
           <Form.Group>
-            <MDBBtn
+            <Button
               active={selected === 'changePassword'}
               variant="primary"
               className="btn btn-lg btn-block"
@@ -49,7 +48,7 @@ const CustomerNavigation = ({ setContent, setQuery, username, vehicles }) => {
               }}
             >
               Change Password
-            </MDBBtn>
+            </Button>
           </Form.Group>
           <Form.Group>
             <Form.Label>
@@ -76,7 +75,7 @@ const CustomerNavigation = ({ setContent, setQuery, username, vehicles }) => {
             />
           </Form.Group>
           <Form.Group >
-            <MDBBtn
+            <Button
               active={selected === 'all'}
               className="btn btn-lg btn-block"
               onClick={() => {
@@ -86,7 +85,7 @@ const CustomerNavigation = ({ setContent, setQuery, username, vehicles }) => {
               }}
             >
               All visits
-            </MDBBtn>
+            </Button>
           </Form.Group>
           {vehicles.map(v => createNavBtn(v.licensePlate, v.vehicleId))}
         </div>

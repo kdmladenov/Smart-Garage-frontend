@@ -1,7 +1,6 @@
-import { MDBBtn } from 'mdbreact';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { BASE_URL } from '../../common/constants';
 import { getToken } from '../../providers/AuthContext';
 import carSegmentsEnum from '../../common/car-segment.enum';
@@ -144,17 +143,17 @@ const VehiclesSideNav = ({ setVehiclesQuery }) => {
             </Form.Control>
           </Form.Group>
           <Form.Group className="search-field">
-            <MDBBtn
+            <Button
               className="btn btn-lg btn-block search"
               onClick={() => {
                 setVehiclesQuery(`?fullName=${searchParams.name}&email=${searchParams.email}&manufacturer=${searchParams.manufacturer}&modelName=${searchParams.modelName}&carSegment=${searchParams.carSegment}`);
               }}
             >
               search
-            </MDBBtn>
+            </Button>
           </Form.Group>
           <Form.Group className="search-field">
-            <MDBBtn
+            <Button
               className="btn btn-lg btn-block search"
               onClick={() => {
                 setSearchParams({
@@ -170,7 +169,7 @@ const VehiclesSideNav = ({ setVehiclesQuery }) => {
               }}
             >
               clear search
-            </MDBBtn>
+            </Button>
           </Form.Group>
     </div>
   );

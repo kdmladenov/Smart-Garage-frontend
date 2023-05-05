@@ -1,7 +1,6 @@
-import { MDBBtn } from 'mdbreact';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { BASE_URL } from '../../common/constants';
 import { getToken } from '../../providers/AuthContext';
 import carSegmentsEnum from '../../common/car-segment.enum';
@@ -70,9 +69,9 @@ const CustomersSideNav = ({ setRegisterCustomerMode, registerCustomerMode, setCu
   return (
     <div className="side-nav-content customers">
       <Form.Group>
-        <MDBBtn type="button" className="btn btn-lg btn-block" onClick={() => setRegisterCustomerMode(!registerCustomerMode)}>
+        <Button type="button" className="btn btn-lg btn-block" onClick={() => setRegisterCustomerMode(!registerCustomerMode)}>
           {!registerCustomerMode ? 'New Customer' : 'Close Register Form'}
-        </MDBBtn>
+        </Button>
       </Form.Group>
       <Form.Group className="search-field">
         <Form.Label>
@@ -208,7 +207,7 @@ const CustomersSideNav = ({ setRegisterCustomerMode, registerCustomerMode, setCu
         />
       </Form.Group>
       <Form.Group className="search-field">
-        <MDBBtn
+        <Button
           className="btn btn-lg btn-block search"
           onClick={() => {
             setCustomersQuery(
@@ -226,10 +225,10 @@ const CustomersSideNav = ({ setRegisterCustomerMode, registerCustomerMode, setCu
           }}
         >
           search
-        </MDBBtn>
+        </Button>
       </Form.Group>
       <Form.Group className="search-field">
-        <MDBBtn
+        <Button
           className="btn btn-lg btn-block search"
           onClick={() => {
             setCustomersQuery('?');
@@ -247,7 +246,7 @@ const CustomersSideNav = ({ setRegisterCustomerMode, registerCustomerMode, setCu
           }}
         >
           clear search
-        </MDBBtn>
+        </Button>
       </Form.Group>
     </div>
   );

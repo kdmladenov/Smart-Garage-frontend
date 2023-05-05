@@ -1,9 +1,10 @@
-import { MDBBtn, MDBIcon } from 'mdbreact';
+import { MDBIcon } from 'mdbreact';
 import PropTypes from 'prop-types';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
 import VisitCardDetailed from '../Visits/VisitCardDetailed';
 import './ServiceHistory.css';
+import { Button } from 'react-bootstrap';
 
 const ServiceHistory = ({ visits, toggleModal, num, setDetailedVisitReport, allCurrencies }) => {
   const modalNumber = `modal${num}`;
@@ -71,10 +72,10 @@ const ServiceHistory = ({ visits, toggleModal, num, setDetailedVisitReport, allC
             <h5 className="vertical-timeline-element-notes">{e.notes}</h5>
           </div>
           <div className="right">
-            <MDBBtn
+            <Button
               type="button"
               onClick={() => showDetailedVisitReport(e)}
-            >details</MDBBtn>
+            >details</Button>
             <h5 className="vertical-timeline-element-status" style={customStyle[e.visitStatus]}>{e.visitStatus}</h5>
           </div>
         </div>

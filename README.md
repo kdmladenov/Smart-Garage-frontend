@@ -1,147 +1,155 @@
-# SMART GARAGE APPLICATION
+# SmartGarage
+
+This is the final project for Telerik Academy - Alpha JavaScript Track (A27) - by  Krasimir Mladenov and Delyana Yordanova. 
+
+SmartGarage is a Full-stack web application designed to streamline the day-to-day operations of auto repair shop owners. It provides a comprehensive set of features that enable efficient management of cars, services, customers, and service history.
+
+## Table of Contents
+- [SmartGarage](#smartgarage)
+  - [Table of Contents](#table-of-contents)
+  - [Project Description](#project-description)
+    - [Cars and Services Management](#cars-and-services-management)
+    - [Customer Management](#customer-management)
+    - [Service History and Reporting](#service-history-and-reporting)
+    - [New Customer Profile Generation](#new-customer-profile-generation)
+  - [Technologies Used](#technologies-used)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [License](#license)
+  - [Images](#images)
+      - [Customers List](#customers-list)
+      - [Customers - Edit Profile](#customers---edit-profile)
+      - [Customers - Add Car](#customers---add-car)
+      - [Customers - Car List](#customers---car-list)
+      - [Create Car Repair Visit](#create-car-repair-visit)
+      - [Created Car Repair Visit](#created-car-repair-visit)
+      - [Created New Customer](#created-new-customer)
+      - [All Cars List](#all-cars-list)
+      - [All Repair Services List](#all-repair-services-list)
+      - [All Car Parts List](#all-car-parts-list)
+      - [Admin User Profile](#admin-user-profile)
+      - [PDF Invoice - Car Repair Visit](#pdf-invoice---car-repair-visit)
+      - [Forgotten password functionality](#forgotten-password-functionality)
+      - [Mobile view - User Profile](#mobile-view---user-profile)
+      - [Mobile view - Cars List](#mobile-view---cars-list)
+      - [Mobile view - View/Edit Car Details](#mobile-view---viewedit-car-details)
+
+## Project Description
+
+The goal of this project is to develop a web application that empowers auto repair shop owners to effectively manage their daily tasks. The application must include the following key functionalities:
+
+### Cars and Services Management
+
+- Maintain a list of cars, including details such as manufacturer and model.
+- Manage a comprehensive list of available services, specifying service names, descriptions, and corresponding prices.
+- Enable easy association of specific cars with customers.
+- Capture essential identification details for each car, including registration plate and vehicle identification number.
+
+### Customer Management
+
+- Maintain a centralized list of customers, including their contact information such as name, phone number, and email address.
+- Facilitate seamless linkage of customers with their respective cars.
+- Ensure customer profiles are easily accessible and editable via the web user interface.
+
+### Service History and Reporting
+
+- Keep a detailed history of all services performed on customers' cars.
+- Provide the ability to generate a comprehensive report for a specific visit to the shop.
+  - The report should include a breakdown of all services rendered during the visit, along with the corresponding total price.
+  - The currency for the total price should be configurable, either based on the default currency or as per the preference of the employee or customer.
+- Optional: Implement functionality to generate PDF reports that encompass all services performed on a specific car, along with the corresponding total price. The choice of currency should be customizable by the customer.
+
+### New Customer Profile Generation
+
+- Enable the generation of profiles for new customers by the system administrator.
+- Automatically send login information, including the customer's email address as the username and a randomly generated password, to the customer via email.
+- Ensure that all customers can access and manage their personal information conveniently through the web UI.
+
+## Technologies Used
+
+The SmartGarage web application will be developed using the following technologies:
+
+- Front-end: React.js, JavaScript, HTML, CSS, Redux, Bootstrap, Material-UI
+- Back-end: Node.js, Express.js, TypeScript, MariaDB/ MySQL
+- Authentication: JSON Web Tokens (JWT)
+- Additional Libraries and Tools:  React Router, Passport, Bcrypt, Nodemailer
+
+## Installation
+
+Back-end:
+
+1. Clone the repository: `git clone https://github.com/kdmladenov/Smart-Garage-backend.git`
+2. Install the necessary dependencies: `npm install`
+3. Set up the database and configure the connection settings in the `.env` file.
+
+Front-end:
+
+1. Clone the repository: `git clone https://github.com/kdmladenov/Smart-Garage-frontend.git`
+2. Install the necessary dependencies: `npm install`
+
+## Usage
+
+1. Start the backend API in the main folder : `npm run dev`
+1. Start the development server in the frontend folder: `npm start`
+1. Access the site in your browser at `http://localhost:3000`
 
 
-**SMART GARAGE APP** is the final project for Telerik Academy - Alpha JavaScript Track (A27) - by Delyana Yordanova and Krasimir Mladenov. 
+## License
 
-## 1. Project Description
-**SMART GARAGE APP** is a Full Stack Single Page Application that enables the owners of an auto repair shop to manage their day-to-day job.
-Employees of the auto repair shop can browse and manage (create, update and delete) vehicles, customers, services, spare parts, shop visits, view detailed repair reports.
-Customers are able to view, filter and sort visit history via a timeline. They are also able to download detailed report  for a visit as a PDF file.
-Implemented authentication, as well as forgotten password option.
+This project is a restricted personal project of Krasimir Mladenov and Delyana Yordanova. All rights reserved. Unauthorized copying, reproduction, or distribution of this repository, either in its entirety or any part of it, is strictly prohibited. Modification or commercial use of the source code or any associated materials without explicit permission from Krasimir Mladenov and Delyana Yordanova is not allowed.
+
+Please note that this license only applies to the specific project owned by Krasimir Mladenov and Delyana Yordanova and may not be applicable to any other projects or repositories.
 
 
-## 2. Technologies & Tools Used
+## Images
 
-### Front-end
-  - React
-  - MDBootstrap
-### Back-end
-  - Node.js
-  - Express.js
-  - JWT
-  - MariaDB
-  - TypeScript (Back-end)
-  - MySQL Workbench
+#### Customers List
+![](/assets/images/1.png)
 
 
-## 3. Server (Back-end) npm packages setup
-The main server application git folder is located here https://gitlab.com/DelyanaYo/smart-garage-server.git
-In order to run the application you will need to set it up. You will be working in the `smart-garage-server` folder. This will be designated as the **root** folder, where `package.json` is placed.
-
-You need to install all the packages in the root folder: `npm i`.
-
-The project can be run in two ways:
-
-- `npm start` - will run the current version of the code and will **not** reflect any changes done to the code until this command is executed again
-- `npm run dev` - will run the code in *development* mode, meaning every change done to the code will trigger the program to restart and reflect the changes made
-
-<br>
+#### Customers - Edit Profile
+![](/assets/images/2.png)
 
 
-## 4. Setup MySQL Workbench
-
-We will be using **MySQL Workbench** for storing the data. If you don't have it installed, please do so. You can use the following link **[MySQL Workbench](https://www.mysql.com/products/workbench/)**.
-
-We have provided you with the database which you can import in your MySQL Workbench - please use `smart_garage.sql` for the import. The SQL dump file is placed in the root folder. 
-
-After you connect to the database `"smart_garage"` and examine the major tables, you can use the database for all tasks.
-
-## 5. Dotenv
-
-You will be using dotenv to help manage your environment variables. The **.env** file is stored in your .gitignore file.
-You will have to create it in the **root** folder, where `package.json` is placed, as a separate file. 
-
-You can use the following content for your **.env** file. Keep in mind that you might need to replace `USER` and `PASSWORD` with the ones you have set in your `MySQL Workbench`. Also make sure that `DATABASE` name corresponds to the one with the data you will be using to run the application.
-
-```
-PORT=5555
-HOST=localhost
-DBPORT=3306
-USER=root
-PASSWORD=root
-DATABASE=smart_garage
-PRIVATE_KEY=sekreten_chasten_klu4
-TOKEN_LIFETIME=360000
-EMAIL_SERVICE=hotmail
-EMAIL_USER=smartgaragekd@outlook.com
-EMAIL_PASSWORD=BestSuperSekretenklu4
-```
-
-<br>
+#### Customers - Add Car
+![](/assets/images/3.png)
 
 
-## 6. Implemented Endpoints with corresponding functionalities
+#### Customers - Car List
+![](/assets/images/4.png)
 
-### **Public part** - accessible without authentication:
+#### Create Car Repair Visit
+![](/assets/images/5.png)
 
-- `/auth/login` - POST - User Login
-- `/auth/logout` - DELETE - User Logout
-- `/users` - POST - User Registration
-- `/users` - POST - User Registration
+#### Created Car Repair Visit
+![](/assets/images/6.png)
 
+#### Created New Customer
+![](/assets/images/7.png)
 
-### **Private part** - accessible for registered users only:
+#### All Cars List
+![](/assets/images/8.png)
 
--`/users?[query]` - GET - GET all customers filtered by multiple criteria
--`/users` - POST - Register new customer
--`/users/:userId` - DELETE - Delete a customer
--`/users/:userId` - GET - Get a single customer by userId
--`/users/:userId` - PUT - Update customer by userId
--`/users/:userId/change-password` - PATCH - Update password
--`/users/forgotten-password` - POST Request a password reset link
--`/users/reset-password/:userId/:token` - POST Reset password
+#### All Repair Services List
+![](/assets/images/9.png)
 
-- `/vehicles?[query]` - GET - Get all vehicles filtered by multiple criteria
-- `/vehicles` - POST - Register new vehicle
-- `/vehicles/:vehicleId` - GET - Get a single vehicle by vehicleId
-- `/vehicles/:vehicleId` - PUT - Update vehicle by vehicleId
+#### All Car Parts List
+![](/assets/images/10.png)
 
--`/visits?[query]` - GET - Get all visits, filtered by multiple criteria
-- `/visits` - POST - Register new visit
-- `/visits/visitId` - GET - Get a single visit by visitId
-- `/visits/visitId` - PUT - Update a visit by visitId
+#### Admin User Profile
+![](/assets/images/11.png)
 
-- `/services?[query]` - GET - Get all services filtered by multiple criteria
-- `/services` POST - Create new service
-- `/services/:serviceId` GET - Get a single service by serviceId
-- `/services/:serviceId` PUT - Update a service by serviceId
-- `/services/:serviceId` DELETE - Delete a service by serviceId
-  
-- `/parts?[query]` - GET - Get all parts filtered by multiple criteria
-- `/parts` POST - Create new part
-- `/parts/:partId` GET - Get a single part by partId
-- `/parts/:partId` PUT - Update a part by partId
-- `/parts/:partId` DELETE - Delete a part by partId
+#### PDF Invoice - Car Repair Visit
+![](/assets/images/12.png)
 
-- `/models` - GET - Get all models registered in the database
+#### Forgotten password functionality
+![](/assets/images/13.png)
 
+#### Mobile view - User Profile
+![](/assets/images/14.png)
 
-<br>
+#### Mobile view - Cars List
+![](/assets/images/15.png)
 
-## 7. Front-end (client side) npm packages setup
-
-The main application front-end git folder is located here https://gitlab.com/DelyanaYo/smart-garage-app.git
-In order to run the front-ebd of the application you will need to set it up. You will be working in the `smart-garage-app` folder. This will be designated as the **root** folder, where `package.json` is placed.
-
-You need to install all the packages in the root folder: `npm i`.
-
-To run the front-end in the project directory, you can run: 
-### `npm start`
-
-Thee app will be run in the development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-<br>
-
-## 10. Front-end project structure
-
-The main part of the client-side code is in `library/src`.
-
-- `common` - contains all constants and enums 
-- `components` - contains all the components of the project
-- `containers` - contains all the main book and user containers of the project
-- `hooks` - contains some custom hooks
-- `providers` - context provider which state to be shared across components
-- `App.js` - navigates to the components
-- `index.js` - the entry point of the project
-
-<br>
+#### Mobile view - View/Edit Car Details
+![](/assets/images/16.png)
